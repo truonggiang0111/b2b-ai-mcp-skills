@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.truonggiang0111/b2b-market-intel-mcp",
+  "title": "B2B Hiring Signals, Ad Spend Spy & Market Intel MCP Suite",
+  "description": "All-in-one B2B jobs, EU ad spend, app bug reviews & Google News full-text MCP suite.",
+  "version": "1.0.0",
+  "websiteUrl": "https://apify.com/ttyan0111",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/icons/reed-uk.png",
+      "mimeType": "image/png",
+      "sizes": ["256x256"]
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/truonggiang0111/b2b-ai-mcp-skills",
+    "source": "github",
+    "subfolder": "servers/b2b-suite"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.apify.com?actors=ttyan0111/reed-uk-jobs-hiring-signals,ttyan0111/seek-au-nz-jobs-hiring-signals,ttyan0111/app-store-play-reviews-spy,ttyan0111/google-ads-transparency-spy,ttyan0111/google-news-ai-article-extractor"
+    }
+  ]
+}

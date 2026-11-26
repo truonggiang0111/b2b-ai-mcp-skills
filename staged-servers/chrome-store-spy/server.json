@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.truonggiang0111/chrome-web-store-spy-mcp",
+  "title": "Chrome Web Store Extensions, Dev Emails & Reviews MCP",
+  "description": "Chrome Web Store extensions, developer support emails, installs & negative review pain signals.",
+  "version": "1.0.0",
+  "websiteUrl": "https://apify.com/ttyan0111/chrome-web-store-extension-spy",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/icons/chrome-store.png",
+      "mimeType": "image/png",
+      "sizes": ["256x256"]
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/truonggiang0111/b2b-ai-mcp-skills",
+    "source": "github",
+    "subfolder": "staged-servers/chrome-store-spy"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.apify.com?actors=ttyan0111/chrome-web-store-extension-spy"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+name: Publish MCP Servers to Official Registry
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'servers/**/server.json'
+      - '.github/workflows/publish-mcp-registry.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download mcp-publisher v1.8.16
+        run: |
+          curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/download/v1.8.16/mcp-publisher_linux_amd64.tar.gz" | tar -xz -C /usr/local/bin mcp-publisher
+          chmod +x /usr/local/bin/mcp-publisher
+
+      - name: Authenticate via GitHub OIDC
+        run: mcp-publisher login github-oidc
+
+      - name: Validate and publish all server.json manifests
+        run: |
+          for file in servers/*/server.json; do
+            echo "=== Validating $file ==="
+            mcp-publisher validate "$file"
+            echo "=== Publishing $file ==="
+            mcp-publisher publish "$file"
+          done

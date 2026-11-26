@@ -1,0 +1,67 @@
+{
+  "name": "Weekly Competitor Winning Ads & EU DSA Spend Spy",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [1],
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "id": "weekly-trigger",
+      "name": "Every Monday 10AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~google-ads-transparency-spy/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"queries\": [\"shopify.com\"],\n  \"countryCode\": \"US\",\n  \"adFormat\": \"ALL\",\n  \"minDaysActive\": 30,\n  \"includeDetails\": true,\n  \"maxAdsPerQuery\": 25,\n  \"proxyConfiguration\": { \"useApifyProxy\": true }\n}",
+        "options": {}
+      },
+      "id": "google-ads-spy",
+      "name": "Extract Winning Google Ads",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const ads = $input.all().map(i => i.json);\nreturn ads.map(a => ({\n  json: {\n    advertiserName: a.advertiserName,\n    adFormat: a.adFormat,\n    daysActive: a.daysActive,\n    euReach: a.euImpressionsRange,\n    previewRenderUrl: a.previewRenderUrl,\n    summary: a.agentSummary\n  }\n}));"
+      },
+      "id": "format-digest",
+      "name": "Format Winning Ads Digest",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [740, 300]
+    }
+  ],
+  "connections": {
+    "Every Monday 10AM": {
+      "main": [[{ "node": "Extract Winning Google Ads", "type": "main", "index": 0 }]]
+    },
+    "Extract Winning Google Ads": {
+      "main": [[{ "node": "Format Winning Ads Digest", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" }
+}

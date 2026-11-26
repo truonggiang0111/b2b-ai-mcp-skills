@@ -1,0 +1,98 @@
+{
+  "name": "Daily UK (Reed) + AU/NZ (Seek) Direct-Employer B2B Hiring Leads",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "daily-trigger",
+      "name": "Daily 8AM Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~reed-uk-jobs-hiring-signals/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"keywords\": \"Python Developer\",\n  \"location\": \"London\",\n  \"directEmployerOnly\": true,\n  \"excludeIntermediaryPosts\": true,\n  \"excludeTrainingCourses\": true,\n  \"maxJobs\": 25\n}",
+        "options": {}
+      },
+      "id": "reed-uk-direct",
+      "name": "Reed UK Direct Employers",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~seek-au-nz-jobs-hiring-signals/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"keywords\": \"Software Engineer\",\n  \"location\": \"Sydney\",\n  \"country\": \"AU\",\n  \"directEmployerOnly\": true,\n  \"includeCompanyDetails\": true,\n  \"maxJobs\": 25\n}",
+        "options": {}
+      },
+      "id": "seek-au-direct",
+      "name": "Seek AU Direct Employers",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 400]
+    },
+    {
+      "parameters": {
+        "mode": "append"
+      },
+      "id": "merge-leads",
+      "name": "Merge UK + AU Leads",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [720, 300]
+    }
+  ],
+  "connections": {
+    "Daily 8AM Trigger": {
+      "main": [
+        [
+          { "node": "Reed UK Direct Employers", "type": "main", "index": 0 },
+          { "node": "Seek AU Direct Employers", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Reed UK Direct Employers": {
+      "main": [[{ "node": "Merge UK + AU Leads", "type": "main", "index": 0 }]]
+    },
+    "Seek AU Direct Employers": {
+      "main": [[{ "node": "Merge UK + AU Leads", "type": "main", "index": 1 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" }
+}

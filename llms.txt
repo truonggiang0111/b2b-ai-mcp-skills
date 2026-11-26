@@ -1,0 +1,33 @@
+# b2b-ai-mcp-skills (`ttyan0111` / `truonggiang0111`)
+
+> Zero-proxy B2B Hiring Intelligence, Competitor Ad Spend Spy, Unified App/Extension Bug Reviews & Google News Real-URL RAG tools for AI Agents (MCP) and `n8n` automation.
+> Hosted serverless on Apify (`$5/month` free credit included for new accounts).
+
+## Remote MCP Endpoint (All-in-One B2B Suite)
+
+- URL (`streamable-http`): `https://mcp.apify.com?actors=ttyan0111/reed-uk-jobs-hiring-signals,ttyan0111/seek-au-nz-jobs-hiring-signals,ttyan0111/app-store-play-reviews-spy,ttyan0111/google-ads-transparency-spy,ttyan0111/google-news-ai-article-extractor`
+- Official MCP Registry Namespaces (`io.github.truonggiang0111/*`):
+  - `io.github.truonggiang0111/reed-uk-jobs-mcp`: Reed.co.uk UK jobs & Direct-Employer (`direct=True`) + Outside IR35 flags (`https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals`)
+  - `io.github.truonggiang0111/seek-au-nz-jobs-mcp`: Seek Australia (`seek.com.au`) & New Zealand (`seek.co.nz`) GraphQL jobs + company signals without HTML 403 blocks (`https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals`)
+  - `io.github.truonggiang0111/app-reviews-bug-spy-mcp`: Unified iOS App Store + Google Play reviews with server-side star filter & pain-signal tags (`https://apify.com/ttyan0111/app-store-play-reviews-spy`)
+  - `io.github.truonggiang0111/google-ads-transparency-mcp`: Google Ads Transparency Center creatives, active days & EU DSA reach stats (`https://apify.com/ttyan0111/google-ads-transparency-spy`)
+  - `io.github.truonggiang0111/google-news-real-url-mcp`: Decode opaque `news.google.com/rss` links into real destination publisher URLs + clean LLM/RAG full article text (`https://apify.com/ttyan0111/google-news-ai-article-extractor`)
+  - `io.github.truonggiang0111/b2b-market-intel-mcp`: Multi-tool B2B Market Intel suite combining all 5 live endpoints above
+
+## Portable Agent Skills (`skills.sh`)
+
+- Install: `npx skills add truonggiang0111/b2b-ai-mcp-skills`
+- Skills:
+  - [skills/reed-uk-hiring-signals/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/reed-uk-hiring-signals/SKILL.md)
+  - [skills/seek-au-nz-hiring-signals/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/seek-au-nz-hiring-signals/SKILL.md)
+  - [skills/app-store-play-bug-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/app-store-play-bug-spy/SKILL.md)
+  - [skills/google-ads-transparency-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/google-ads-transparency-spy/SKILL.md)
+  - [skills/google-news-real-url-rag/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/google-news-real-url-rag/SKILL.md)
+  - [skills/substack-creator-leads/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/substack-creator-leads/SKILL.md)
+  - [skills/chrome-web-store-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/chrome-web-store-spy/SKILL.md)
+
+## Automation Templates (`n8n`)
+
+- [workflows/n8n/weekly-competitor-app-bug-spy.n8n.json](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/workflows/n8n/weekly-competitor-app-bug-spy.n8n.json)
+- [workflows/n8n/daily-uk-au-direct-employer-leads.n8n.json](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/workflows/n8n/daily-uk-au-direct-employer-leads.n8n.json)
+- [workflows/n8n/weekly-google-ads-winning-creatives.n8n.json](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/workflows/n8n/weekly-google-ads-winning-creatives.n8n.json)

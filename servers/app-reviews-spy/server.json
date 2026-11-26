@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.truonggiang0111/app-reviews-bug-spy-mcp",
+  "title": "App Store & Google Play Reviews 2-in-1 Bug Spy MCP",
+  "description": "2-in-1 iOS App Store & Google Play reviews with star filters and automated bug/pain-signal tags.",
+  "version": "1.0.0",
+  "websiteUrl": "https://apify.com/ttyan0111/app-store-play-reviews-spy",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/icons/app-reviews.png",
+      "mimeType": "image/png",
+      "sizes": ["256x256"]
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/truonggiang0111/b2b-ai-mcp-skills",
+    "source": "github",
+    "subfolder": "servers/app-reviews-spy"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.apify.com?actors=ttyan0111/app-store-play-reviews-spy"
+    }
+  ]
+}

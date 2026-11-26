@@ -1,0 +1,67 @@
+{
+  "name": "Weekly Competitor App Bug Spy (iOS App Store + Google Play -> Digest)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [1],
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Every Monday 9AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~app-store-play-reviews-spy/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"apps\": [\"Notion\", \"Spotify\"],\n  \"platforms\": [\"ios\", \"android\"],\n  \"countries\": [\"us\", \"gb\"],\n  \"sortBy\": \"mostRecent\",\n  \"minRating\": 1,\n  \"maxRating\": 2,\n  \"maxReviewsPerPlatform\": 30\n}",
+        "options": {}
+      },
+      "id": "apify-app-reviews",
+      "name": "Run App & Play Bug Spy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all().map(i => i.json);\nconst counts = {};\nfor (const r of items) {\n  for (const tag of (r.painSignals || [])) counts[tag] = (counts[tag] || 0) + 1;\n}\nconst topComplaints = items.slice(0, 10).map(r => r.agentSummary).join('\\n');\nreturn [{ json: { totalNegativeReviews: items.length, painSignalCounts: counts, topComplaints } }];"
+      },
+      "id": "summarize-bugs",
+      "name": "Aggregate Pain Signals",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [740, 300]
+    }
+  ],
+  "connections": {
+    "Every Monday 9AM": {
+      "main": [[{ "node": "Run App & Play Bug Spy", "type": "main", "index": 0 }]]
+    },
+    "Run App & Play Bug Spy": {
+      "main": [[{ "node": "Aggregate Pain Signals", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" }
+}
