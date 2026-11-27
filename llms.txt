@@ -1,8 +1,15 @@
 # b2b-ai-mcp-skills (`ttyan0111` / `truonggiang0111`)
 
-> Zero-proxy B2B Hiring Intelligence, Competitor Ad Spend Spy, Unified App/Extension Bug Reviews & Google News Real-URL RAG tools for AI Agents (MCP) and `n8n` automation.
+> Zero-proxy B2B Hiring Intelligence, Public Tenders, ClinicalTrials Biotech Leads, Competitor Ad Spend Spy, Multi-Store Review Churn Spy & Google News Real-URL RAG tools (`15` Agent Skills, `8` `n8n` Workflows, `50` AI `.md` Tasks, `12` Live Agensi Skills + Bundle).
 > Hosted serverless on Apify (`$5/month` free credit included) and distributed on Agensi.io (`https://mcp.agensi.io/mcp/auth`).
 > Full single-file spec: [llms-full.txt](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/llms-full.txt)
+
+## Technical Guides & Open-Source CLI
+
+- [How to Decode Opaque news.google.com/rss CBMi Links Into Real Publisher URLs & Clean Markdown for AI RAG (2026)](https://truonggiang0111.github.io/mcp/google-news-rss-url-decoder/)
+- [Mining 1-Star & 2-Star App, Extension & SaaS Reviews for B2B Churn Leads](https://truonggiang0111.github.io/mcp/shopify-app-store-1-star-churn-teardown/)
+- [Filtering Out Recruitment Agency & Bootcamp Spam (~48% Noise) on Reed.co.uk & Seek.com.au via MCP & n8n](https://truonggiang0111.github.io/mcp/direct-employer-hiring-leads-uk-au/)
+- [Open-Source Node.js 18+ CLI & ESM Helper (`google-news-url-decoder` v1.0.0)](https://github.com/truonggiang0111/google-news-url-decoder)
 
 ## Remote MCP Endpoints (All-in-One B2B Suite)
 
@@ -13,10 +20,10 @@
   - `io.github.truonggiang0111/seek-au-nz-jobs-mcp`: Seek Australia (`seek.com.au`) & New Zealand (`seek.co.nz`) GraphQL jobs + company signals without HTML 403 blocks (`https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals`)
   - `io.github.truonggiang0111/app-reviews-bug-spy-mcp`: Unified iOS App Store + Google Play reviews with server-side star filter & pain-signal tags (`https://apify.com/ttyan0111/app-store-play-reviews-spy`)
   - `io.github.truonggiang0111/google-ads-transparency-mcp`: Google Ads Transparency Center creatives, active days & EU DSA reach stats (`https://apify.com/ttyan0111/google-ads-transparency-spy`)
-  - `io.github.truonggiang0111/google-news-real-url-mcp`: Decode opaque `news.google.com/rss` links into real destination publisher URLs + clean LLM/RAG full article text (`https://apify.com/ttyan0111/google-news-ai-article-extractor`)
+  - `io.github.truonggiang0111/google-news-real-url-mcp`: Decode opaque `news.google.com/rss` links into real destination publisher URLs (`url` + `urlDecoded`) + clean LLM/RAG full article text (`https://apify.com/ttyan0111/google-news-ai-article-extractor`)
   - `io.github.truonggiang0111/b2b-market-intel-mcp`: Multi-tool B2B Market Intel suite combining all 5 live endpoints above
 
-## Agensi.io Live Skills & Bundle (Zero-Key Storefront)
+## Agensi.io Live Skills & Bundle (`12` Live Skills + `1` Bundle — `HTTP 200`)
 
 - Creator Storefront (`Start here` pinned): https://www.agensi.io/creators/giang-tr-ng-tr-ng
 - Free Skill — Google News Real URL Decoder for AI RAG: https://www.agensi.io/skills/google-news-real-url-decoder-for-ai-rag
@@ -24,10 +31,16 @@
 - Free Skill — Competitor App Bug & Review Spy (iOS & Play): https://www.agensi.io/skills/competitor-app-bug-review-spy-ios-play
 - Paid Skill (`$5.00`) — AU/NZ Direct Employer Hiring Signals (Seek): https://www.agensi.io/skills/au-nz-direct-employer-hiring-signals-seek
 - Paid Skill (`$5.00`) — Competitor Google Ads Transparency & Funnel Spy: https://www.agensi.io/skills/competitor-google-ads-transparency-funnel-spy
+- Paid Skill (`$5.00`) — Shopify App Store 1-Star Churn & Dev Email Spy: https://www.agensi.io/skills/shopify-app-store-1-star-churn-dev-email-spy
+- Paid Skill (`$5.00`) — Substack Newsletter Creator & Email Leads: https://www.agensi.io/skills/substack-newsletter-creator-email-leads
+- Paid Skill (`$5.00`) — VS Code & Cursor Extension Install & Bug Spy: https://www.agensi.io/skills/vs-code-cursor-extension-install-bug-spy
+- Paid Skill (`$5.00`) — Podcast Host Direct Email & Sponsor Finder: https://www.agensi.io/skills/podcast-host-direct-email-sponsor-finder
+- Paid Skill (`$5.00`) — Chrome Web Store Extension & Dev Email Spy: https://www.agensi.io/skills/chrome-web-store-extension-dev-email-spy
+- Paid Skill (`$5.00`) — Substack Viral Notes Outlier & Hook Ghostwriter: https://www.agensi.io/skills/substack-viral-notes-outlier-hook-ghostwriter
 - Paid Pack (`$7.99`, `-20%` Launch Deal `$6.39`) — B2B Market & Hiring Intelligence 5-in-1 Pack: https://www.agensi.io/skills/b2b-market-hiring-intelligence-5-in-1-pack
 - Paid Bundle (`$7.99`, Save `20%`) — B2B Hiring & Competitor Ad Spy Bundle: https://www.agensi.io/bundles/b2b-hiring-competitor-ad-spy-bundle
 
-## Portable Agent Skills (`skills.sh`)
+## `15` Portable Agent Skills (`skills.sh`)
 
 - Install: `npx skills add truonggiang0111/b2b-ai-mcp-skills`
 - Skills:
@@ -42,14 +55,23 @@
   - [skills/podcast-host-email-sponsor-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/podcast-host-email-sponsor-spy/SKILL.md)
   - [skills/vscode-cursor-extension-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/vscode-cursor-extension-spy/SKILL.md)
   - [skills/substack-viral-notes-outlier-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/substack-viral-notes-outlier-spy/SKILL.md)
+  - [skills/uk-gov-tenders-buyer-leads/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/uk-gov-tenders-buyer-leads/SKILL.md)
+  - [skills/atlassian-marketplace-b2b-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/atlassian-marketplace-b2b-spy/SKILL.md)
+  - [skills/clinical-trials-biotech-leads/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/clinical-trials-biotech-leads/SKILL.md)
+  - [skills/wordpress-plugin-churn-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/wordpress-plugin-churn-spy/SKILL.md)
 
-## Automation Templates (`n8n`)
+## `8` Automation Templates (`n8n`)
 
+- [workflows/n8n/daily-google-news-ai-rag-digest.n8n.json](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/workflows/n8n/daily-google-news-ai-rag-digest.n8n.json)
 - [workflows/n8n/weekly-competitor-app-bug-spy.n8n.json](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/workflows/n8n/weekly-competitor-app-bug-spy.n8n.json)
+- [workflows/n8n/weekly-shopify-app-churn-leads.n8n.json](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/workflows/n8n/weekly-shopify-app-churn-leads.n8n.json)
 - [workflows/n8n/daily-uk-au-direct-employer-leads.n8n.json](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/workflows/n8n/daily-uk-au-direct-employer-leads.n8n.json)
+- [workflows/n8n/daily-uk-gov-tenders-alert.n8n.json](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/workflows/n8n/daily-uk-gov-tenders-alert.n8n.json)
 - [workflows/n8n/weekly-google-ads-winning-creatives.n8n.json](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/workflows/n8n/weekly-google-ads-winning-creatives.n8n.json)
+- [workflows/n8n/weekly-podcast-guest-sponsor-outreach.n8n.json](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/workflows/n8n/weekly-podcast-guest-sponsor-outreach.n8n.json)
+- [workflows/n8n/weekly-vscode-chrome-extension-bugs.n8n.json](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/workflows/n8n/weekly-vscode-chrome-extension-bugs.n8n.json)
 
-## 30 Ready-to-Run Published Use-Case Tasks (Web + `.md`)
+## `50` Ready-to-Run Published Use-Case Tasks (Web + `.md`)
 
 - https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals/examples/uk-direct-employer-python-jobs (.md)
 - https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals/examples/outside-ir35-uk-contract-tech-jobs (.md)
@@ -57,28 +79,48 @@
 - https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals/examples/uk-ai-machine-learning-direct-employer-jobs (.md)
 - https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals/examples/uk-cybersecurity-contract-outside-ir35-jobs (.md)
 - https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals/examples/manchester-birmingham-uk-tech-hiring-signals (.md)
+- https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals/examples/uk-devops-platform-engineer-direct-hiring-leads (.md)
+- https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals/examples/uk-fintech-quant-finance-direct-employer-jobs (.md)
+- https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals/examples/uk-csharp-dotnet-outside-ir35-contract-jobs (.md)
+- https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals/examples/uk-b2b-sales-sdr-account-executive-hiring-signals (.md)
 - https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals/examples/sydney-direct-employer-software-jobs (.md)
 - https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals/examples/australia-remote-tech-jobs-company-signals (.md)
 - https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals/examples/new-zealand-direct-employer-hiring-leads (.md)
 - https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals/examples/melbourne-brisbane-direct-employer-tech-jobs (.md)
 - https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals/examples/australia-data-ai-engineer-hiring-signals (.md)
 - https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals/examples/australia-mining-engineering-direct-hiring-leads (.md)
+- https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals/examples/australia-cybersecurity-cloud-direct-hiring-seek (.md)
+- https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals/examples/brisbane-queensland-direct-employer-hiring-leads (.md)
+- https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals/examples/auckland-wellington-nz-tech-company-hiring-spy (.md)
+- https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals/examples/australia-accounting-finance-direct-employer-jobs (.md)
 - https://apify.com/ttyan0111/app-store-play-reviews-spy/examples/competitor-app-1-star-bug-complaints (.md)
 - https://apify.com/ttyan0111/app-store-play-reviews-spy/examples/ios-android-billing-churn-review-audit (.md)
 - https://apify.com/ttyan0111/app-store-play-reviews-spy/examples/multi-country-mobile-app-sentiment-benchmark (.md)
 - https://apify.com/ttyan0111/app-store-play-reviews-spy/examples/fintech-banking-app-1-star-bug-audit (.md)
 - https://apify.com/ttyan0111/app-store-play-reviews-spy/examples/ai-chatbot-mobile-app-user-churn-complaints (.md)
 - https://apify.com/ttyan0111/app-store-play-reviews-spy/examples/competitor-app-latest-version-regression-bugs (.md)
+- https://apify.com/ttyan0111/app-store-play-reviews-spy/examples/shopify-ecommerce-mobile-app-1-star-churn-spy (.md)
+- https://apify.com/ttyan0111/app-store-play-reviews-spy/examples/b2b-productivity-saas-mobile-sync-login-bugs (.md)
+- https://apify.com/ttyan0111/app-store-play-reviews-spy/examples/health-fitness-subscription-paywall-backlash-spy (.md)
+- https://apify.com/ttyan0111/app-store-play-reviews-spy/examples/travel-delivery-app-crash-complaint-monitor (.md)
 - https://apify.com/ttyan0111/google-ads-transparency-spy/examples/competitor-winning-google-ads-30-days (.md)
 - https://apify.com/ttyan0111/google-ads-transparency-spy/examples/eu-dsa-competitor-ad-reach-spend-audit (.md)
 - https://apify.com/ttyan0111/google-ads-transparency-spy/examples/youtube-video-ad-creatives-competitor-spy (.md)
 - https://apify.com/ttyan0111/google-ads-transparency-spy/examples/b2b-saas-competitor-google-search-ads-spy (.md)
 - https://apify.com/ttyan0111/google-ads-transparency-spy/examples/ecommerce-d2c-winning-ads-longevity-tracker (.md)
 - https://apify.com/ttyan0111/google-ads-transparency-spy/examples/uk-germany-france-advertiser-spend-reach-spy (.md)
+- https://apify.com/ttyan0111/google-ads-transparency-spy/examples/ai-startup-competitor-google-youtube-ads-spy (.md)
+- https://apify.com/ttyan0111/google-ads-transparency-spy/examples/fintech-payment-competitor-ad-compliance-audit (.md)
+- https://apify.com/ttyan0111/google-ads-transparency-spy/examples/display-banner-image-ad-swipe-file-extractor (.md)
+- https://apify.com/ttyan0111/google-ads-transparency-spy/examples/australia-apac-competitor-google-ads-monitor (.md)
 - https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/decode-google-news-rss-real-publisher-urls (.md)
 - https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/ai-startup-funding-news-full-text-rag (.md)
 - https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/competitor-pr-layoffs-launches-news-monitor (.md)
 - https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/mergers-acquisitions-executive-hiring-news-rag (.md)
 - https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/cybersecurity-breach-incident-news-real-urls (.md)
 - https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/fintech-crypto-regulatory-news-llm-digest (.md)
+- https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/breaking-hourly-news-real-url-rag-feed (.md)
+- https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/b2b-saas-series-a-series-b-funding-trigger-news (.md)
+- https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/ecommerce-supply-chain-tariff-news-monitor (.md)
+- https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/multilingual-europe-apac-google-news-decoder (.md)
 - Web Hub: https://truonggiang0111.github.io/mcp/ · https://truonggiang0111.github.io/llms.txt · https://truonggiang0111.github.io/llms-full.txt

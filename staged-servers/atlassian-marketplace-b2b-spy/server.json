@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.truonggiang0111/atlassian-marketplace-b2b-spy-mcp",
+  "title": "Atlassian Marketplace Apps, Vendor Emails & Churn MCP",
+  "description": "Jira & Confluence app installs, Cloud pricing, vendor support emails & 1-2 star churn reviews.",
+  "version": "1.0.0",
+  "websiteUrl": "https://apify.com/ttyan0111/atlassian-marketplace-b2b-spy",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/icons/atlassian-marketplace-b2b-spy.png",
+      "mimeType": "image/png",
+      "sizes": ["256x256"]
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/truonggiang0111/b2b-ai-mcp-skills",
+    "source": "github",
+    "subfolder": "staged-servers/atlassian-marketplace-b2b-spy"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.apify.com?actors=ttyan0111/atlassian-marketplace-b2b-spy"
+    }
+  ]
+}

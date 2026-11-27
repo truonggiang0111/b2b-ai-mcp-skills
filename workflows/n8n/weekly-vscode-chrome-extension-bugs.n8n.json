@@ -1,0 +1,99 @@
+{
+  "name": "Weekly VS Code, Cursor & Chrome Extension Bug & Dev Email Monitor",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [3],
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "schedule-weekly-extensions",
+      "name": "Every Wednesday 9AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~vscode-cursor-extension-spy/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"queries\": [\"mcp\", \"ai coding\"],\n  \"maxExtensionsPerQuery\": 10,\n  \"sortBy\": \"installs\",\n  \"includeOpenVsxStats\": true,\n  \"includeReviews\": true,\n  \"maxRatingFilter\": 3,\n  \"maxReviewsPerExtension\": 15\n}",
+        "options": {}
+      },
+      "id": "apify-vscode-spy",
+      "name": "Run VS Code & Open-VSX Spy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~chrome-web-store-extension-spy/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"queries\": [\"ai assistant\", \"notion\"],\n  \"includeReviews\": true,\n  \"maxExtensionsPerQuery\": 10,\n  \"maxReviewsPerExtension\": 10,\n  \"onlyWithDeveloperEmail\": true\n}",
+        "options": {}
+      },
+      "id": "apify-chrome-spy",
+      "name": "Run Chrome Web Store Spy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 420]
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all().map(i => i.json);\nconst summaries = rows.slice(0, 15).map(r => r.agentSummary).filter(Boolean);\nreturn [{ json: { count: rows.length, summaries } }];"
+      },
+      "id": "summarize-extension-signals",
+      "name": "Summarize Extension Bugs & Leads",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [760, 300]
+    }
+  ],
+  "connections": {
+    "Every Wednesday 9AM": {
+      "main": [
+        [
+          { "node": "Run VS Code & Open-VSX Spy", "type": "main", "index": 0 },
+          { "node": "Run Chrome Web Store Spy", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Run VS Code & Open-VSX Spy": {
+      "main": [[{ "node": "Summarize Extension Bugs & Leads", "type": "main", "index": 0 }]]
+    },
+    "Run Chrome Web Store Spy": {
+      "main": [[{ "node": "Summarize Extension Bugs & Leads", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" }
+}

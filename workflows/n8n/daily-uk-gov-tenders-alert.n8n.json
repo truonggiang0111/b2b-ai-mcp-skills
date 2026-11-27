@@ -1,0 +1,67 @@
+{
+  "name": "Daily UK Gov Tenders & Direct Buyer Email Alert",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 24,
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "schedule-daily-uk-tenders",
+      "name": "Every Day 8AM UK",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~uk-gov-tenders-buyer-leads/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"keywords\": [\"software\", \"cloud\", \"cyber security\"],\n  \"stages\": [\"tender\", \"award\"],\n  \"minValueGBP\": 25000,\n  \"onlyWithEmail\": true,\n  \"maxItems\": 25\n}",
+        "options": {}
+      },
+      "id": "apify-uk-tenders",
+      "name": "Run UK Gov Tenders & Buyer Emails",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const notices = $input.all().map(i => i.json);\nreturn notices.map(n => ({\n  json: {\n    title: n.title,\n    stage: n.stage,\n    buyerName: n.buyerName,\n    contactName: n.contactName,\n    contactEmail: n.contactEmail,\n    valueGBP: n.valueGBP,\n    deadlineDate: n.deadlineDate,\n    suitableForSME: n.suitableForSME,\n    noticeUrl: n.noticeUrl,\n    agentSummary: n.agentSummary\n  }\n}));"
+      },
+      "id": "format-tender-leads",
+      "name": "Project Buyer Email Leads",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [740, 300]
+    }
+  ],
+  "connections": {
+    "Every Day 8AM UK": {
+      "main": [[{ "node": "Run UK Gov Tenders & Buyer Emails", "type": "main", "index": 0 }]]
+    },
+    "Run UK Gov Tenders & Buyer Emails": {
+      "main": [[{ "node": "Project Buyer Email Leads", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" }
+}

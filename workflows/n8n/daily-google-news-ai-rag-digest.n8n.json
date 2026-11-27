@@ -1,0 +1,67 @@
+{
+  "name": "Daily Google News Real-URL AI RAG & PR Signal Digest",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 24,
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "schedule-daily-gnews",
+      "name": "Every Day 8AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~google-news-ai-article-extractor/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"queries\": [\"\\\"Series A\\\" B2B SaaS\", \"enterprise AI acquisition\"],\n  \"language\": \"en-US\",\n  \"timeRange\": \"1d\",\n  \"decodeSourceUrls\": true,\n  \"extractFullArticle\": true,\n  \"maxArticlesPerQuery\": 15\n}",
+        "options": {}
+      },
+      "id": "apify-google-news",
+      "name": "Run Google News Real-URL Extractor",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all().map(i => i.json);\nconst signalCounts = {};\nfor (const a of items) {\n  for (const tag of (a.marketSignals || [])) signalCounts[tag] = (signalCounts[tag] || 0) + 1;\n}\nconst ragDocs = items.map(a => ({\n  title: a.title,\n  url: a.url,\n  urlDecoded: a.urlDecoded,\n  sourceName: a.sourceName,\n  publishedAt: a.publishedAt,\n  marketSignals: a.marketSignals,\n  agentSummary: a.agentSummary\n}));\nreturn [{ json: { totalArticles: items.length, decodedCount: items.filter(x => x.urlDecoded).length, signalCounts, ragDocs } }];"
+      },
+      "id": "format-rag-digest",
+      "name": "Format Real-URL RAG Digest",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [740, 300]
+    }
+  ],
+  "connections": {
+    "Every Day 8AM": {
+      "main": [[{ "node": "Run Google News Real-URL Extractor", "type": "main", "index": 0 }]]
+    },
+    "Run Google News Real-URL Extractor": {
+      "main": [[{ "node": "Format Real-URL RAG Digest", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" }
+}

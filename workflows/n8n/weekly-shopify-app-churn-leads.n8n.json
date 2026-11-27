@@ -1,0 +1,67 @@
+{
+  "name": "Weekly Shopify App Store 1-Star Churn & Dev Email Leads",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [1],
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "schedule-weekly-shopify",
+      "name": "Every Monday 9AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~shopify-app-store-churn-spy/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"queries\": [\"klaviyo-email-marketing\", \"upsell\"],\n  \"maxAppsPerQuery\": 5,\n  \"includeReviews\": true,\n  \"starRatings\": [\"1\", \"2\"],\n  \"sortBy\": \"newest\",\n  \"maxReviewsPerApp\": 20,\n  \"onlyWithDeveloperEmail\": false\n}",
+        "options": {}
+      },
+      "id": "apify-shopify-churn",
+      "name": "Run Shopify App Churn Spy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const apps = $input.all().map(i => i.json);\nconst leads = apps.map(a => ({\n  appName: a.name,\n  handle: a.handle,\n  rating: a.rating,\n  developerName: a.developerName,\n  developerEmail: a.developerEmail,\n  mentionedDomains: a.mentionedDomains || [],\n  painSignalSummary: a.painSignalSummary,\n  agentSummary: a.agentSummary\n}));\nreturn [{ json: { totalApps: leads.length, withDevEmail: leads.filter(l => !!l.developerEmail).length, leads } }];"
+      },
+      "id": "extract-shopify-leads",
+      "name": "Extract Churn & Dev Email Leads",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [740, 300]
+    }
+  ],
+  "connections": {
+    "Every Monday 9AM": {
+      "main": [[{ "node": "Run Shopify App Churn Spy", "type": "main", "index": 0 }]]
+    },
+    "Run Shopify App Churn Spy": {
+      "main": [[{ "node": "Extract Churn & Dev Email Leads", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" }
+}

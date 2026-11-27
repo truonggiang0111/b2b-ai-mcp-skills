@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.truonggiang0111/wordpress-plugin-churn-spy-mcp",
+  "title": "WordPress & WooCommerce Plugin Churn & Emails MCP",
+  "description": "WordPress & WooCommerce active installs, vendor emails, 1-2 star churn reviews & open tickets.",
+  "version": "1.0.0",
+  "websiteUrl": "https://apify.com/ttyan0111/wordpress-plugin-churn-spy",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/icons/wordpress-plugin-churn-spy.png",
+      "mimeType": "image/png",
+      "sizes": ["256x256"]
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/truonggiang0111/b2b-ai-mcp-skills",
+    "source": "github",
+    "subfolder": "staged-servers/wordpress-plugin-churn-spy"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.apify.com?actors=ttyan0111/wordpress-plugin-churn-spy"
+    }
+  ]
+}

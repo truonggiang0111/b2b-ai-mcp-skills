@@ -1,0 +1,67 @@
+{
+  "name": "Weekly B2B Podcast Guest & Sponsor Outreach Leads",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [2],
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "schedule-weekly-podcast",
+      "name": "Every Tuesday 9AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~podcast-host-email-sponsor-spy/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"queries\": [\"B2B SaaS\", \"AI engineering\"],\n  \"country\": \"US\",\n  \"maxPodcastsPerQuery\": 15,\n  \"onlyWithEmail\": true,\n  \"activeWithinDays\": 90,\n  \"episodesToAnalyze\": 5\n}",
+        "options": {}
+      },
+      "id": "apify-podcast-leads",
+      "name": "Run Podcast Host Email & Sponsor Spy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const shows = $input.all().map(i => i.json);\nconst directShows = shows.filter(s => s.hostEmail && !s.isPlatformRelayEmail);\nreturn directShows.map(s => ({\n  json: {\n    podcastName: s.podcastName,\n    hostAuthor: s.hostAuthor,\n    hostEmail: s.hostEmail,\n    daysSinceLastEpisode: s.daysSinceLastEpisode,\n    sponsorDomainsDetected: s.sponsorDomainsDetected || [],\n    websiteUrl: s.websiteUrl,\n    agentSummary: s.agentSummary\n  }\n}));"
+      },
+      "id": "filter-direct-host-emails",
+      "name": "Filter Non-Relay Host Emails",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [740, 300]
+    }
+  ],
+  "connections": {
+    "Every Tuesday 9AM": {
+      "main": [[{ "node": "Run Podcast Host Email & Sponsor Spy", "type": "main", "index": 0 }]]
+    },
+    "Run Podcast Host Email & Sponsor Spy": {
+      "main": [[{ "node": "Filter Non-Relay Host Emails", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" }
+}
