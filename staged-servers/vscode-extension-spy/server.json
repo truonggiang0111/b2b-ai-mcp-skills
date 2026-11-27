@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.truonggiang0111/vscode-cursor-extension-mcp",
+  "title": "VS Code Marketplace & Open-VSX Extension Spy MCP",
+  "description": "VS Code & Open-VSX installs, verified domains, GitHub repos & 1-3 star bug reviews.",
+  "version": "1.0.0",
+  "websiteUrl": "https://apify.com/ttyan0111/vscode-cursor-extension-spy",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/icons/vscode-extensions.png",
+      "mimeType": "image/png",
+      "sizes": ["256x256"]
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/truonggiang0111/b2b-ai-mcp-skills",
+    "source": "github",
+    "subfolder": "staged-servers/vscode-extension-spy"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.apify.com?actors=ttyan0111/vscode-cursor-extension-spy"
+    }
+  ]
+}

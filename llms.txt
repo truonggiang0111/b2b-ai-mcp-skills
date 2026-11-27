@@ -38,6 +38,9 @@
   - [skills/google-news-real-url-rag/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/google-news-real-url-rag/SKILL.md)
   - [skills/substack-creator-leads/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/substack-creator-leads/SKILL.md)
   - [skills/chrome-web-store-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/chrome-web-store-spy/SKILL.md)
+  - [skills/shopify-app-store-churn-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/shopify-app-store-churn-spy/SKILL.md)
+  - [skills/podcast-host-email-sponsor-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/podcast-host-email-sponsor-spy/SKILL.md)
+  - [skills/vscode-cursor-extension-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/vscode-cursor-extension-spy/SKILL.md)
 
 ## Automation Templates (`n8n`)
 

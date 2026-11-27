@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.truonggiang0111/podcast-host-email-mcp",
+  "title": "Apple Podcasts Host Emails & Sponsor Leads MCP",
+  "description": "Apple Podcasts direct host emails from RSS XML, active filters & sponsor domains.",
+  "version": "1.0.0",
+  "websiteUrl": "https://apify.com/ttyan0111/podcast-host-email-sponsor-spy",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/icons/podcast-emails.png",
+      "mimeType": "image/png",
+      "sizes": ["256x256"]
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/truonggiang0111/b2b-ai-mcp-skills",
+    "source": "github",
+    "subfolder": "staged-servers/podcast-email-spy"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.apify.com?actors=ttyan0111/podcast-host-email-sponsor-spy"
+    }
+  ]
+}
