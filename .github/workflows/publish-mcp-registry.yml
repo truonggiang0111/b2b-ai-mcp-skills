@@ -32,6 +32,14 @@ jobs:
           for file in servers/*/server.json; do
             echo "=== Validating $file ==="
             mcp-publisher validate "$file"
-            echo "=== Publishing $file ==="
-            mcp-publisher publish "$file"
+            name=$(jq -r '.name' "$file")
+            version=$(jq -r '.version' "$file")
+            encoded_name=${name//\//%2F}
+            status=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.modelcontextprotocol.io/v0.1/servers/${encoded_name}/versions/${version}")
+            if [ "$status" = "200" ]; then
+              echo "Already published ${name}@${version}, skipping"
+            else
+              echo "=== Publishing ${name}@${version} ($file) ==="
+              mcp-publisher publish "$file"
+            fi
           done
