@@ -25,6 +25,7 @@ Production-tested **MCP endpoints**, portable **`SKILL.md` playbooks**, and **`n
 | **Shopify App Store 1★ Churn & Dev Emails** *(tonight `22:00+07`)* | SSR `1★–2★` churn reviews, complaining merchant store names, pricing plans & developer support emails | Yes | `$0.006` + `$2.00/1k` apps + `$1.20/1k` reviews | [Skill Guide](./skills/shopify-app-store-churn-spy/SKILL.md) |
 | **Apple Podcasts Host Emails & Sponsors** *(tonight `22:00+07`)* | Direct `<itunes:email>` from bounded 400 KB RSS XML streams, non-podfaded active filter & sponsor domains | Yes | `$0.006` + `$2.50/1k` leads + `$1.50/1k` RSS | [Skill Guide](./skills/podcast-host-email-sponsor-spy/SKILL.md) |
 | **VS Code & Open-VSX Extension Spy** *(tonight `22:00+07`)* | VS Code Marketplace + Open-VSX (Cursor/Windsurf) combined installs, verified domains, GitHub repos & 1–3★ bug reviews | Yes | `$0.006` + `$2.00/1k` ext + `$1.20/1k` reviews | [Skill Guide](./skills/vscode-cursor-extension-spy/SKILL.md) |
+| **Substack Viral Notes Outlier & Hook Spy** *(queued public)* | Weighted Viral Score (`Likes + 3×Replies + 5×Restacks`), `>= 2.0x` outlier detection, peak UTC hour & Ghostwriter Swipe prompts | Yes | `$0.005` + `$1.50/1k` notes + `$0.003/creator` | [Skill Guide](./skills/substack-viral-notes-outlier-spy/SKILL.md) |
 
 ---
 

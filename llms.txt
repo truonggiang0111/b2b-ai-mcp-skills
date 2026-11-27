@@ -41,6 +41,7 @@
   - [skills/shopify-app-store-churn-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/shopify-app-store-churn-spy/SKILL.md)
   - [skills/podcast-host-email-sponsor-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/podcast-host-email-sponsor-spy/SKILL.md)
   - [skills/vscode-cursor-extension-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/vscode-cursor-extension-spy/SKILL.md)
+  - [skills/substack-viral-notes-outlier-spy/SKILL.md](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/skills/substack-viral-notes-outlier-spy/SKILL.md)
 
 ## Automation Templates (`n8n`)
 
