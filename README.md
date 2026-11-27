@@ -181,6 +181,16 @@ for job in resp.json():
 
 ---
 
+## Custom Scrapers & Automated Data Pipelines (24–48h Turnaround)
+
+Need a custom web scraper, anti-bot extractor, or daily automated pipeline synced into **Google Sheets, Excel, Airtable, HubSpot, or n8n**?
+
+- **Fixed-price builds (`$150 – $500`):** Fast `24–48h` delivery for B2B lead pipelines, e-commerce price/review monitoring, and internal ops automation.
+- **Free proof first:** Get a **free `20`-row live data sample** extracted from your exact target site before any deposit.
+- **Contact:** `giang12aa3@gmail.com` · **Apify Profile:** [apify.com/ttyan0111](https://apify.com/ttyan0111)
+
+---
+
 ## License
 
 MIT — skills, MCP manifests (`server.json`), and `n8n` workflows are open-source. Hosted cloud execution runs serverlessly on [Apify (`ttyan0111`)](https://apify.com/ttyan0111).
