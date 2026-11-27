@@ -1,21 +1,29 @@
 # b2b-ai-mcp-skills (`ttyan0111` / `truonggiang0111`)
 
-> Zero-proxy B2B Hiring Intelligence, Public Tenders, ClinicalTrials Biotech Leads, Competitor Ad Spend Spy, Multi-Store Review Churn Spy & Google News Real-URL RAG tools (`15` Agent Skills, `8` `n8n` Workflows, `100` AI `.md` Tasks, `12` Live Agensi Skills + Bundle).
+> Zero-proxy B2B Hiring Intelligence, Public Tenders, ClinicalTrials Biotech Leads, Competitor Ad Spend Spy, Multi-Store Review Churn Spy & Google News Real-URL RAG tools (`15` Agent Skills, `8` `n8n` Workflows, `100` AI `.md` Tasks, `16` Live Agensi Skills + `3` Bundles, Node STDIO MCP + Python SDK + Sample Datasets).
 > Hosted serverless on Apify (`$5/month` free credit included) and distributed on Agensi.io (`https://mcp.agensi.io/mcp/auth`).
 > Full single-file spec: [llms-full.txt](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/llms-full.txt)
 
-## Technical Guides & Open-Source CLI
+## Technical Guides, Open-Source SDKs & Sample Datasets
 
 - [How to Decode Opaque news.google.com/rss CBMi Links Into Real Publisher URLs & Clean Markdown for AI RAG (2026)](https://truonggiang0111.github.io/mcp/google-news-rss-url-decoder/)
 - [Mining 1-Star & 2-Star App, Extension & SaaS Reviews for B2B Churn Leads](https://truonggiang0111.github.io/mcp/shopify-app-store-1-star-churn-teardown/)
 - [Filtering Out Recruitment Agency & Bootcamp Spam (~48% Noise) on Reed.co.uk & Seek.com.au via MCP & n8n](https://truonggiang0111.github.io/mcp/direct-employer-hiring-leads-uk-au/)
-- [Open-Source Node.js 18+ CLI & ESM Helper (`google-news-url-decoder` v1.0.0)](https://github.com/truonggiang0111/google-news-url-decoder)
+- [UK Gov Tenders OCDS & Direct Buyer Emails Guide](https://truonggiang0111.github.io/mcp/uk-gov-contracts-finder-buyer-emails/)
+- [ClinicalTrials.gov Biotech & PI Email Leads Guide](https://truonggiang0111.github.io/mcp/clinicaltrials-gov-biotech-sponsor-leads/)
+- [VS Code Marketplace vs Open-VSX (Cursor/Windsurf) Benchmark & Churn Guide](https://truonggiang0111.github.io/mcp/vscode-vs-openvsx-cursor-extension-metrics/)
+- [Substack Viral Notes Outlier Formula & Ghostwriter Guide](https://truonggiang0111.github.io/mcp/substack-viral-notes-outlier-formula/)
+- [Dev.to Technical Breakdown (Google News AU_yqL RAG & MCP)](https://dev.to/truonggiang0111/why-google-news-rss-base64-decoding-broke-2024-2026-and-how-to-fix-it-for-ai-rag-mcp-26pi)
+- [Open-Source Zero-Dep Node STDIO MCP Server (`npx -y github:truonggiang0111/b2b-market-intel-mcp`)](https://github.com/truonggiang0111/b2b-market-intel-mcp)
+- [Open-Source Zero-Dep Python 3.10+ SDK & CLI (`b2b-market-intel-python` v1.0.0)](https://github.com/truonggiang0111/b2b-market-intel-python)
+- [Open-Source Node.js 18+ CLI Decoder (`google-news-url-decoder` v1.0.0)](https://github.com/truonggiang0111/google-news-url-decoder)
+- [Sanitised B2B Sample Datasets (`6` CSV + `6` JSON, `150` Real Rows)](https://github.com/truonggiang0111/b2b-sample-datasets-2026)
 
 ## Remote MCP Endpoints (All-in-One B2B Suite)
 
 - URL (`streamable-http`, Apify): `https://mcp.apify.com?actors=ttyan0111/reed-uk-jobs-hiring-signals,ttyan0111/seek-au-nz-jobs-hiring-signals,ttyan0111/app-store-play-reviews-spy,ttyan0111/google-ads-transparency-spy,ttyan0111/google-news-ai-article-extractor,ttyan0111/substack-newsletter-creator-leads,ttyan0111/chrome-web-store-extension-spy,ttyan0111/shopify-app-store-churn-spy,ttyan0111/podcast-host-email-sponsor-spy,ttyan0111/vscode-cursor-extension-spy`
 - Zero-Key Managed Marketplace (Agensi MCP `https://mcp.agensi.io/mcp/auth`): `https://www.agensi.io/creators/giang-tr-ng-tr-ng`
-- Official MCP Registry Namespaces (`io.github.truonggiang0111/*`):
+- Official MCP Registry Namespaces (`io.github.truonggiang0111/*` — `11` Servers / `12` Active Versions):
   - `io.github.truonggiang0111/reed-uk-jobs-mcp`: Reed.co.uk UK jobs & Direct-Employer (`direct=True`) + Outside IR35 flags (`https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals`)
   - `io.github.truonggiang0111/seek-au-nz-jobs-mcp`: Seek Australia (`seek.com.au`) & New Zealand (`seek.co.nz`) GraphQL jobs + company signals without HTML 403 blocks (`https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals`)
   - `io.github.truonggiang0111/app-reviews-bug-spy-mcp`: Unified iOS App Store + Google Play reviews with server-side star filter & pain-signal tags (`https://apify.com/ttyan0111/app-store-play-reviews-spy`)
@@ -26,9 +34,9 @@
   - `io.github.truonggiang0111/shopify-app-store-churn-mcp`: Shopify App Store 1-Star Churn & Dev Emails Spy (`https://apify.com/ttyan0111/shopify-app-store-churn-spy`, `servers/shopify-app-spy/server.json`)
   - `io.github.truonggiang0111/podcast-host-email-mcp`: Apple Podcasts Host Emails & Sponsor Leads (`https://apify.com/ttyan0111/podcast-host-email-sponsor-spy`, `servers/podcast-email-spy/server.json`)
   - `io.github.truonggiang0111/vscode-cursor-extension-mcp`: VS Code & Open-VSX (Cursor/Windsurf) Extension Spy (`https://apify.com/ttyan0111/vscode-cursor-extension-spy`, `servers/vscode-extension-spy/server.json`)
-  - `io.github.truonggiang0111/b2b-market-intel-mcp`: Multi-tool B2B Market Intel suite combining all 10 live endpoints above
+  - `io.github.truonggiang0111/b2b-market-intel-mcp`: Multi-tool B2B Market Intel suite combining all 10 live endpoints above (`v1.1.0`)
 
-## Agensi.io Live Skills & Bundle (`12` Live Skills + `1` Bundle — `HTTP 200`)
+## Agensi.io Live Skills & Bundles (`16` Live Skills + `3` Bundles — `HTTP 200`)
 
 - Creator Storefront (`Start here` pinned): https://www.agensi.io/creators/giang-tr-ng-tr-ng
 - Free Skill — Google News Real URL Decoder for AI RAG: https://www.agensi.io/skills/google-news-real-url-decoder-for-ai-rag
@@ -42,8 +50,14 @@
 - Paid Skill (`$5.00`) — Podcast Host Direct Email & Sponsor Finder: https://www.agensi.io/skills/podcast-host-direct-email-sponsor-finder
 - Paid Skill (`$5.00`) — Chrome Web Store Extension & Dev Email Spy: https://www.agensi.io/skills/chrome-web-store-extension-dev-email-spy
 - Paid Skill (`$5.00`) — Substack Viral Notes Outlier & Hook Ghostwriter: https://www.agensi.io/skills/substack-viral-notes-outlier-hook-ghostwriter
+- Paid Skill (`$5.00`) — UK Gov Tenders & Direct Buyer Emails: https://www.agensi.io/skills/uk-gov-tenders-direct-buyer-emails
+- Paid Skill (`$5.00`) — Atlassian Marketplace B2B App & Churn Spy: https://www.agensi.io/skills/atlassian-marketplace-b2b-app-churn-spy
+- Paid Skill (`$5.00`) — ClinicalTrials.gov Biotech & PI Email Leads: https://www.agensi.io/skills/clinicaltrials-gov-biotech-pi-email-leads
+- Paid Skill (`$5.00`) — WordPress & WooCommerce Plugin Churn Spy: https://www.agensi.io/skills/wordpress-woocommerce-plugin-churn-spy
 - Paid Pack (`$7.99`, `-20%` Launch Deal `$6.39`) — B2B Market & Hiring Intelligence 5-in-1 Pack: https://www.agensi.io/skills/b2b-market-hiring-intelligence-5-in-1-pack
-- Paid Bundle (`$7.99`, Save `20%`) — B2B Hiring & Competitor Ad Spy Bundle: https://www.agensi.io/bundles/b2b-hiring-competitor-ad-spy-bundle
+- Bundle #1 (`$7.99`, Save `20%`) — B2B Hiring & Competitor Ad Spy Bundle: https://www.agensi.io/bundles/b2b-hiring-competitor-ad-spy-bundle
+- Bundle #2 (`$12.99`, Save `35%`) — E-Commerce & SaaS Churn Spy Bundle: https://www.agensi.io/bundles/e-commerce-saas-churn-spy-bundle
+- Bundle #3 (`$12.99`, Save `35%`) — B2B Biotech, Gov Tenders & Creator Leads Bundle: https://www.agensi.io/bundles/b2b-biotech-gov-tenders-creator-leads-bundle
 
 ## `15` Portable Agent Skills (`skills.sh`)
 
