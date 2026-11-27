@@ -1,0 +1,231 @@
+{
+  "name": "Daily Substack Viral Notes >=3x Outliers & Ghostwriter Swipe Prompt",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Daily Substack Viral Notes Ghostwriter\n\n**Quick Setup:** Replace `YOUR_APIFY_API_TOKEN` in the HTTP Request node(s) with your Apify token from the **$5/mo free Apify tier** (covers dozens of runs with $0 proxy cost): https://apify.com/ttyan0111\n- **Apify Actor:** `ttyan0111/substack-viral-notes-outlier-spy` (https://apify.com/ttyan0111)\n- Runs Actor -> fetches dataset + KV Store RUN_SUMMARY (ghostwriterSwipePrompt) -> filters >=3x outliers.\n\n### Zero-Key & Native n8n Ecosystem\n- **Native n8n Community Node (`usableAsTool: true`):** `npm install github:truonggiang0111/n8n-nodes-b2b-market-intel` (https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel)\n- **Zero-Key CLI / STDIO MCP:** `npx -y github:truonggiang0111/b2b-market-intel-mcp`\n- **Hosted Zero-Key Skills & Bundles (Agensi.io):** https://www.agensi.io/creators/giang-tr-ng-tr-ng\n- **$5/mo Free Apify Cloud Tier:** https://apify.com/ttyan0111",
+        "height": 440,
+        "width": 340,
+        "color": 4
+      },
+      "id": "sticky-setup-substack-notes-gw",
+      "name": "Setup & Free Zero-Key Options",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        80
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "manual-trigger-substack-notes-gw",
+      "name": "Test Workflow Manually",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        220,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 24,
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "schedule-substack-notes-gw",
+      "name": "Every Day 8AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~substack-viral-notes-outlier-spy/runs?waitForFinish=120",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"queries\": [\n    \"gurwinder\",\n    \"dan\"\n  ],\n  \"maxNotesPerCreator\": 25,\n  \"maxCreatorsPerKeyword\": 3,\n  \"onlyOutliers\": false,\n  \"minOutlierMultiplier\": 3,\n  \"sortBy\": \"outlierMultiplier\"\n}",
+        "options": {}
+      },
+      "id": "apify-substack-notes-run",
+      "name": "Start Substack Notes Outlier Run",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ \"https://api.apify.com/v2/datasets/\" + $json.data.defaultDatasetId + \"/items?clean=true\" }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "apify-substack-notes-dataset",
+      "name": "Fetch Notes Dataset",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        720,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ \"https://api.apify.com/v2/key-value-stores/\" + $json.data.defaultKeyValueStoreId + \"/records/RUN_SUMMARY\" }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "apify-substack-notes-summary",
+      "name": "Fetch RUN_SUMMARY Swipe Prompt",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        720,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "append"
+      },
+      "id": "merge-substack-notes-data",
+      "name": "Merge Notes & RUN_SUMMARY",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        960,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all().map((i) => i.json);\nconst summary = rows.find((r) => r && (r.ghostwriterSwipePrompt || r.insights || r.topHooks)) || {};\nconst notes = rows.filter((r) => r && (r.noteId || r.hook || r.viralScore !== undefined));\nconst outliers3x = notes\n  .filter((n) => Number(n.outlierMultiplier || 0) >= 3)\n  .sort((a, b) => Number(b.outlierMultiplier || 0) - Number(a.outlierMultiplier || 0) || Number(b.viralScore || 0) - Number(a.viralScore || 0))\n  .map((n) => ({\n    handle: n.handle,\n    authorName: n.authorName,\n    hook: n.hook,\n    viralScore: n.viralScore,\n    outlierMultiplier: n.outlierMultiplier,\n    lengthBucket: n.lengthBucket,\n    wordCount: n.wordCount,\n    noteUrl: n.noteUrl,\n    agentSummary: n.agentSummary,\n  }));\nconst fallbackPrompt = outliers3x.length\n  ? \"Reverse-engineer these >=3x Substack Notes outliers (structure, opening hook, pacing) and write 5 original variants:\\n\\n\" + outliers3x.slice(0, 8).map((o, idx) => `${idx + 1}. [${o.outlierMultiplier}x | ${o.lengthBucket}] ${o.hook} (${o.noteUrl})`).join(\"\\n\")\n  : \"No >=3x outlier notes found in this batch.\";\nreturn [{\n  json: {\n    totalNotesScanned: notes.length,\n    outliers3xCount: outliers3x.length,\n    insights: summary.insights || null,\n    ghostwriterSwipePrompt: summary.ghostwriterSwipePrompt || fallbackPrompt,\n    outliers3x,\n  },\n}];"
+      },
+      "id": "filter-substack-3x-outliers",
+      "name": "Filter >=3x Outliers & Swipe Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        220
+      ]
+    }
+  ],
+  "connections": {
+    "Test Workflow Manually": {
+      "main": [
+        [
+          {
+            "node": "Start Substack Notes Outlier Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every Day 8AM": {
+      "main": [
+        [
+          {
+            "node": "Start Substack Notes Outlier Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start Substack Notes Outlier Run": {
+      "main": [
+        [
+          {
+            "node": "Fetch Notes Dataset",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Fetch RUN_SUMMARY Swipe Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Notes Dataset": {
+      "main": [
+        [
+          {
+            "node": "Merge Notes & RUN_SUMMARY",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch RUN_SUMMARY Swipe Prompt": {
+      "main": [
+        [
+          {
+            "node": "Merge Notes & RUN_SUMMARY",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Notes & RUN_SUMMARY": {
+      "main": [
+        [
+          {
+            "node": "Filter >=3x Outliers & Swipe Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

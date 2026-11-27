@@ -1,0 +1,186 @@
+{
+  "name": "Daily ClinicalTrials.gov Zero-Key Biotech Sponsor & Central Contact Leads",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Zero-Key ClinicalTrials.gov Biotech Leads\n\n**100% Zero-Key Primary Pipeline:** Queries `https://clinicaltrials.gov/api/v2/studies` directly with NO API keys required. Enable the disabled Apify node at the end for deep deduplicated site PI emails & `RUN_SUMMARY` compression.\n- **Apify Actor:** `ttyan0111/clinical-trials-biotech-leads` (https://apify.com/ttyan0111)\n\n### Zero-Key & Native n8n Ecosystem\n- **Native n8n Community Node (`usableAsTool: true`):** `npm install github:truonggiang0111/n8n-nodes-b2b-market-intel` (https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel)\n- **Zero-Key CLI / STDIO MCP:** `npx -y github:truonggiang0111/b2b-market-intel-mcp`\n- **Hosted Zero-Key Skills & Bundles (Agensi.io):** https://www.agensi.io/creators/giang-tr-ng-tr-ng\n- **$5/mo Free Apify Cloud Tier:** https://apify.com/ttyan0111",
+        "height": 450,
+        "width": 360,
+        "color": 5
+      },
+      "id": "sticky-setup-clinical-trials-leads",
+      "name": "Setup & Free Zero-Key Options",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        80
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "manual-trigger-clinical-trials-leads",
+      "name": "Test Workflow Manually",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 24,
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "schedule-clinical-trials-leads",
+      "name": "Every Day 8AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://clinicaltrials.gov/api/v2/studies",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query.cond",
+              "value": "oncology"
+            },
+            {
+              "name": "filter.overallStatus",
+              "value": "RECRUITING"
+            },
+            {
+              "name": "filter.advanced",
+              "value": "AREA[LeadSponsorClass]INDUSTRY"
+            },
+            {
+              "name": "pageSize",
+              "value": "25"
+            },
+            {
+              "name": "format",
+              "value": "json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http-clinical-trials-zero-key",
+      "name": "Fetch ClinicalTrials v2 (Zero-Key)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const payload = $input.first().json || {};\nconst studies = Array.isArray(payload.studies) ? payload.studies : [];\nconst leads = [];\nfor (const st of studies) {\n  const p = st.protocolSection || {};\n  const id = p.identificationModule || {};\n  const status = p.statusModule || {};\n  const sponsor = (p.sponsorCollaboratorsModule || {}).leadSponsor || {};\n  const design = p.designModule || {};\n  const contacts = p.contactsLocationsModule || {};\n  const central = Array.isArray(contacts.centralContacts) ? contacts.centralContacts : [];\n  const officials = Array.isArray(contacts.overallOfficials) ? contacts.overallOfficials : [];\n  const locations = Array.isArray(contacts.locations) ? contacts.locations : [];\n  const siteEmails = [];\n  for (const loc of locations) {\n    for (const c of (loc.contacts || [])) {\n      if (c.email && !siteEmails.includes(c.email)) siteEmails.push(c.email);\n    }\n  }\n  const centralEmails = central.map((c) => c.email).filter(Boolean);\n  const primaryEmail = centralEmails[0] || siteEmails[0] || null;\n  leads.push({\n    json: {\n      nctId: id.nctId,\n      briefTitle: id.briefTitle,\n      leadSponsorName: sponsor.name || null,\n      leadSponsorClass: sponsor.class || null,\n      overallStatus: status.overallStatus || null,\n      phases: design.phases || [],\n      enrollmentCount: design.enrollmentInfo?.count || null,\n      primaryEmail,\n      centralContacts: central,\n      overallOfficials: officials,\n      siteEmailCount: siteEmails.length,\n      studyUrl: `https://clinicaltrials.gov/study/${id.nctId}`,\n    },\n  });\n}\nreturn leads.filter((l) => l.json.primaryEmail || l.json.centralContacts.length > 0);"
+      },
+      "id": "parse-clinical-trials-sponsors",
+      "name": "Extract Sponsor & Central Contacts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        760,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~clinical-trials-biotech-leads/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ queries: $input.all().slice(0, 10).map(i => i.json.nctId).filter(Boolean), sponsorClass: \"INDUSTRY\", onlyWithEmail: true, includeSiteContacts: true, maxSiteContactsPerTrial: 10, maxTrials: 20 }) }}",
+        "options": {}
+      },
+      "id": "apify-clinical-trials-optional",
+      "name": "Optional Apify Biotech PI Enricher",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1020,
+        220
+      ],
+      "disabled": true,
+      "notes": "Disabled by default so the Zero-Key pipeline runs immediately. Enable and add APIFY_TOKEN for full deduplicated site PI emails.",
+      "notesInFlow": true
+    }
+  ],
+  "connections": {
+    "Test Workflow Manually": {
+      "main": [
+        [
+          {
+            "node": "Fetch ClinicalTrials v2 (Zero-Key)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every Day 8AM": {
+      "main": [
+        [
+          {
+            "node": "Fetch ClinicalTrials v2 (Zero-Key)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch ClinicalTrials v2 (Zero-Key)": {
+      "main": [
+        [
+          {
+            "node": "Extract Sponsor & Central Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Sponsor & Central Contacts": {
+      "main": [
+        [
+          {
+            "node": "Optional Apify Biotech PI Enricher",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

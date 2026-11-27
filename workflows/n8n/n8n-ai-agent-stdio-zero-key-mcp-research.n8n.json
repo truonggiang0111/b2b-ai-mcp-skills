@@ -1,0 +1,131 @@
+{
+  "name": "n8n AI Agent — Zero-Key STDIO MCP Research (b2b-market-intel-mcp)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## AI Agent: Zero-Key STDIO MCP Research\n\n**Zero-Key STDIO Setup:** Expose `npx -y github:truonggiang0111/b2b-market-intel-mcp` to n8n via `npx -y supergateway --stdio \"npx -y github:truonggiang0111/b2b-market-intel-mcp\" --outputTransport streamableHttp --port 8000` (no Apify key needed for `decode_google_news_url`, `preview_uk_gov_tenders`, `preview_clinical_trials_leads`). Or install the native n8n Community Node (`usableAsTool: true`): `npm install github:truonggiang0111/n8n-nodes-b2b-market-intel`.\n\n### Zero-Key & Native n8n Ecosystem\n- **Native n8n Community Node (`usableAsTool: true`):** `npm install github:truonggiang0111/n8n-nodes-b2b-market-intel` (https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel)\n- **Zero-Key CLI / STDIO MCP:** `npx -y github:truonggiang0111/b2b-market-intel-mcp`\n- **Hosted Zero-Key Skills & Bundles (Agensi.io):** https://www.agensi.io/creators/giang-tr-ng-tr-ng\n- **$5/mo Free Apify Cloud Tier:** https://apify.com/ttyan0111",
+        "height": 470,
+        "width": 380,
+        "color": 5
+      },
+      "id": "sticky-setup-agent-stdio-mcp",
+      "name": "Setup & Free Zero-Key Options",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "chat-trigger-stdio-mcp",
+      "name": "When Chat Message Received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        220,
+        180
+      ],
+      "webhookId": "b2b-stdio-zero-key-mcp-chat"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "options": {
+          "systemMessage": "You are a Zero-Key B2B Research AI Agent backed by b2b-market-intel-mcp (STDIO). Use decode_google_news_url, preview_uk_gov_tenders, and preview_clinical_trials_leads out of the box without API keys, or scaled cloud batch tools when APIFY_TOKEN is set."
+        }
+      },
+      "id": "ai-agent-stdio-mcp",
+      "name": "Zero-Key B2B Research AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        500,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {}
+      },
+      "id": "openai-chat-stdio-mcp",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        420
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "endpointUrl": "http://localhost:8000/mcp",
+        "serverTransport": "httpStreamable",
+        "authentication": "none",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "mcp-client-stdio-zero-key",
+      "name": "Zero-Key B2B MCP (STDIO Bridge)",
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        420
+      ],
+      "notes": "STDIO Server: npx -y github:truonggiang0111/b2b-market-intel-mcp | Bridge to n8n: npx -y supergateway --stdio \"npx -y github:truonggiang0111/b2b-market-intel-mcp\" --outputTransport streamableHttp --port 8000",
+      "notesInFlow": true
+    }
+  ],
+  "connections": {
+    "When Chat Message Received": {
+      "main": [
+        [
+          {
+            "node": "Zero-Key B2B Research AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Zero-Key B2B Research AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zero-Key B2B MCP (STDIO Bridge)": {
+      "ai_tool": [
+        [
+          {
+            "node": "Zero-Key B2B Research AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

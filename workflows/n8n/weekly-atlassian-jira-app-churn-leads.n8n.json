@@ -1,0 +1,188 @@
+{
+  "name": "Weekly Atlassian Jira Marketplace Zero-Key App & Churn Leads",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Weekly Atlassian Jira App Churn Leads\n\n**100% Zero-Key Primary Pipeline:** Queries `https://marketplace.atlassian.com/rest/2/addons` directly with NO API keys required. Enable the optional Apify batch node at the end for vendor support emails & 1★–2★ enterprise churn reviews.\n- **Apify Actor:** `ttyan0111/atlassian-marketplace-b2b-spy` (https://apify.com/ttyan0111)\n\n### Zero-Key & Native n8n Ecosystem\n- **Native n8n Community Node (`usableAsTool: true`):** `npm install github:truonggiang0111/n8n-nodes-b2b-market-intel` (https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel)\n- **Zero-Key CLI / STDIO MCP:** `npx -y github:truonggiang0111/b2b-market-intel-mcp`\n- **Hosted Zero-Key Skills & Bundles (Agensi.io):** https://www.agensi.io/creators/giang-tr-ng-tr-ng\n- **$5/mo Free Apify Cloud Tier:** https://apify.com/ttyan0111",
+        "height": 450,
+        "width": 360,
+        "color": 5
+      },
+      "id": "sticky-setup-atlassian-churn",
+      "name": "Setup & Free Zero-Key Options",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        80
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "manual-trigger-atlassian-churn",
+      "name": "Test Workflow Manually",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1
+              ],
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "schedule-atlassian-churn",
+      "name": "Every Monday 9AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://marketplace.atlassian.com/rest/2/addons",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "time tracking"
+            },
+            {
+              "name": "application",
+              "value": "jira"
+            },
+            {
+              "name": "hosting",
+              "value": "cloud"
+            },
+            {
+              "name": "withVersion",
+              "value": "true"
+            },
+            {
+              "name": "limit",
+              "value": "25"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http-atlassian-rest-zero-key",
+      "name": "Fetch Atlassian Marketplace Addons (Zero-Key)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json || {};\nconst addons = (data._embedded && Array.isArray(data._embedded.addons)) ? data._embedded.addons : [];\nreturn addons\n  .map((a) => {\n    const emb = a._embedded || {};\n    const dist = emb.distribution || {};\n    const rev = emb.reviews || {};\n    const vendor = emb.vendor || {};\n    const altHref = a._links?.alternate?.href || \"\";\n    const vendorHref = vendor._links?.alternate?.href || \"\";\n    const avgStars = rev.averageStars != null ? Number(Number(rev.averageStars).toFixed(2)) : null;\n    const installs = Number(dist.totalInstalls || 0);\n    return {\n      json: {\n        addonKey: a.key,\n        name: a.name,\n        tagLine: a.tagLine || \"\",\n        vendorName: vendor.name || null,\n        vendorUrl: vendorHref ? `https://marketplace.atlassian.com${vendorHref}` : null,\n        totalInstalls: installs,\n        totalUsers: dist.totalUsers ?? null,\n        averageStars: avgStars,\n        reviewCount: rev.count || 0,\n        highInstallChurnTarget: installs >= 500 && (avgStars === null || avgStars < 4.2),\n        marketplaceUrl: altHref ? `https://marketplace.atlassian.com${altHref}` : null,\n      },\n    };\n  })\n  .sort((a, b) => Number(b.json.highInstallChurnTarget) - Number(a.json.highInstallChurnTarget) || b.json.totalInstalls - a.json.totalInstalls);"
+      },
+      "id": "parse-atlassian-addons",
+      "name": "Parse Atlassian Apps & Churn Signals",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        760,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~atlassian-marketplace-b2b-spy/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ queries: $input.all().slice(0, 5).map(i => i.json.addonKey).filter(Boolean), application: \"jira\", hosting: \"cloud\", maxAppsPerQuery: 5, includeChurnReviews: true, maxReviewsPerApp: 15 }) }}",
+        "options": {}
+      },
+      "id": "apify-atlassian-optional",
+      "name": "Optional Apify Atlassian Churn Enricher",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1020,
+        220
+      ],
+      "disabled": true,
+      "notes": "Disabled by default for Zero-Key execution. Enable with APIFY_TOKEN to extract vendor support emails and 1-2 star enterprise reviews.",
+      "notesInFlow": true
+    }
+  ],
+  "connections": {
+    "Test Workflow Manually": {
+      "main": [
+        [
+          {
+            "node": "Fetch Atlassian Marketplace Addons (Zero-Key)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every Monday 9AM": {
+      "main": [
+        [
+          {
+            "node": "Fetch Atlassian Marketplace Addons (Zero-Key)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Atlassian Marketplace Addons (Zero-Key)": {
+      "main": [
+        [
+          {
+            "node": "Parse Atlassian Apps & Churn Signals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Atlassian Apps & Churn Signals": {
+      "main": [
+        [
+          {
+            "node": "Optional Apify Atlassian Churn Enricher",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

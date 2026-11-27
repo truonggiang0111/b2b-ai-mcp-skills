@@ -3,11 +3,12 @@
 [![MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.truonggiang0111-10b981?style=flat-square)](https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.truonggiang0111)
 [![B2B Market Intel Suite MCP connector](https://glama.ai/mcp/connectors/io.github.truonggiang0111/b2b-market-intel-mcp/badges/score.svg)](https://glama.ai/mcp/connectors/io.github.truonggiang0111/b2b-market-intel-mcp)
 [![Apify Profile](https://img.shields.io/badge/Apify%20Store-ttyan0111-2563eb?style=flat-square)](https://apify.com/ttyan0111)
-[![Agensi.io Storefront](https://img.shields.io/badge/Agensi.io-12%20Live%20Skills%20%2B%20Bundle-0f172a?style=flat-square)](https://www.agensi.io/creators/giang-tr-ng-tr-ng)
+[![Agensi.io Storefront](https://img.shields.io/badge/Agensi.io-16%20Live%20Skills%20%2B%203%20Bundles-0f172a?style=flat-square)](https://www.agensi.io/creators/giang-tr-ng-tr-ng)
 [![Agent Skills](https://img.shields.io/badge/skills.sh-15%20Skills-6366f1?style=flat-square)](#-2-install-portable-agent-skills-claude-code--cursor--codex)
+[![n8n Workflows](https://img.shields.io/badge/n8n-16%20Workflows%20%2B%20Node-ea4b71?style=flat-square)](#-3-16-ready-to-import-n8n-workflows--native-community-node)
 [![llms.txt](https://img.shields.io/badge/AI%20Index-llms--full.txt-059669?style=flat-square)](./llms-full.txt)
 
-Production-tested **MCP endpoints**, **`15` portable `SKILL.md` playbooks**, **`8` `n8n` JSON templates**, and **`100` AI `.md` use-case blueprints** for AI Agents, B2B growth teams, recruiters, and RAG developers. Powered by lightweight zero-proxy cloud endpoints on Apify (**new Apify accounts receive `$5/month` in free usage — try all tools at `$0` out-of-pocket**).
+Production-tested **MCP endpoints**, **`15` portable `SKILL.md` playbooks**, **`16` `n8n` JSON templates** + **[`n8n-nodes-b2b-market-intel`](https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel)** (`usableAsTool: true`, `18` ops), **[`b2b-market-intel-python`](https://github.com/truonggiang0111/b2b-market-intel-python)** zero-dep Python SDK, **[`b2b-market-intel-mcp`](https://github.com/truonggiang0111/b2b-market-intel-mcp)** STDIO CLI, and **`100` AI `.md` use-case blueprints** for AI Agents, B2B growth teams, recruiters, and RAG developers. Powered by lightweight zero-proxy cloud endpoints on Apify (**new Apify accounts receive `$5/month` in free usage — try all tools at `$0` out-of-pocket**).
 
 ---
 
@@ -35,11 +36,20 @@ Production-tested **MCP endpoints**, **`15` portable `SKILL.md` playbooks**, **`
 
 ## Technical Guides & Open-Source Developer Tools
 
-- **Guide 1 (RAG Engineering):** [How to Decode Opaque `news.google.com/rss` CBMi Links Into Real Publisher URLs & Clean Markdown for AI RAG (2026)](https://truonggiang0111.github.io/mcp/google-news-rss-url-decoder/)
-- **Guide 2 (B2B Churn Teardown):** [Mining 1-Star & 2-Star App, Extension & SaaS Reviews for B2B Churn Leads](https://truonggiang0111.github.io/mcp/shopify-app-store-1-star-churn-teardown/)
-- **Guide 3 (Hiring Signals):** [Filtering Out Recruitment Agency & Bootcamp Spam (~48% Noise) on Reed.co.uk & Seek.com.au via MCP & n8n](https://truonggiang0111.github.io/mcp/direct-employer-hiring-leads-uk-au/)
-- **Standalone Zero-Dependency Node.js 18+ CLI & ESM Helper:** [truonggiang0111/google-news-url-decoder (`v1.0.0`)](https://github.com/truonggiang0111/google-news-url-decoder) — offline protobuf inspector + live `DotsSplashUi` `Fbv4je` single-URL decoder (`MIT`).
-- **Developer Quickstart Gists:** [Google News CBMi RAG Quickstart](https://gist.github.com/truonggiang0111/19e0d938cdab54f3e616e486a764b842) · [1-Star Review Churn MCP + n8n](https://gist.github.com/truonggiang0111/29743bb101bc20a482d1009c8c24cbab)
+- **Native `n8n` Community Node & AI Agent Tool (`18` Ops, Zero Runtime Deps):** [`truonggiang0111/n8n-nodes-b2b-market-intel`](https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel) — `npm install github:truonggiang0111/n8n-nodes-b2b-market-intel` (`usableAsTool: true`, `3` zero-key ops + `15` Apify batch ops).
+- **Zero-Dep Node.js STDIO MCP Server (`v1.0.0`):** [`truonggiang0111/b2b-market-intel-mcp`](https://github.com/truonggiang0111/b2b-market-intel-mcp) — `npx -y github:truonggiang0111/b2b-market-intel-mcp` (`3` zero-key instant tools + `5` Apify batch tools).
+- **Zero-Dep Python 3.10+ SDK, CLI & Tool Schemas (`v1.0.0`):** [`truonggiang0111/b2b-market-intel-python`](https://github.com/truonggiang0111/b2b-market-intel-python) — `pip install git+https://github.com/truonggiang0111/b2b-market-intel-python` / `uvx` (`b2b-intel --self-test`, OpenAI/Anthropic/LangChain schemas + `ApifyB2BClient`).
+- **Standalone Zero-Dependency Node.js 18+ CLI & ESM Helper:** [`truonggiang0111/google-news-url-decoder` (`v1.0.0`)](https://github.com/truonggiang0111/google-news-url-decoder) — offline protobuf inspector + live `DotsSplashUi` `Fbv4je` single-URL decoder (`MIT`).
+- **Sanitised B2B Sample Datasets (`v1.0.0`, `6` CSV + `6` JSON):** [`truonggiang0111/b2b-sample-datasets-2026`](https://github.com/truonggiang0111/b2b-sample-datasets-2026) — `150` real zero-PII sample rows across 6 B2B verticals.
+- **Technical Guides (`7` Guides):**
+  - [Google News RSS CBMi Real-URL Decoding for AI RAG (2026)](https://truonggiang0111.github.io/mcp/google-news-rss-url-decoder/) · [Dev.to Breakdown](https://dev.to/truonggiang0111/why-google-news-rss-base64-decoding-broke-2024-2026-and-how-to-fix-it-for-ai-rag-mcp-26pi)
+  - [Mining 1-Star & 2-Star App, Extension & SaaS Reviews for B2B Churn Leads](https://truonggiang0111.github.io/mcp/shopify-app-store-1-star-churn-teardown/)
+  - [Filtering Out Recruitment Agency & Bootcamp Spam (~48% Noise) on Reed.co.uk & Seek.com.au](https://truonggiang0111.github.io/mcp/direct-employer-hiring-leads-uk-au/)
+  - [UK Gov Contracts Finder OCDS & Direct `.gov.uk` Buyer Emails](https://truonggiang0111.github.io/mcp/uk-gov-contracts-finder-buyer-emails/)
+  - [ClinicalTrials.gov v2 Biotech Sponsor & PI Email Leads](https://truonggiang0111.github.io/mcp/clinicaltrials-gov-biotech-sponsor-leads/)
+  - [VS Code Marketplace vs Open-VSX (Cursor/Windsurf) Metrics & Bug Churn](https://truonggiang0111.github.io/mcp/vscode-vs-openvsx-cursor-extension-metrics/)
+  - [Substack Viral Notes Outlier Formula & Ghostwriter Swipe Prompts](https://truonggiang0111.github.io/mcp/substack-viral-notes-outlier-formula/)
+- **Developer Quickstart Gists:** [Google News CBMi RAG Quickstart](https://gist.github.com/truonggiang0111/19e0d938cdab54f3e616e486a764b842) · [1-Star Review Churn MCP + n8n](https://gist.github.com/truonggiang0111/29743bb101bc20a482d1009c8c24cbab) · [Python GNews + Tenders](https://gist.github.com/truonggiang0111/8f5a0a2ef71adae95735f1489908f868) · [Python ClinicalTrials Leads](https://gist.github.com/truonggiang0111/82546fcc4fa6d6222ca284326bb6f768)
 
 ---
 
@@ -82,7 +92,7 @@ npx skills add truonggiang0111/b2b-ai-mcp-skills --skill google-news-real-url-ra
 
 ## 2b. Zero-Key Managed Execution via Agensi.io (`https://mcp.agensi.io/mcp/auth`)
 
-Prefer **zero Apify API keys** inside Claude Code, Codex CLI, Cursor, or ChatGPT? Connect [Agensi MCP (`https://mcp.agensi.io/mcp/auth`)](https://www.agensi.io/creators/giang-tr-ng-tr-ng) — **`12` Live Skills + `1` Bundle** on [Giang's Agensi Storefront](https://www.agensi.io/creators/giang-tr-ng-tr-ng):
+Prefer **zero Apify API keys** inside Claude Code, Codex CLI, Cursor, or ChatGPT? Connect [Agensi MCP (`https://mcp.agensi.io/mcp/auth`)](https://www.agensi.io/creators/giang-tr-ng-tr-ng) — **`16` Live Skills + `3` Bundles** on [Giang's Agensi Storefront](https://www.agensi.io/creators/giang-tr-ng-tr-ng):
 
 | Agensi Listing | Tier / Pricing | Direct Marketplace Link |
 | :--- | :--- | :--- |
@@ -97,25 +107,44 @@ Prefer **zero Apify API keys** inside Claude Code, Codex CLI, Cursor, or ChatGPT
 | **Podcast Host Direct Email & Sponsor Finder** | **`$5.00`** One-time | [Open on Agensi](https://www.agensi.io/skills/podcast-host-direct-email-sponsor-finder) |
 | **Chrome Web Store Extension & Dev Email Spy** | **`$5.00`** One-time | [Open on Agensi](https://www.agensi.io/skills/chrome-web-store-extension-dev-email-spy) |
 | **Substack Viral Notes Outlier & Hook Ghostwriter** | **`$5.00`** One-time | [Open on Agensi](https://www.agensi.io/skills/substack-viral-notes-outlier-hook-ghostwriter) |
+| **UK Gov Tenders & Direct Buyer Emails** | **`$5.00`** One-time | [Open on Agensi](https://www.agensi.io/skills/uk-gov-tenders-direct-buyer-emails) |
+| **Atlassian Marketplace B2B App & Churn Spy** | **`$5.00`** One-time | [Open on Agensi](https://www.agensi.io/skills/atlassian-marketplace-b2b-app-churn-spy) |
+| **ClinicalTrials.gov Biotech & PI Email Leads** | **`$5.00`** One-time | [Open on Agensi](https://www.agensi.io/skills/clinicaltrials-gov-biotech-pi-email-leads) |
+| **WordPress & WooCommerce Plugin Churn Spy** | **`$5.00`** One-time | [Open on Agensi](https://www.agensi.io/skills/wordpress-woocommerce-plugin-churn-spy) |
 | **B2B Market & Hiring Intelligence 5-in-1 Pack** | **`$7.99`** (`-20%` Launch Deal -> **`$6.39`**) | [Open on Agensi](https://www.agensi.io/skills/b2b-market-hiring-intelligence-5-in-1-pack) |
-| **Bundle: B2B Hiring & Competitor Ad Spy Bundle** | **`$7.99`** (Save `20%` vs `$10.00`) | [Open Bundle](https://www.agensi.io/bundles/b2b-hiring-competitor-ad-spy-bundle) |
+| **Bundle #1: B2B Hiring & Competitor Ad Spy Bundle** | **`$7.99`** (Save `20%` vs `$10.00`) | [Open Bundle](https://www.agensi.io/bundles/b2b-hiring-competitor-ad-spy-bundle) |
+| **Bundle #2: E-Commerce & SaaS Churn Spy Bundle** | **`$12.99`** (Save `35%` vs `$20.00`) | [Open Bundle](https://www.agensi.io/bundles/e-commerce-saas-churn-spy-bundle) |
+| **Bundle #3: B2B Biotech, Gov Tenders & Creator Leads Bundle** | **`$12.99`** (Save `35%` vs `$20.00`) | [Open Bundle](https://www.agensi.io/bundles/b2b-biotech-gov-tenders-creator-leads-bundle) |
 
 > Full single-file AI ingestion spec (inputs, outputs, `RUN_SUMMARY` keys, and all 100 task endpoints): [`llms.txt`](./llms.txt) · [`llms-full.txt`](./llms-full.txt)
 
 ---
 
-## 3. `8` Ready-to-Import `n8n` Workflows
+## 3. `16` Ready-to-Import `n8n` Workflows & Native Community Node
 
-Import these JSON files directly into **n8n** and swap in your Apify token (`$5/month` free credit covers dozens of scheduled runs):
+Install the **native zero-runtime-dependency `n8n` Community Node** ([`truonggiang0111/n8n-nodes-b2b-market-intel`](https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel) — `usableAsTool: true`, `3` instant zero-key ops + `15` Apify batch ops) or import any of the **`16` `.n8n.json` workflows** directly via **Import from URL** (see full catalog & raw URLs in [`workflows/n8n/README.md`](./workflows/n8n/README.md)):
 
-- [`workflows/n8n/daily-google-news-ai-rag-digest.n8n.json`](./workflows/n8n/daily-google-news-ai-rag-digest.n8n.json) — Daily Google News real-URL (`CBMi` -> `url`) AI RAG & PR signal digest.
-- [`workflows/n8n/weekly-competitor-app-bug-spy.n8n.json`](./workflows/n8n/weekly-competitor-app-bug-spy.n8n.json) — Weekly `1★–2★` competitor review & crash-bug digest across iOS & Android.
+```bash
+# Install native n8n Community Node inside ~/.n8n/nodes
+npm install github:truonggiang0111/n8n-nodes-b2b-market-intel
+```
+
+- [`workflows/n8n/daily-google-news-ai-rag-digest.n8n.json`](./workflows/n8n/daily-google-news-ai-rag-digest.n8n.json) — Daily Google News real-URL (`CBMi` -> `url`) AI RAG & PR signal digest (`manualTrigger` + `scheduleTrigger`).
+- [`workflows/n8n/weekly-competitor-app-bug-spy.n8n.json`](./workflows/n8n/weekly-competitor-app-bug-spy.n8n.json) — Weekly `1★–2★` competitor review & crash-bug digest across iOS & Android (`manualTrigger` + `scheduleTrigger`).
 - [`workflows/n8n/weekly-shopify-app-churn-leads.n8n.json`](./workflows/n8n/weekly-shopify-app-churn-leads.n8n.json) — Weekly Shopify App Store `1★–2★` merchant churn & developer email lead pipeline.
 - [`workflows/n8n/daily-uk-au-direct-employer-leads.n8n.json`](./workflows/n8n/daily-uk-au-direct-employer-leads.n8n.json) — Daily UK (`Reed.co.uk`) + AU (`Seek.com.au`) direct-employer hiring leads merged into one pipeline.
 - [`workflows/n8n/daily-uk-gov-tenders-alert.n8n.json`](./workflows/n8n/daily-uk-gov-tenders-alert.n8n.json) — Daily UK Contracts Finder OCDS public tenders & direct `.gov.uk`/NHS buyer email alert.
 - [`workflows/n8n/weekly-google-ads-winning-creatives.n8n.json`](./workflows/n8n/weekly-google-ads-winning-creatives.n8n.json) — Weekly tracker of competitor ads running `30+` days + EU DSA reach metrics.
 - [`workflows/n8n/weekly-podcast-guest-sponsor-outreach.n8n.json`](./workflows/n8n/weekly-podcast-guest-sponsor-outreach.n8n.json) — Weekly B2B podcast non-relay `<itunes:email>` & active sponsor domain outreach list.
 - [`workflows/n8n/weekly-vscode-chrome-extension-bugs.n8n.json`](./workflows/n8n/weekly-vscode-chrome-extension-bugs.n8n.json) — Weekly VS Code, Open-VSX & Chrome Web Store extension bug & dev-email monitor.
+- [`workflows/n8n/weekly-substack-paid-creator-leads.n8n.json`](./workflows/n8n/weekly-substack-paid-creator-leads.n8n.json) — Weekly Substack paid newsletter creator emails & sponsor-readiness filter.
+- [`workflows/n8n/daily-substack-viral-notes-ghostwriter.n8n.json`](./workflows/n8n/daily-substack-viral-notes-ghostwriter.n8n.json) — Daily Substack viral Notes `>=3x` outlier filter + `RUN_SUMMARY.ghostwriterSwipePrompt` extractor.
+- [`workflows/n8n/daily-clinical-trials-biotech-sponsor-leads.n8n.json`](./workflows/n8n/daily-clinical-trials-biotech-sponsor-leads.n8n.json) — **Zero-Key** `clinicaltrials.gov/api/v2/studies` biotech sponsor & central contact extractor (+ optional Apify site-PI enrichment).
+- [`workflows/n8n/weekly-atlassian-jira-app-churn-leads.n8n.json`](./workflows/n8n/weekly-atlassian-jira-app-churn-leads.n8n.json) — **Zero-Key** Atlassian Marketplace REST v2 Jira app churn parser (+ optional Apify review/email enrichment).
+- [`workflows/n8n/weekly-wordpress-woocommerce-plugin-churn-leads.n8n.json`](./workflows/n8n/weekly-wordpress-woocommerce-plugin-churn-leads.n8n.json) — **Zero-Key** `api.wordpress.org/plugins/info/1.2/` WooCommerce churn & support backlog monitor (+ optional Apify vendor email enrichment).
+- [`workflows/n8n/n8n-ai-agent-streamable-http-mcp-prospecting.n8n.json`](./workflows/n8n/n8n-ai-agent-streamable-http-mcp-prospecting.n8n.json) — **n8n AI Agent** (`chatTrigger` + `agent` + `lmChatOpenAi`) wired via `mcpClientTool` (`httpStreamable`) to Apify B2B MCP tools.
+- [`workflows/n8n/n8n-ai-agent-stdio-zero-key-mcp-research.n8n.json`](./workflows/n8n/n8n-ai-agent-stdio-zero-key-mcp-research.n8n.json) — **Zero-Key n8n AI Agent** wired via `mcpClientTool` to local STDIO `npx -y github:truonggiang0111/b2b-market-intel-mcp` (`supergateway` bridge).
+- [`workflows/n8n/weekly-competitor-review-databait-outreach-drafter.n8n.json`](./workflows/n8n/weekly-competitor-review-databait-outreach-drafter.n8n.json) — Groups competitor `1★–2★` crash/billing quotes into `<80`-word Data-Bait outreach payloads.
 
 ---
 

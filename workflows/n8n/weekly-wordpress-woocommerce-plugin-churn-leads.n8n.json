@@ -1,0 +1,180 @@
+{
+  "name": "Weekly WordPress & WooCommerce Plugin Zero-Key Churn Leads",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Weekly WordPress & WooCommerce Churn Leads\n\n**100% Zero-Key Primary Pipeline:** Queries `https://api.wordpress.org/plugins/info/1.2/` directly with NO API keys required. Enable the optional Apify enrichment node for domain-verified vendor emails, 1★–2★ RSS reviews, and live unresolved support tickets.\n- **Apify Actor:** `ttyan0111/wordpress-plugin-churn-spy` (https://apify.com/ttyan0111)\n\n### Zero-Key & Native n8n Ecosystem\n- **Native n8n Community Node (`usableAsTool: true`):** `npm install github:truonggiang0111/n8n-nodes-b2b-market-intel` (https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel)\n- **Zero-Key CLI / STDIO MCP:** `npx -y github:truonggiang0111/b2b-market-intel-mcp`\n- **Hosted Zero-Key Skills & Bundles (Agensi.io):** https://www.agensi.io/creators/giang-tr-ng-tr-ng\n- **$5/mo Free Apify Cloud Tier:** https://apify.com/ttyan0111",
+        "height": 450,
+        "width": 360,
+        "color": 5
+      },
+      "id": "sticky-setup-wp-churn",
+      "name": "Setup & Free Zero-Key Options",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        80
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "manual-trigger-wp-churn",
+      "name": "Test Workflow Manually",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                2
+              ],
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "schedule-wp-churn",
+      "name": "Every Tuesday 9AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.wordpress.org/plugins/info/1.2/",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "action",
+              "value": "query_plugins"
+            },
+            {
+              "name": "request[search]",
+              "value": "woocommerce"
+            },
+            {
+              "name": "request[per_page]",
+              "value": "25"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http-wp-plugins-zero-key",
+      "name": "Query WordPress.org Plugins (Zero-Key)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json || {};\nconst plugins = Array.isArray(data.plugins) ? data.plugins : [];\nreturn plugins\n  .map((p) => {\n    const r = p.ratings || {};\n    const oneStar = Number(r[\"1\"] || 0);\n    const twoStar = Number(r[\"2\"] || 0);\n    const unresolved = Math.max(0, Number(p.support_threads || 0) - Number(p.support_threads_resolved || 0));\n    const starsOutOf5 = p.rating ? Number((Number(p.rating) / 20).toFixed(2)) : null;\n    return {\n      json: {\n        name: p.name,\n        slug: p.slug,\n        version: p.version,\n        testedUpToWp: p.tested,\n        activeInstalls: Number(p.active_installs || 0),\n        starsOutOf5,\n        oneStarCount: oneStar,\n        twoStarCount: twoStar,\n        oneTwoStarTotal: oneStar + twoStar,\n        unresolvedSupportThreads: unresolved,\n        homepage: p.homepage || null,\n        pluginUrl: `https://wordpress.org/plugins/${p.slug}/`,\n      },\n    };\n  })\n  .filter((item) => item.json.activeInstalls >= 500 && (item.json.oneTwoStarTotal > 0 || item.json.unresolvedSupportThreads > 0))\n  .sort((a, b) => (b.json.oneTwoStarTotal + b.json.unresolvedSupportThreads) - (a.json.oneTwoStarTotal + a.json.unresolvedSupportThreads));"
+      },
+      "id": "filter-wp-churn-signals",
+      "name": "Filter WooCommerce Churn & Support Backlog",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        760,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~wordpress-plugin-churn-spy/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ queries: $input.all().slice(0, 5).map(i => i.json.slug).filter(Boolean), maxPluginsPerQuery: 5, minActiveInstalls: 500, includeChurnReviews: true, maxReviewsPerPlugin: 15, includeUnresolvedSupport: true, enrichAuthorContacts: true }) }}",
+        "options": {}
+      },
+      "id": "apify-wp-optional",
+      "name": "Optional Apify WordPress Vendor Enricher",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1020,
+        220
+      ],
+      "disabled": true,
+      "notes": "Disabled by default for Zero-Key execution. Enable with APIFY_TOKEN for domain-verified vendor emails and full 1-2 star RSS churn reviews.",
+      "notesInFlow": true
+    }
+  ],
+  "connections": {
+    "Test Workflow Manually": {
+      "main": [
+        [
+          {
+            "node": "Query WordPress.org Plugins (Zero-Key)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every Tuesday 9AM": {
+      "main": [
+        [
+          {
+            "node": "Query WordPress.org Plugins (Zero-Key)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query WordPress.org Plugins (Zero-Key)": {
+      "main": [
+        [
+          {
+            "node": "Filter WooCommerce Churn & Support Backlog",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter WooCommerce Churn & Support Backlog": {
+      "main": [
+        [
+          {
+            "node": "Optional Apify WordPress Vendor Enricher",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

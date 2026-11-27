@@ -1,0 +1,135 @@
+{
+  "name": "n8n AI Agent — Streamable HTTP MCP B2B Prospecting (Apify)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## AI Agent: Streamable HTTP MCP Prospecting\n\n**Setup:** Configure `OpenAI Chat Model` credentials and set `Bearer Auth` on the `Apify B2B MCP Client` node with your Apify token from the **$5/mo free tier** (https://apify.com/ttyan0111). Uses modern Streamable HTTP (`httpStreamable`) transport.\n- **Apify Actor:** `ttyan0111/reed-uk-jobs-hiring-signals, ttyan0111/shopify-app-store-churn-spy, ttyan0111/google-news-ai-article-extractor` (https://apify.com/ttyan0111)\n\n### Zero-Key & Native n8n Ecosystem\n- **Native n8n Community Node (`usableAsTool: true`):** `npm install github:truonggiang0111/n8n-nodes-b2b-market-intel` (https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel)\n- **Zero-Key CLI / STDIO MCP:** `npx -y github:truonggiang0111/b2b-market-intel-mcp`\n- **Hosted Zero-Key Skills & Bundles (Agensi.io):** https://www.agensi.io/creators/giang-tr-ng-tr-ng\n- **$5/mo Free Apify Cloud Tier:** https://apify.com/ttyan0111",
+        "height": 450,
+        "width": 360,
+        "color": 6
+      },
+      "id": "sticky-setup-agent-http-mcp",
+      "name": "Setup & Free Zero-Key Options",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -180,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "chat-trigger-http-mcp",
+      "name": "When Chat Message Received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        220,
+        180
+      ],
+      "webhookId": "b2b-streamable-http-mcp-chat"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "options": {
+          "systemMessage": "You are a B2B Market Intelligence & Prospecting AI Agent. Use the connected Apify MCP tools (Reed UK direct-employer jobs, Shopify 1-star app churn & developer emails, and Google News Real-URL RAG articles). Always inspect Key-Value Store RUN_SUMMARY first and project compact fields including agentSummary."
+        }
+      },
+      "id": "ai-agent-http-mcp",
+      "name": "B2B Prospecting AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        500,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {}
+      },
+      "id": "openai-chat-http-mcp",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        420
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "endpointUrl": "https://mcp.apify.com?actors=ttyan0111/reed-uk-jobs-hiring-signals,ttyan0111/shopify-app-store-churn-spy,ttyan0111/google-news-ai-article-extractor",
+        "serverTransport": "httpStreamable",
+        "authentication": "bearerAuth",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "mcp-client-http-streamable",
+      "name": "Apify B2B MCP Client (Streamable HTTP)",
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        420
+      ],
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "YOUR_APIFY_BEARER_CREDENTIAL_ID",
+          "name": "Apify Bearer Auth"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When Chat Message Received": {
+      "main": [
+        [
+          {
+            "node": "B2B Prospecting AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "B2B Prospecting AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify B2B MCP Client (Streamable HTTP)": {
+      "ai_tool": [
+        [
+          {
+            "node": "B2B Prospecting AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

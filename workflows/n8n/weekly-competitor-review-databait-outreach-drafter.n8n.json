@@ -1,0 +1,134 @@
+{
+  "name": "Weekly Competitor 1-2★ Review Data-Bait Outreach Drafter (<80 Words)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Competitor Review Data-Bait Outreach Drafter\n\n**Quick Setup:** Replace `YOUR_APIFY_API_TOKEN` in the HTTP Request node(s) with your Apify token from the **$5/mo free Apify tier** (covers dozens of runs with $0 proxy cost): https://apify.com/ttyan0111\n- **Apify Actor:** `ttyan0111/app-store-play-reviews-spy` (https://apify.com/ttyan0111)\n- Groups 1★–2★ crash_bug & billing_subscription quotes per app into <80-word Data-Bait cold email payloads.\n\n### Zero-Key & Native n8n Ecosystem\n- **Native n8n Community Node (`usableAsTool: true`):** `npm install github:truonggiang0111/n8n-nodes-b2b-market-intel` (https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel)\n- **Zero-Key CLI / STDIO MCP:** `npx -y github:truonggiang0111/b2b-market-intel-mcp`\n- **Hosted Zero-Key Skills & Bundles (Agensi.io):** https://www.agensi.io/creators/giang-tr-ng-tr-ng\n- **$5/mo Free Apify Cloud Tier:** https://apify.com/ttyan0111",
+        "height": 430,
+        "width": 340,
+        "color": 4
+      },
+      "id": "sticky-setup-databait-drafter",
+      "name": "Setup & Free Zero-Key Options",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        80
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "manual-trigger-databait-drafter",
+      "name": "Test Workflow Manually",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        220,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                4
+              ],
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "schedule-databait-drafter",
+      "name": "Every Thursday 9AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~app-store-play-reviews-spy/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"apps\": [\n    \"Notion\",\n    \"Obsidian\"\n  ],\n  \"platforms\": [\n    \"ios\",\n    \"android\"\n  ],\n  \"countries\": [\n    \"us\",\n    \"gb\"\n  ],\n  \"sortBy\": \"mostRecent\",\n  \"minRating\": 1,\n  \"maxRating\": 2,\n  \"maxReviewsPerPlatform\": 25\n}",
+        "options": {}
+      },
+      "id": "apify-databait-reviews",
+      "name": "Run App & Play 1-2★ Bug Spy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const reviews = $input.all().map((i) => i.json).filter((r) => Number(r.rating || 5) <= 2);\nconst byApp = {};\nconst clip = (str, maxWords = 11) => String(str || \"\").replace(/\\s+/g, \" \").trim().split(\" \").slice(0, maxWords).join(\" \");\nfor (const r of reviews) {\n  const app = r.appName || \"Unknown App\";\n  if (!byApp[app]) byApp[app] = { appName: app, totalLowStar: 0, crashCount: 0, billingCount: 0, crashQuotes: [], billingQuotes: [] };\n  const g = byApp[app];\n  g.totalLowStar += 1;\n  const tags = Array.isArray(r.painSignals) ? r.painSignals : [];\n  const body = String(r.text || r.title || \"\");\n  const isCrash = tags.includes(\"crash_bug\") || /crash|freeze|bug|hang|won.?t open/i.test(body);\n  const isBilling = tags.includes(\"billing_subscription\") || /bill|charge|cancel|refund|subscription|paywall/i.test(body);\n  if (isCrash) {\n    g.crashCount += 1;\n    if (g.crashQuotes.length < 2 && body) g.crashQuotes.push(clip(body));\n  }\n  if (isBilling) {\n    g.billingCount += 1;\n    if (g.billingQuotes.length < 2 && body) g.billingQuotes.push(clip(body));\n  }\n}\nreturn Object.values(byApp).map((g) => {\n  const q1 = g.crashQuotes[0] ? `\"${g.crashQuotes[0]}...\"` : \"recent stability drops\";\n  const q2 = g.billingQuotes[0] ? `\"${g.billingQuotes[0]}...\"` : \"unexpected billing friction\";\n  let draftBody = `Pulled ${g.totalLowStar} recent 1-2 star ${g.appName} reviews (${g.crashCount} crash, ${g.billingCount} billing). Users mention ${q1} and ${q2}. Happy to share the full CSV breakdown and bug-cluster summary if your team tracks churn signals — want me to send it over?`;\n  const words = draftBody.trim().split(/\\s+/);\n  if (words.length >= 80) draftBody = words.slice(0, 76).join(\" \") + \"?\";\n  return {\n    json: {\n      appName: g.appName,\n      totalLowStar: g.totalLowStar,\n      crashCount: g.crashCount,\n      billingCount: g.billingCount,\n      subject: `${g.totalLowStar} recent 1-2★ ${g.appName} crash & billing signals`,\n      dataBaitBody: draftBody,\n      wordCount: draftBody.trim().split(/\\s+/).length,\n    },\n  };\n});"
+      },
+      "id": "draft-databait-payloads",
+      "name": "Draft <80-Word Data-Bait Outreach",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        740,
+        220
+      ]
+    }
+  ],
+  "connections": {
+    "Test Workflow Manually": {
+      "main": [
+        [
+          {
+            "node": "Run App & Play 1-2★ Bug Spy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every Thursday 9AM": {
+      "main": [
+        [
+          {
+            "node": "Run App & Play 1-2★ Bug Spy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run App & Play 1-2★ Bug Spy": {
+      "main": [
+        [
+          {
+            "node": "Draft <80-Word Data-Bait Outreach",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

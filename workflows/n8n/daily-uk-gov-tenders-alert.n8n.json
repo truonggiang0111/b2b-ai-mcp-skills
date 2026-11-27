@@ -3,6 +3,33 @@
   "nodes": [
     {
       "parameters": {
+        "content": "## Daily UK Gov Tenders & Buyer Email Alert\n\n**Quick Setup:** Replace `YOUR_APIFY_API_TOKEN` in the HTTP Request node(s) with your Apify token from the **$5/mo free Apify tier** (covers dozens of runs with $0 proxy cost): https://apify.com/ttyan0111\n- **Apify Actor:** `ttyan0111/uk-gov-tenders-buyer-leads` (https://apify.com/ttyan0111)\n\n### Zero-Key & Native n8n Ecosystem\n- **Native n8n Community Node (`usableAsTool: true`):** `npm install github:truonggiang0111/n8n-nodes-b2b-market-intel` (https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel)\n- **Zero-Key CLI / STDIO MCP:** `npx -y github:truonggiang0111/b2b-market-intel-mcp`\n- **Hosted Zero-Key Skills & Bundles (Agensi.io):** https://www.agensi.io/creators/giang-tr-ng-tr-ng\n- **$5/mo Free Apify Cloud Tier:** https://apify.com/ttyan0111",
+        "height": 430,
+        "width": 340,
+        "color": 4
+      },
+      "id": "sticky-setup-daily-uk-tenders",
+      "name": "Setup & Free Zero-Key Options",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        80
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "manual-trigger-daily-uk-tenders",
+      "name": "Test Workflow Manually",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        220,
+        120
+      ]
+    },
+    {
+      "parameters": {
         "rule": {
           "interval": [
             {
@@ -17,7 +44,10 @@
       "name": "Every Day 8AM UK",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
-      "position": [220, 300]
+      "position": [
+        220,
+        300
+      ]
     },
     {
       "parameters": {
@@ -41,7 +71,10 @@
       "name": "Run UK Gov Tenders & Buyer Emails",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [480, 300]
+      "position": [
+        480,
+        300
+      ]
     },
     {
       "parameters": {
@@ -51,17 +84,49 @@
       "name": "Project Buyer Email Leads",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [740, 300]
+      "position": [
+        740,
+        300
+      ]
     }
   ],
   "connections": {
+    "Test Workflow Manually": {
+      "main": [
+        [
+          {
+            "node": "Run UK Gov Tenders & Buyer Emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Every Day 8AM UK": {
-      "main": [[{ "node": "Run UK Gov Tenders & Buyer Emails", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Run UK Gov Tenders & Buyer Emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Run UK Gov Tenders & Buyer Emails": {
-      "main": [[{ "node": "Project Buyer Email Leads", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Project Buyer Email Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
-  "settings": { "executionOrder": "v1" }
+  "settings": {
+    "executionOrder": "v1"
+  }
 }

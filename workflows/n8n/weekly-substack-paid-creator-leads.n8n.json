@@ -1,0 +1,134 @@
+{
+  "name": "Weekly Substack Paid Newsletter Creator & Sponsor Leads",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Weekly Substack Paid Creator & Sponsor Leads\n\n**Quick Setup:** Replace `YOUR_APIFY_API_TOKEN` in the HTTP Request node(s) with your Apify token from the **$5/mo free Apify tier** (covers dozens of runs with $0 proxy cost): https://apify.com/ttyan0111\n- **Apify Actor:** `ttyan0111/substack-newsletter-creator-leads` (https://apify.com/ttyan0111)\n- Filters monetized Substack newsletters with direct creator emails & sponsorship signals.\n\n### Zero-Key & Native n8n Ecosystem\n- **Native n8n Community Node (`usableAsTool: true`):** `npm install github:truonggiang0111/n8n-nodes-b2b-market-intel` (https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel)\n- **Zero-Key CLI / STDIO MCP:** `npx -y github:truonggiang0111/b2b-market-intel-mcp`\n- **Hosted Zero-Key Skills & Bundles (Agensi.io):** https://www.agensi.io/creators/giang-tr-ng-tr-ng\n- **$5/mo Free Apify Cloud Tier:** https://apify.com/ttyan0111",
+        "height": 430,
+        "width": 340,
+        "color": 4
+      },
+      "id": "sticky-setup-substack-paid-leads",
+      "name": "Setup & Free Zero-Key Options",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        80
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "manual-trigger-substack-paid-leads",
+      "name": "Test Workflow Manually",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        220,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1
+              ],
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "schedule-substack-paid-leads",
+      "name": "Every Monday 9AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/ttyan0111~substack-newsletter-creator-leads/run-sync-get-dataset-items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_APIFY_API_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"queries\": [\n    \"b2b saas\",\n    \"artificial intelligence\"\n  ],\n  \"paidNewslettersOnly\": true,\n  \"withContactEmailOnly\": true,\n  \"includeLatestPosts\": true,\n  \"maxPostsPerPublication\": 3,\n  \"maxPublicationsPerQuery\": 25\n}",
+        "options": {}
+      },
+      "id": "apify-substack-paid-leads",
+      "name": "Run Substack Paid Creator Leads",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const pubs = $input.all().map((i) => i.json);\nconst qualified = pubs\n  .filter((p) => {\n    const email = p.contactEmail || p.substackReplyEmail || (Array.isArray(p.contactEmails) ? p.contactEmails[0] : '');\n    const isPaid = Boolean(p.isPaid || Number(p.monthlyPriceUsd || 0) > 0 || /paid/i.test(String(p.rankingDetail || '')));\n    return Boolean(email) && isPaid;\n  })\n  .map((p) => {\n    const email = p.contactEmail || p.substackReplyEmail || (Array.isArray(p.contactEmails) ? p.contactEmails[0] : '');\n    const postsText = JSON.stringify(p.latestPosts || p.recentPosts || []);\n    const hasSponsorSignals = /sponsor|partner|advertis|newsletter|media kit/i.test(postsText) || Number(p.totalReactionsRecent || 0) >= 50;\n    return {\n      json: {\n        publicationName: p.name || p.publicationName,\n        authorName: p.authorName,\n        contactEmail: email,\n        substackReplyEmail: p.substackReplyEmail || null,\n        publicationUrl: p.publicationUrl,\n        rankingDetail: p.rankingDetail || null,\n        freeSubscriberEstimate: p.freeSubscriberEstimate || null,\n        monthlyPriceUsd: p.monthlyPriceUsd || null,\n        totalReactionsRecent: p.totalReactionsRecent || 0,\n        sponsorOutreachReady: hasSponsorSignals,\n        agentSummary: p.agentSummary,\n      },\n    };\n  });\nreturn qualified.length ? qualified : [{ json: { totalMatched: 0, note: \"No paid newsletters with direct emails matched this query.\" } }];"
+      },
+      "id": "filter-substack-paid-sponsors",
+      "name": "Filter Paid, Email & Sponsor Creators",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        740,
+        220
+      ]
+    }
+  ],
+  "connections": {
+    "Test Workflow Manually": {
+      "main": [
+        [
+          {
+            "node": "Run Substack Paid Creator Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every Monday 9AM": {
+      "main": [
+        [
+          {
+            "node": "Run Substack Paid Creator Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Substack Paid Creator Leads": {
+      "main": [
+        [
+          {
+            "node": "Filter Paid, Email & Sponsor Creators",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
