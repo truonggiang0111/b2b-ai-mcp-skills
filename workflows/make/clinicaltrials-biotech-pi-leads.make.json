@@ -1,0 +1,431 @@
+{
+  "name": "ClinicalTrials.gov Zero-Key Biotech Sponsor & PI Email Leads",
+  "flow": [
+    {
+      "id": 1,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "variables": [
+          {
+            "name": "condition",
+            "value": "oncology"
+          },
+          {
+            "name": "sponsorClass",
+            "value": "INDUSTRY"
+          },
+          {
+            "name": "overallStatus",
+            "value": "RECRUITING"
+          },
+          {
+            "name": "pageSize",
+            "value": "25"
+          },
+          {
+            "name": "apifyToken",
+            "value": "OPTIONAL_APIFY_API_TOKEN"
+          }
+        ],
+        "scope": "roundtrip"
+      },
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "name": "Config (Zero-Key + Optional Apify)"
+        },
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {
+        "handleErrors": true,
+        "useNewZLibDeCompress": true
+      },
+      "mapper": {
+        "url": "https://clinicaltrials.gov/api/v2/studies",
+        "serializeUrl": false,
+        "method": "get",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "qs": [
+          {
+            "name": "query.cond",
+            "value": "{{1.condition}}"
+          },
+          {
+            "name": "filter.overallStatus",
+            "value": "{{1.overallStatus}}"
+          },
+          {
+            "name": "filter.advanced",
+            "value": "AREA[LeadSponsorClass]{{1.sponsorClass}}"
+          },
+          {
+            "name": "pageSize",
+            "value": "{{1.pageSize}}"
+          },
+          {
+            "name": "format",
+            "value": "json"
+          }
+        ],
+        "parseResponse": true
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Fetch ClinicalTrials v2 (Zero-Key)"
+        },
+        "restore": {
+          "expect": {
+            "method": {
+              "mode": "chose",
+              "label": "GET"
+            },
+            "headers": {
+              "mode": "chose"
+            },
+            "qs": {
+              "mode": "chose"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx)",
+            "required": true
+          },
+          {
+            "name": "useNewZLibDeCompress",
+            "type": "boolean",
+            "label": "Use new ZLib deCompress",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "parameters": {},
+      "mapper": null,
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "name": "Split Zero-Key & Apify PI Enrich"
+        }
+      },
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 4,
+              "module": "builtin:BasicFeeder",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "array": "{{2.data.studies}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": -150,
+                  "name": "Iterate ClinicalTrials Studies"
+                },
+                "restore": {
+                  "expect": {
+                    "array": {
+                      "mode": "edit"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 5,
+              "module": "util:SetVariables",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "variables": [
+                  {
+                    "name": "nctId",
+                    "value": "{{4.protocolSection.identificationModule.nctId}}"
+                  },
+                  {
+                    "name": "briefTitle",
+                    "value": "{{4.protocolSection.identificationModule.briefTitle}}"
+                  },
+                  {
+                    "name": "leadSponsorName",
+                    "value": "{{4.protocolSection.sponsorCollaboratorsModule.leadSponsor.name}}"
+                  },
+                  {
+                    "name": "phases",
+                    "value": "{{join(4.protocolSection.designModule.phases; \", \")}}"
+                  },
+                  {
+                    "name": "centralContactName",
+                    "value": "{{get(first(4.protocolSection.contactsLocationsModule.centralContacts); \"name\")}}"
+                  },
+                  {
+                    "name": "centralContactEmail",
+                    "value": "{{get(first(4.protocolSection.contactsLocationsModule.centralContacts); \"email\")}}"
+                  },
+                  {
+                    "name": "studyUrl",
+                    "value": "https://clinicaltrials.gov/study/{{4.protocolSection.identificationModule.nctId}}"
+                  }
+                ],
+                "scope": "roundtrip"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": -150,
+                  "name": "Extract Sponsor & Central Contacts"
+                },
+                "restore": {
+                  "expect": {
+                    "scope": {
+                      "label": "One cycle"
+                    }
+                  }
+                }
+              },
+              "filter": {
+                "name": "Has Central Contact Email",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{get(first(4.protocolSection.contactsLocationsModule.centralContacts); \"email\")}}",
+                      "o": "exist"
+                    }
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 6,
+              "module": "http:ActionSendData",
+              "version": 3,
+              "parameters": {
+                "handleErrors": true,
+                "useNewZLibDeCompress": true
+              },
+              "mapper": {
+                "url": "https://api.apify.com/v2/acts/ttyan0111~clinical-trials-biotech-leads/run-sync-get-dataset-items",
+                "serializeUrl": false,
+                "method": "post",
+                "headers": [
+                  {
+                    "name": "Authorization",
+                    "value": "Bearer {{1.apifyToken}}"
+                  },
+                  {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "qs": [],
+                "bodyType": "raw",
+                "parseResponse": true,
+                "contentType": "application/json",
+                "data": "{\n  \"queries\": [\"{{1.condition}}\"],\n  \"location\": \"United States\",\n  \"statuses\": [\"{{1.overallStatus}}\"],\n  \"sponsorClass\": \"{{1.sponsorClass}}\",\n  \"phases\": [\"PHASE1\", \"PHASE2\", \"PHASE3\"],\n  \"onlyWithEmail\": true,\n  \"includeSiteContacts\": true,\n  \"maxSiteContactsPerTrial\": 10,\n  \"maxTrials\": 20\n}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": 150,
+                  "name": "Enrich Site PIs via Apify Actor"
+                },
+                "restore": {
+                  "expect": {
+                    "method": {
+                      "mode": "chose",
+                      "label": "POST"
+                    },
+                    "bodyType": {
+                      "mode": "chose",
+                      "label": "Raw"
+                    },
+                    "contentType": {
+                      "mode": "chose",
+                      "label": "JSON (application/json)"
+                    },
+                    "headers": {
+                      "mode": "chose"
+                    },
+                    "qs": {
+                      "mode": "chose"
+                    }
+                  }
+                },
+                "parameters": [
+                  {
+                    "name": "handleErrors",
+                    "type": "boolean",
+                    "label": "Evaluate all states as errors (except for 2xx and 3xx)",
+                    "required": true
+                  },
+                  {
+                    "name": "useNewZLibDeCompress",
+                    "type": "boolean",
+                    "label": "Use new ZLib deCompress",
+                    "required": true
+                  }
+                ]
+              },
+              "filter": {
+                "name": "Optional Apify Token Provided",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{1.apifyToken}}",
+                      "o": "exist"
+                    },
+                    {
+                      "a": "{{1.apifyToken}}",
+                      "o": "text:notequal",
+                      "b": "OPTIONAL_APIFY_API_TOKEN"
+                    },
+                    {
+                      "a": "{{1.apifyToken}}",
+                      "o": "text:notcontain",
+                      "b": "YOUR_APIFY"
+                    }
+                  ]
+                ]
+              }
+            },
+            {
+              "id": 7,
+              "module": "builtin:BasicFeeder",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "array": "{{6.data}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": 150,
+                  "name": "Iterate Enriched Biotech Leads"
+                },
+                "restore": {
+                  "expect": {
+                    "array": {
+                      "mode": "edit"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 8,
+              "module": "util:SetVariables",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "variables": [
+                  {
+                    "name": "nctId",
+                    "value": "{{7.nctId}}"
+                  },
+                  {
+                    "name": "leadSponsorName",
+                    "value": "{{7.leadSponsorName}}"
+                  },
+                  {
+                    "name": "primaryEmail",
+                    "value": "{{7.primaryEmail}}"
+                  },
+                  {
+                    "name": "corporateSponsorDomain",
+                    "value": "{{7.corporateSponsorDomain}}"
+                  },
+                  {
+                    "name": "leadPiSummary",
+                    "value": "{{7.leadPiSummary}}"
+                  },
+                  {
+                    "name": "siteContactsCount",
+                    "value": "{{7.siteContactsCount}}"
+                  },
+                  {
+                    "name": "studyUrl",
+                    "value": "{{7.studyUrl}}"
+                  },
+                  {
+                    "name": "agentSummary",
+                    "value": "{{7.agentSummary}}"
+                  }
+                ],
+                "scope": "roundtrip"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1500,
+                  "y": 150,
+                  "name": "Project Biotech + Site PI Leads"
+                },
+                "restore": {
+                  "expect": {
+                    "scope": {
+                      "label": "One cycle"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "us1.make.com"
+  }
+}

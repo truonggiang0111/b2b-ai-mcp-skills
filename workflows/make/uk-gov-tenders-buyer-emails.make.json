@@ -1,0 +1,435 @@
+{
+  "name": "UK Gov Tenders OCDS (Zero-Key) & Direct Buyer Email Leads",
+  "flow": [
+    {
+      "id": 1,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "variables": [
+          {
+            "name": "keywords",
+            "value": "software"
+          },
+          {
+            "name": "stages",
+            "value": "tender"
+          },
+          {
+            "name": "minValueGBP",
+            "value": "25000"
+          },
+          {
+            "name": "maxItems",
+            "value": "25"
+          },
+          {
+            "name": "apifyToken",
+            "value": "OPTIONAL_APIFY_API_TOKEN"
+          }
+        ],
+        "scope": "roundtrip"
+      },
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "name": "Config (Zero-Key + Optional Apify)"
+        },
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {
+        "handleErrors": true,
+        "useNewZLibDeCompress": true
+      },
+      "mapper": {
+        "url": "https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search",
+        "serializeUrl": false,
+        "method": "get",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "qs": [
+          {
+            "name": "stages",
+            "value": "{{1.stages}}"
+          },
+          {
+            "name": "limit",
+            "value": "{{1.maxItems}}"
+          }
+        ],
+        "parseResponse": true
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Fetch UK Contracts Finder OCDS (Zero-Key)"
+        },
+        "restore": {
+          "expect": {
+            "method": {
+              "mode": "chose",
+              "label": "GET"
+            },
+            "headers": {
+              "mode": "chose"
+            },
+            "qs": {
+              "mode": "chose"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx)",
+            "required": true
+          },
+          {
+            "name": "useNewZLibDeCompress",
+            "type": "boolean",
+            "label": "Use new ZLib deCompress",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "parameters": {},
+      "mapper": null,
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "name": "Split Zero-Key & Apify Buyer Enrich"
+        }
+      },
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 4,
+              "module": "builtin:BasicFeeder",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "array": "{{2.data.releases}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": -150,
+                  "name": "Iterate OCDS Tender Releases"
+                },
+                "restore": {
+                  "expect": {
+                    "array": {
+                      "mode": "edit"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 5,
+              "module": "util:SetVariables",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "variables": [
+                  {
+                    "name": "ocid",
+                    "value": "{{4.ocid}}"
+                  },
+                  {
+                    "name": "title",
+                    "value": "{{4.tender.title}}"
+                  },
+                  {
+                    "name": "buyerName",
+                    "value": "{{4.buyer.name}}"
+                  },
+                  {
+                    "name": "valueGBP",
+                    "value": "{{4.tender.value.amount}}"
+                  },
+                  {
+                    "name": "deadlineDate",
+                    "value": "{{4.tender.tenderPeriod.endDate}}"
+                  },
+                  {
+                    "name": "contactName",
+                    "value": "{{get(first(4.parties); \"contactPoint.name\")}}"
+                  },
+                  {
+                    "name": "contactEmail",
+                    "value": "{{get(first(4.parties); \"contactPoint.email\")}}"
+                  },
+                  {
+                    "name": "noticeUrl",
+                    "value": "https://www.contractsfinder.service.gov.uk/Notice/{{replace(4.id; \"/-\\d+$/\"; \"\")}}"
+                  }
+                ],
+                "scope": "roundtrip"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": -150,
+                  "name": "Extract UK Tender & Buyer Fields"
+                },
+                "restore": {
+                  "expect": {
+                    "scope": {
+                      "label": "One cycle"
+                    }
+                  }
+                }
+              },
+              "filter": {
+                "name": "Matches Keyword Filter",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{lower(4.tender.title)}}",
+                      "o": "text:contain",
+                      "b": "{{lower(1.keywords)}}"
+                    }
+                  ],
+                  [
+                    {
+                      "a": "{{lower(4.tender.description)}}",
+                      "o": "text:contain",
+                      "b": "{{lower(1.keywords)}}"
+                    }
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 6,
+              "module": "http:ActionSendData",
+              "version": 3,
+              "parameters": {
+                "handleErrors": true,
+                "useNewZLibDeCompress": true
+              },
+              "mapper": {
+                "url": "https://api.apify.com/v2/acts/ttyan0111~uk-gov-tenders-buyer-leads/run-sync-get-dataset-items",
+                "serializeUrl": false,
+                "method": "post",
+                "headers": [
+                  {
+                    "name": "Authorization",
+                    "value": "Bearer {{1.apifyToken}}"
+                  },
+                  {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "qs": [],
+                "bodyType": "raw",
+                "parseResponse": true,
+                "contentType": "application/json",
+                "data": "{\n  \"keywords\": [\"{{1.keywords}}\", \"cloud\"],\n  \"stages\": [\"tender\", \"award\"],\n  \"minValueGBP\": {{1.minValueGBP}},\n  \"onlyWithEmail\": true,\n  \"maxItems\": {{1.maxItems}}\n}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": 150,
+                  "name": "Enrich .gov.uk Buyer Emails via Apify"
+                },
+                "restore": {
+                  "expect": {
+                    "method": {
+                      "mode": "chose",
+                      "label": "POST"
+                    },
+                    "bodyType": {
+                      "mode": "chose",
+                      "label": "Raw"
+                    },
+                    "contentType": {
+                      "mode": "chose",
+                      "label": "JSON (application/json)"
+                    },
+                    "headers": {
+                      "mode": "chose"
+                    },
+                    "qs": {
+                      "mode": "chose"
+                    }
+                  }
+                },
+                "parameters": [
+                  {
+                    "name": "handleErrors",
+                    "type": "boolean",
+                    "label": "Evaluate all states as errors (except for 2xx and 3xx)",
+                    "required": true
+                  },
+                  {
+                    "name": "useNewZLibDeCompress",
+                    "type": "boolean",
+                    "label": "Use new ZLib deCompress",
+                    "required": true
+                  }
+                ]
+              },
+              "filter": {
+                "name": "Optional Apify Token Provided",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{1.apifyToken}}",
+                      "o": "exist"
+                    },
+                    {
+                      "a": "{{1.apifyToken}}",
+                      "o": "text:notequal",
+                      "b": "OPTIONAL_APIFY_API_TOKEN"
+                    },
+                    {
+                      "a": "{{1.apifyToken}}",
+                      "o": "text:notcontain",
+                      "b": "YOUR_APIFY"
+                    }
+                  ]
+                ]
+              }
+            },
+            {
+              "id": 7,
+              "module": "builtin:BasicFeeder",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "array": "{{6.data}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": 150,
+                  "name": "Iterate Enriched UK Tender Buyers"
+                },
+                "restore": {
+                  "expect": {
+                    "array": {
+                      "mode": "edit"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 8,
+              "module": "util:SetVariables",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "variables": [
+                  {
+                    "name": "title",
+                    "value": "{{7.title}}"
+                  },
+                  {
+                    "name": "stage",
+                    "value": "{{7.stage}}"
+                  },
+                  {
+                    "name": "buyerName",
+                    "value": "{{7.buyerName}}"
+                  },
+                  {
+                    "name": "contactName",
+                    "value": "{{7.contactName}}"
+                  },
+                  {
+                    "name": "contactEmail",
+                    "value": "{{7.contactEmail}}"
+                  },
+                  {
+                    "name": "valueGBP",
+                    "value": "{{7.valueGBP}}"
+                  },
+                  {
+                    "name": "suitableForSME",
+                    "value": "{{7.suitableForSME}}"
+                  },
+                  {
+                    "name": "noticeUrl",
+                    "value": "{{7.noticeUrl}}"
+                  },
+                  {
+                    "name": "agentSummary",
+                    "value": "{{7.agentSummary}}"
+                  }
+                ],
+                "scope": "roundtrip"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1500,
+                  "y": 150,
+                  "name": "Project Verified Buyer Emails"
+                },
+                "restore": {
+                  "expect": {
+                    "scope": {
+                      "label": "One cycle"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "us1.make.com"
+  }
+}

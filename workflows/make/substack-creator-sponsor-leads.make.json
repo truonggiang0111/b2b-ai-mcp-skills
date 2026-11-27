@@ -1,0 +1,268 @@
+{
+  "name": "Substack Paid Newsletter Creator & Sponsor Leads",
+  "flow": [
+    {
+      "id": 1,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "variables": [
+          {
+            "name": "apifyToken",
+            "value": "YOUR_APIFY_API_TOKEN"
+          },
+          {
+            "name": "query1",
+            "value": "b2b saas"
+          },
+          {
+            "name": "query2",
+            "value": "artificial intelligence"
+          },
+          {
+            "name": "maxPublicationsPerQuery",
+            "value": "25"
+          },
+          {
+            "name": "maxPostsPerPublication",
+            "value": "3"
+          }
+        ],
+        "scope": "roundtrip"
+      },
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "name": "Config & Apify Token ($5/mo Free)"
+        },
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {
+        "handleErrors": true,
+        "useNewZLibDeCompress": true
+      },
+      "mapper": {
+        "url": "https://api.apify.com/v2/acts/ttyan0111~substack-newsletter-creator-leads/run-sync-get-dataset-items",
+        "serializeUrl": false,
+        "method": "post",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{1.apifyToken}}"
+          },
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "contentType": "application/json",
+        "data": "{\n  \"queries\": [\"{{1.query1}}\", \"{{1.query2}}\"],\n  \"paidNewslettersOnly\": true,\n  \"withContactEmailOnly\": true,\n  \"includeLatestPosts\": true,\n  \"maxPostsPerPublication\": {{1.maxPostsPerPublication}},\n  \"maxPublicationsPerQuery\": {{1.maxPublicationsPerQuery}}\n}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Run Substack Creator Leads Actor"
+        },
+        "restore": {
+          "expect": {
+            "method": {
+              "mode": "chose",
+              "label": "POST"
+            },
+            "bodyType": {
+              "mode": "chose",
+              "label": "Raw"
+            },
+            "contentType": {
+              "mode": "chose",
+              "label": "JSON (application/json)"
+            },
+            "headers": {
+              "mode": "chose"
+            },
+            "qs": {
+              "mode": "chose"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx)",
+            "required": true
+          },
+          {
+            "name": "useNewZLibDeCompress",
+            "type": "boolean",
+            "label": "Use new ZLib deCompress",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "array": "{{2.data}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "name": "Iterate Paid Substack Creators"
+        },
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "variables": [
+          {
+            "name": "publicationName",
+            "value": "{{3.name}}"
+          },
+          {
+            "name": "authorName",
+            "value": "{{3.authorName}}"
+          },
+          {
+            "name": "contactEmail",
+            "value": "{{ifempty(3.contactEmail; 3.substackReplyEmail)}}"
+          },
+          {
+            "name": "publicationUrl",
+            "value": "{{3.publicationUrl}}"
+          },
+          {
+            "name": "rankingDetail",
+            "value": "{{3.rankingDetail}}"
+          },
+          {
+            "name": "monthlyPriceUsd",
+            "value": "{{3.monthlyPriceUsd}}"
+          },
+          {
+            "name": "freeSubscriberEstimate",
+            "value": "{{3.freeSubscriberEstimate}}"
+          },
+          {
+            "name": "totalReactionsRecent",
+            "value": "{{3.totalReactionsRecent}}"
+          },
+          {
+            "name": "agentSummary",
+            "value": "{{3.agentSummary}}"
+          }
+        ],
+        "scope": "roundtrip"
+      },
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0,
+          "name": "Project Verified Creator & Sponsor Signals"
+        },
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            }
+          }
+        }
+      },
+      "filter": {
+        "name": "Has Direct Creator Email",
+        "conditions": [
+          [
+            {
+              "a": "{{ifempty(3.contactEmail; 3.substackReplyEmail)}}",
+              "o": "exist"
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "module": "util:TextAggregator",
+      "version": 1,
+      "parameters": {
+        "rowSeparator": "other",
+        "otherRowSeparator": "\n---\n",
+        "feeder": 3
+      },
+      "mapper": {
+        "value": "{{4.publicationName}} | {{4.authorName}} <{{4.contactEmail}}> | ${{4.monthlyPriceUsd}}/mo | {{4.publicationUrl}} | {{4.agentSummary}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0,
+          "name": "Aggregate Sponsor Outreach List"
+        },
+        "restore": {
+          "parameters": {
+            "rowSeparator": {
+              "label": "Other"
+            }
+          },
+          "extra": {
+            "feeder": {
+              "label": "Iterate Paid Substack Creators"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "us1.make.com"
+  }
+}

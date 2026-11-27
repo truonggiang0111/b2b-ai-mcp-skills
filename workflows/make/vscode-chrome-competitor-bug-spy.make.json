@@ -1,0 +1,405 @@
+{
+  "name": "VS Code, Cursor Open-VSX & Chrome Web Store Competitor Bug Spy",
+  "flow": [
+    {
+      "id": 1,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "variables": [
+          {
+            "name": "apifyToken",
+            "value": "YOUR_APIFY_API_TOKEN"
+          },
+          {
+            "name": "vscodeQuery1",
+            "value": "mcp"
+          },
+          {
+            "name": "vscodeQuery2",
+            "value": "ai coding"
+          },
+          {
+            "name": "chromeQuery1",
+            "value": "ai writing"
+          },
+          {
+            "name": "chromeQuery2",
+            "value": "notion"
+          }
+        ],
+        "scope": "roundtrip"
+      },
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "name": "Config & Apify Token ($5/mo Free)"
+        },
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "parameters": {},
+      "mapper": null,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Split VS Code/Open-VSX & Chrome Store"
+        }
+      },
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 3,
+              "module": "http:ActionSendData",
+              "version": 3,
+              "parameters": {
+                "handleErrors": true,
+                "useNewZLibDeCompress": true
+              },
+              "mapper": {
+                "url": "https://api.apify.com/v2/acts/ttyan0111~vscode-cursor-extension-spy/run-sync-get-dataset-items",
+                "serializeUrl": false,
+                "method": "post",
+                "headers": [
+                  {
+                    "name": "Authorization",
+                    "value": "Bearer {{1.apifyToken}}"
+                  },
+                  {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "qs": [],
+                "bodyType": "raw",
+                "parseResponse": true,
+                "contentType": "application/json",
+                "data": "{\n  \"queries\": [\"{{1.vscodeQuery1}}\", \"{{1.vscodeQuery2}}\"],\n  \"maxExtensionsPerQuery\": 10,\n  \"sortBy\": \"installs\",\n  \"includeOpenVsxStats\": true,\n  \"includeReviews\": true,\n  \"maxRatingFilter\": 3,\n  \"maxReviewsPerExtension\": 15\n}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 600,
+                  "y": -150,
+                  "name": "Run VS Code & Open-VSX Bug Spy"
+                },
+                "restore": {
+                  "expect": {
+                    "method": {
+                      "mode": "chose",
+                      "label": "POST"
+                    },
+                    "bodyType": {
+                      "mode": "chose",
+                      "label": "Raw"
+                    },
+                    "contentType": {
+                      "mode": "chose",
+                      "label": "JSON (application/json)"
+                    },
+                    "headers": {
+                      "mode": "chose"
+                    },
+                    "qs": {
+                      "mode": "chose"
+                    }
+                  }
+                },
+                "parameters": [
+                  {
+                    "name": "handleErrors",
+                    "type": "boolean",
+                    "label": "Evaluate all states as errors (except for 2xx and 3xx)",
+                    "required": true
+                  },
+                  {
+                    "name": "useNewZLibDeCompress",
+                    "type": "boolean",
+                    "label": "Use new ZLib deCompress",
+                    "required": true
+                  }
+                ]
+              }
+            },
+            {
+              "id": 4,
+              "module": "builtin:BasicFeeder",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "array": "{{3.data}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": -150,
+                  "name": "Iterate VS Code / Cursor Extensions"
+                },
+                "restore": {
+                  "expect": {
+                    "array": {
+                      "mode": "edit"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 5,
+              "module": "util:SetVariables",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "variables": [
+                  {
+                    "name": "ecosystem",
+                    "value": "VS Code + Open-VSX"
+                  },
+                  {
+                    "name": "displayName",
+                    "value": "{{4.displayName}}"
+                  },
+                  {
+                    "name": "uniqueIdentifier",
+                    "value": "{{4.uniqueIdentifier}}"
+                  },
+                  {
+                    "name": "publisherDisplayName",
+                    "value": "{{4.publisherDisplayName}}"
+                  },
+                  {
+                    "name": "verifiedDomain",
+                    "value": "{{4.verifiedDomain}}"
+                  },
+                  {
+                    "name": "totalCombinedInstalls",
+                    "value": "{{4.totalCombinedInstalls}}"
+                  },
+                  {
+                    "name": "averageRating",
+                    "value": "{{4.averageRating}}"
+                  },
+                  {
+                    "name": "githubRepoUrl",
+                    "value": "{{4.githubRepoUrl}}"
+                  },
+                  {
+                    "name": "agentSummary",
+                    "value": "{{4.agentSummary}}"
+                  }
+                ],
+                "scope": "roundtrip"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": -150,
+                  "name": "Project VS Code + Open-VSX Bugs"
+                },
+                "restore": {
+                  "expect": {
+                    "scope": {
+                      "label": "One cycle"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 6,
+              "module": "http:ActionSendData",
+              "version": 3,
+              "parameters": {
+                "handleErrors": true,
+                "useNewZLibDeCompress": true
+              },
+              "mapper": {
+                "url": "https://api.apify.com/v2/acts/ttyan0111~chrome-web-store-extension-spy/run-sync-get-dataset-items",
+                "serializeUrl": false,
+                "method": "post",
+                "headers": [
+                  {
+                    "name": "Authorization",
+                    "value": "Bearer {{1.apifyToken}}"
+                  },
+                  {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "qs": [],
+                "bodyType": "raw",
+                "parseResponse": true,
+                "contentType": "application/json",
+                "data": "{\n  \"queries\": [\"{{1.chromeQuery1}}\", \"{{1.chromeQuery2}}\"],\n  \"includeReviews\": true,\n  \"maxExtensionsPerQuery\": 15,\n  \"maxReviewsPerExtension\": 10,\n  \"onlyWithDeveloperEmail\": true\n}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 600,
+                  "y": 150,
+                  "name": "Run Chrome Web Store Extension Spy"
+                },
+                "restore": {
+                  "expect": {
+                    "method": {
+                      "mode": "chose",
+                      "label": "POST"
+                    },
+                    "bodyType": {
+                      "mode": "chose",
+                      "label": "Raw"
+                    },
+                    "contentType": {
+                      "mode": "chose",
+                      "label": "JSON (application/json)"
+                    },
+                    "headers": {
+                      "mode": "chose"
+                    },
+                    "qs": {
+                      "mode": "chose"
+                    }
+                  }
+                },
+                "parameters": [
+                  {
+                    "name": "handleErrors",
+                    "type": "boolean",
+                    "label": "Evaluate all states as errors (except for 2xx and 3xx)",
+                    "required": true
+                  },
+                  {
+                    "name": "useNewZLibDeCompress",
+                    "type": "boolean",
+                    "label": "Use new ZLib deCompress",
+                    "required": true
+                  }
+                ]
+              }
+            },
+            {
+              "id": 7,
+              "module": "builtin:BasicFeeder",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "array": "{{6.data}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": 150,
+                  "name": "Iterate Chrome Extensions"
+                },
+                "restore": {
+                  "expect": {
+                    "array": {
+                      "mode": "edit"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 8,
+              "module": "util:SetVariables",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "variables": [
+                  {
+                    "name": "ecosystem",
+                    "value": "Chrome Web Store"
+                  },
+                  {
+                    "name": "name",
+                    "value": "{{7.name}}"
+                  },
+                  {
+                    "name": "extensionId",
+                    "value": "{{7.extensionId}}"
+                  },
+                  {
+                    "name": "developerName",
+                    "value": "{{7.developerName}}"
+                  },
+                  {
+                    "name": "developerEmail",
+                    "value": "{{7.developerEmail}}"
+                  },
+                  {
+                    "name": "userCountEstimate",
+                    "value": "{{7.userCountEstimate}}"
+                  },
+                  {
+                    "name": "rating",
+                    "value": "{{7.rating}}"
+                  },
+                  {
+                    "name": "storeUrl",
+                    "value": "{{7.storeUrl}}"
+                  },
+                  {
+                    "name": "agentSummary",
+                    "value": "{{7.agentSummary}}"
+                  }
+                ],
+                "scope": "roundtrip"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": 150,
+                  "name": "Project Chrome Dev Emails & Bugs"
+                },
+                "restore": {
+                  "expect": {
+                    "scope": {
+                      "label": "One cycle"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "us1.make.com"
+  }
+}

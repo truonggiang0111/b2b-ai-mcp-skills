@@ -1,0 +1,574 @@
+{
+  "name": "WordPress, WooCommerce & Atlassian Zero-Key Churn Leads",
+  "flow": [
+    {
+      "id": 1,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "variables": [
+          {
+            "name": "wpSearch",
+            "value": "woocommerce"
+          },
+          {
+            "name": "atlassianQuery",
+            "value": "time tracking"
+          },
+          {
+            "name": "apifyToken",
+            "value": "OPTIONAL_APIFY_API_TOKEN"
+          }
+        ],
+        "scope": "roundtrip"
+      },
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "name": "Config (Zero-Key + Optional Apify)"
+        },
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "parameters": {},
+      "mapper": null,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Split WordPress, Atlassian & Apify Enrich"
+        }
+      },
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 3,
+              "module": "http:ActionSendData",
+              "version": 3,
+              "parameters": {
+                "handleErrors": true,
+                "useNewZLibDeCompress": true
+              },
+              "mapper": {
+                "url": "https://api.wordpress.org/plugins/info/1.2/",
+                "serializeUrl": false,
+                "method": "get",
+                "headers": [
+                  {
+                    "name": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "qs": [
+                  {
+                    "name": "action",
+                    "value": "query_plugins"
+                  },
+                  {
+                    "name": "request[search]",
+                    "value": "{{1.wpSearch}}"
+                  },
+                  {
+                    "name": "request[per_page]",
+                    "value": "25"
+                  }
+                ],
+                "parseResponse": true
+              },
+              "metadata": {
+                "designer": {
+                  "x": 600,
+                  "y": -220,
+                  "name": "Query WordPress.org Plugins 1.2 (Zero-Key)"
+                },
+                "restore": {
+                  "expect": {
+                    "method": {
+                      "mode": "chose",
+                      "label": "GET"
+                    },
+                    "headers": {
+                      "mode": "chose"
+                    },
+                    "qs": {
+                      "mode": "chose"
+                    }
+                  }
+                },
+                "parameters": [
+                  {
+                    "name": "handleErrors",
+                    "type": "boolean",
+                    "label": "Evaluate all states as errors (except for 2xx and 3xx)",
+                    "required": true
+                  },
+                  {
+                    "name": "useNewZLibDeCompress",
+                    "type": "boolean",
+                    "label": "Use new ZLib deCompress",
+                    "required": true
+                  }
+                ]
+              }
+            },
+            {
+              "id": 4,
+              "module": "builtin:BasicFeeder",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "array": "{{3.data.plugins}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": -220,
+                  "name": "Iterate WordPress Plugins"
+                },
+                "restore": {
+                  "expect": {
+                    "array": {
+                      "mode": "edit"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 5,
+              "module": "util:SetVariables",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "variables": [
+                  {
+                    "name": "marketplace",
+                    "value": "WordPress.org"
+                  },
+                  {
+                    "name": "name",
+                    "value": "{{4.name}}"
+                  },
+                  {
+                    "name": "slug",
+                    "value": "{{4.slug}}"
+                  },
+                  {
+                    "name": "activeInstalls",
+                    "value": "{{4.active_installs}}"
+                  },
+                  {
+                    "name": "starsOutOf5",
+                    "value": "{{round(4.rating / 20; 2)}}"
+                  },
+                  {
+                    "name": "oneStarCount",
+                    "value": "{{get(4.ratings; \"1\")}}"
+                  },
+                  {
+                    "name": "unresolvedSupportThreads",
+                    "value": "{{4.support_threads - 4.support_threads_resolved}}"
+                  },
+                  {
+                    "name": "pluginUrl",
+                    "value": "https://wordpress.org/plugins/{{4.slug}}/"
+                  }
+                ],
+                "scope": "roundtrip"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": -220,
+                  "name": "Filter WooCommerce Churn Signals"
+                },
+                "restore": {
+                  "expect": {
+                    "scope": {
+                      "label": "One cycle"
+                    }
+                  }
+                }
+              },
+              "filter": {
+                "name": "Active Installs >= 500",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{4.active_installs}}",
+                      "o": "number:greaterOrEqual",
+                      "b": "500"
+                    }
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 6,
+              "module": "http:ActionSendData",
+              "version": 3,
+              "parameters": {
+                "handleErrors": true,
+                "useNewZLibDeCompress": true
+              },
+              "mapper": {
+                "url": "https://marketplace.atlassian.com/rest/2/addons",
+                "serializeUrl": false,
+                "method": "get",
+                "headers": [
+                  {
+                    "name": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "qs": [
+                  {
+                    "name": "text",
+                    "value": "{{1.atlassianQuery}}"
+                  },
+                  {
+                    "name": "application",
+                    "value": "jira"
+                  },
+                  {
+                    "name": "hosting",
+                    "value": "cloud"
+                  },
+                  {
+                    "name": "withVersion",
+                    "value": "true"
+                  },
+                  {
+                    "name": "limit",
+                    "value": "25"
+                  }
+                ],
+                "parseResponse": true
+              },
+              "metadata": {
+                "designer": {
+                  "x": 600,
+                  "y": 0,
+                  "name": "Query Atlassian Marketplace REST v2 (Zero-Key)"
+                },
+                "restore": {
+                  "expect": {
+                    "method": {
+                      "mode": "chose",
+                      "label": "GET"
+                    },
+                    "headers": {
+                      "mode": "chose"
+                    },
+                    "qs": {
+                      "mode": "chose"
+                    }
+                  }
+                },
+                "parameters": [
+                  {
+                    "name": "handleErrors",
+                    "type": "boolean",
+                    "label": "Evaluate all states as errors (except for 2xx and 3xx)",
+                    "required": true
+                  },
+                  {
+                    "name": "useNewZLibDeCompress",
+                    "type": "boolean",
+                    "label": "Use new ZLib deCompress",
+                    "required": true
+                  }
+                ]
+              }
+            },
+            {
+              "id": 7,
+              "module": "builtin:BasicFeeder",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "array": "{{6.data._embedded.addons}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": 0,
+                  "name": "Iterate Atlassian Addons"
+                },
+                "restore": {
+                  "expect": {
+                    "array": {
+                      "mode": "edit"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 8,
+              "module": "util:SetVariables",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "variables": [
+                  {
+                    "name": "marketplace",
+                    "value": "Atlassian Jira"
+                  },
+                  {
+                    "name": "addonKey",
+                    "value": "{{7.key}}"
+                  },
+                  {
+                    "name": "name",
+                    "value": "{{7.name}}"
+                  },
+                  {
+                    "name": "vendorName",
+                    "value": "{{7._embedded.vendor.name}}"
+                  },
+                  {
+                    "name": "totalInstalls",
+                    "value": "{{7._embedded.distribution.totalInstalls}}"
+                  },
+                  {
+                    "name": "averageStars",
+                    "value": "{{7._embedded.reviews.averageStars}}"
+                  },
+                  {
+                    "name": "reviewCount",
+                    "value": "{{7._embedded.reviews.count}}"
+                  },
+                  {
+                    "name": "marketplaceUrl",
+                    "value": "https://marketplace.atlassian.com{{7._links.alternate.href}}"
+                  }
+                ],
+                "scope": "roundtrip"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": 0,
+                  "name": "Extract Atlassian Churn Signals"
+                },
+                "restore": {
+                  "expect": {
+                    "scope": {
+                      "label": "One cycle"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 9,
+              "module": "http:ActionSendData",
+              "version": 3,
+              "parameters": {
+                "handleErrors": true,
+                "useNewZLibDeCompress": true
+              },
+              "mapper": {
+                "url": "https://api.apify.com/v2/acts/ttyan0111~wordpress-plugin-churn-spy/run-sync-get-dataset-items",
+                "serializeUrl": false,
+                "method": "post",
+                "headers": [
+                  {
+                    "name": "Authorization",
+                    "value": "Bearer {{1.apifyToken}}"
+                  },
+                  {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "qs": [],
+                "bodyType": "raw",
+                "parseResponse": true,
+                "contentType": "application/json",
+                "data": "{\n  \"queries\": [\"{{1.wpSearch}}\"],\n  \"maxPluginsPerQuery\": 5,\n  \"minActiveInstalls\": 500,\n  \"includeChurnReviews\": true,\n  \"maxReviewsPerPlugin\": 15,\n  \"includeUnresolvedSupport\": true,\n  \"enrichAuthorContacts\": true\n}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 600,
+                  "y": 220,
+                  "name": "Enrich WordPress Churn via Apify"
+                },
+                "restore": {
+                  "expect": {
+                    "method": {
+                      "mode": "chose",
+                      "label": "POST"
+                    },
+                    "bodyType": {
+                      "mode": "chose",
+                      "label": "Raw"
+                    },
+                    "contentType": {
+                      "mode": "chose",
+                      "label": "JSON (application/json)"
+                    },
+                    "headers": {
+                      "mode": "chose"
+                    },
+                    "qs": {
+                      "mode": "chose"
+                    }
+                  }
+                },
+                "parameters": [
+                  {
+                    "name": "handleErrors",
+                    "type": "boolean",
+                    "label": "Evaluate all states as errors (except for 2xx and 3xx)",
+                    "required": true
+                  },
+                  {
+                    "name": "useNewZLibDeCompress",
+                    "type": "boolean",
+                    "label": "Use new ZLib deCompress",
+                    "required": true
+                  }
+                ]
+              },
+              "filter": {
+                "name": "Optional Apify Token Provided",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{1.apifyToken}}",
+                      "o": "exist"
+                    },
+                    {
+                      "a": "{{1.apifyToken}}",
+                      "o": "text:notequal",
+                      "b": "OPTIONAL_APIFY_API_TOKEN"
+                    },
+                    {
+                      "a": "{{1.apifyToken}}",
+                      "o": "text:notcontain",
+                      "b": "YOUR_APIFY"
+                    }
+                  ]
+                ]
+              }
+            },
+            {
+              "id": 10,
+              "module": "http:ActionSendData",
+              "version": 3,
+              "parameters": {
+                "handleErrors": true,
+                "useNewZLibDeCompress": true
+              },
+              "mapper": {
+                "url": "https://api.apify.com/v2/acts/ttyan0111~atlassian-marketplace-b2b-spy/run-sync-get-dataset-items",
+                "serializeUrl": false,
+                "method": "post",
+                "headers": [
+                  {
+                    "name": "Authorization",
+                    "value": "Bearer {{1.apifyToken}}"
+                  },
+                  {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "qs": [],
+                "bodyType": "raw",
+                "parseResponse": true,
+                "contentType": "application/json",
+                "data": "{\n  \"queries\": [\"{{1.atlassianQuery}}\"],\n  \"application\": \"jira\",\n  \"hosting\": \"cloud\",\n  \"maxAppsPerQuery\": 5,\n  \"includeChurnReviews\": true,\n  \"maxReviewsPerApp\": 15\n}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": 220,
+                  "name": "Enrich Atlassian Churn via Apify"
+                },
+                "restore": {
+                  "expect": {
+                    "method": {
+                      "mode": "chose",
+                      "label": "POST"
+                    },
+                    "bodyType": {
+                      "mode": "chose",
+                      "label": "Raw"
+                    },
+                    "contentType": {
+                      "mode": "chose",
+                      "label": "JSON (application/json)"
+                    },
+                    "headers": {
+                      "mode": "chose"
+                    },
+                    "qs": {
+                      "mode": "chose"
+                    }
+                  }
+                },
+                "parameters": [
+                  {
+                    "name": "handleErrors",
+                    "type": "boolean",
+                    "label": "Evaluate all states as errors (except for 2xx and 3xx)",
+                    "required": true
+                  },
+                  {
+                    "name": "useNewZLibDeCompress",
+                    "type": "boolean",
+                    "label": "Use new ZLib deCompress",
+                    "required": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "us1.make.com"
+  }
+}

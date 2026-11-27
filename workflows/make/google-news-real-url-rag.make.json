@@ -1,0 +1,257 @@
+{
+  "name": "Google News Real-URL RAG & PR Signal Digest (Apify + Zero-Key RSS)",
+  "flow": [
+    {
+      "id": 1,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "variables": [
+          {
+            "name": "apifyToken",
+            "value": "YOUR_APIFY_API_TOKEN"
+          },
+          {
+            "name": "query",
+            "value": "AI startup Series A funding"
+          },
+          {
+            "name": "language",
+            "value": "en-US"
+          },
+          {
+            "name": "timeRange",
+            "value": "7d"
+          },
+          {
+            "name": "maxArticlesPerQuery",
+            "value": "15"
+          },
+          {
+            "name": "zeroKeyCli",
+            "value": "npx -y github:truonggiang0111/b2b-market-intel-mcp"
+          },
+          {
+            "name": "agensiFreeSkill",
+            "value": "https://www.agensi.io/r/GIANGTRNGTRNG?to=/skills/google-news-real-url-decoder-for-ai-rag&utm_source=make_blueprint"
+          }
+        ],
+        "scope": "roundtrip"
+      },
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "name": "Config & Apify Token ($5/mo Free)"
+        },
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {
+        "handleErrors": true,
+        "useNewZLibDeCompress": true
+      },
+      "mapper": {
+        "url": "https://api.apify.com/v2/acts/ttyan0111~google-news-ai-article-extractor/run-sync-get-dataset-items",
+        "serializeUrl": false,
+        "method": "post",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{1.apifyToken}}"
+          },
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "contentType": "application/json",
+        "data": "{\n  \"queries\": [\"{{1.query}}\"],\n  \"language\": \"{{1.language}}\",\n  \"timeRange\": \"{{1.timeRange}}\",\n  \"decodeSourceUrls\": true,\n  \"extractFullArticle\": true,\n  \"maxArticlesPerQuery\": {{1.maxArticlesPerQuery}}\n}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Run Google News Real-URL Extractor"
+        },
+        "restore": {
+          "expect": {
+            "method": {
+              "mode": "chose",
+              "label": "POST"
+            },
+            "bodyType": {
+              "mode": "chose",
+              "label": "Raw"
+            },
+            "contentType": {
+              "mode": "chose",
+              "label": "JSON (application/json)"
+            },
+            "headers": {
+              "mode": "chose"
+            },
+            "qs": {
+              "mode": "chose"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx)",
+            "required": true
+          },
+          {
+            "name": "useNewZLibDeCompress",
+            "type": "boolean",
+            "label": "Use new ZLib deCompress",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "array": "{{2.data}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "name": "Iterate Decoded Articles"
+        },
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "variables": [
+          {
+            "name": "title",
+            "value": "{{3.title}}"
+          },
+          {
+            "name": "realUrl",
+            "value": "{{ifempty(3.url; 3.urlDecoded)}}"
+          },
+          {
+            "name": "sourceName",
+            "value": "{{3.sourceName}}"
+          },
+          {
+            "name": "publishedAt",
+            "value": "{{3.publishedAt}}"
+          },
+          {
+            "name": "marketSignals",
+            "value": "{{join(3.marketSignals; \", \")}}"
+          },
+          {
+            "name": "agentSummary",
+            "value": "{{3.agentSummary}}"
+          },
+          {
+            "name": "articleText",
+            "value": "{{3.articleText}}"
+          }
+        ],
+        "scope": "roundtrip"
+      },
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0,
+          "name": "Project LLM/RAG Fields"
+        },
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "module": "util:TextAggregator",
+      "version": 1,
+      "parameters": {
+        "rowSeparator": "other",
+        "otherRowSeparator": "\n---\n",
+        "feeder": 3
+      },
+      "mapper": {
+        "value": "### {{4.title}}\n- Source: {{4.sourceName}} ({{4.publishedAt}})\n- Real URL: {{4.realUrl}}\n- Signals: {{4.marketSignals}}\n- Summary: {{4.agentSummary}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0,
+          "name": "Format Markdown RAG Digest"
+        },
+        "restore": {
+          "parameters": {
+            "rowSeparator": {
+              "label": "Other"
+            }
+          },
+          "extra": {
+            "feeder": {
+              "label": "Iterate Decoded Articles"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "us1.make.com"
+  }
+}

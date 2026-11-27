@@ -1,0 +1,409 @@
+{
+  "name": "Reed UK + Seek AU/NZ Direct-Employer Hiring Leads (Agency-Free)",
+  "flow": [
+    {
+      "id": 1,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "variables": [
+          {
+            "name": "apifyToken",
+            "value": "YOUR_APIFY_API_TOKEN"
+          },
+          {
+            "name": "ukKeywords",
+            "value": "Python Developer"
+          },
+          {
+            "name": "ukLocation",
+            "value": "London"
+          },
+          {
+            "name": "auKeywords",
+            "value": "Software Engineer"
+          },
+          {
+            "name": "auLocation",
+            "value": "Sydney"
+          },
+          {
+            "name": "maxJobs",
+            "value": "25"
+          },
+          {
+            "name": "agensiReedFree",
+            "value": "https://www.agensi.io/r/GIANGTRNGTRNG?to=/skills/uk-direct-employer-hiring-signals-reed-uk&utm_source=make_blueprint"
+          }
+        ],
+        "scope": "roundtrip"
+      },
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "name": "Config & Apify Token ($5/mo Free)"
+        },
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "parameters": {},
+      "mapper": null,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Parallel UK (Reed) + AU (Seek)"
+        }
+      },
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 3,
+              "module": "http:ActionSendData",
+              "version": 3,
+              "parameters": {
+                "handleErrors": true,
+                "useNewZLibDeCompress": true
+              },
+              "mapper": {
+                "url": "https://api.apify.com/v2/acts/ttyan0111~reed-uk-jobs-hiring-signals/run-sync-get-dataset-items",
+                "serializeUrl": false,
+                "method": "post",
+                "headers": [
+                  {
+                    "name": "Authorization",
+                    "value": "Bearer {{1.apifyToken}}"
+                  },
+                  {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "qs": [],
+                "bodyType": "raw",
+                "parseResponse": true,
+                "contentType": "application/json",
+                "data": "{\n  \"keywords\": \"{{1.ukKeywords}}\",\n  \"location\": \"{{1.ukLocation}}\",\n  \"directEmployerOnly\": true,\n  \"excludeIntermediaryPosts\": true,\n  \"excludeTrainingCourses\": true,\n  \"includeFullDescription\": true,\n  \"maxJobs\": {{1.maxJobs}}\n}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 600,
+                  "y": -150,
+                  "name": "Run Reed UK Direct Employer Spy"
+                },
+                "restore": {
+                  "expect": {
+                    "method": {
+                      "mode": "chose",
+                      "label": "POST"
+                    },
+                    "bodyType": {
+                      "mode": "chose",
+                      "label": "Raw"
+                    },
+                    "contentType": {
+                      "mode": "chose",
+                      "label": "JSON (application/json)"
+                    },
+                    "headers": {
+                      "mode": "chose"
+                    },
+                    "qs": {
+                      "mode": "chose"
+                    }
+                  }
+                },
+                "parameters": [
+                  {
+                    "name": "handleErrors",
+                    "type": "boolean",
+                    "label": "Evaluate all states as errors (except for 2xx and 3xx)",
+                    "required": true
+                  },
+                  {
+                    "name": "useNewZLibDeCompress",
+                    "type": "boolean",
+                    "label": "Use new ZLib deCompress",
+                    "required": true
+                  }
+                ]
+              }
+            },
+            {
+              "id": 4,
+              "module": "builtin:BasicFeeder",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "array": "{{3.data}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": -150,
+                  "name": "Iterate Reed UK Direct Jobs"
+                },
+                "restore": {
+                  "expect": {
+                    "array": {
+                      "mode": "edit"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 5,
+              "module": "util:SetVariables",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "variables": [
+                  {
+                    "name": "market",
+                    "value": "UK (Reed)"
+                  },
+                  {
+                    "name": "employerName",
+                    "value": "{{4.employerName}}"
+                  },
+                  {
+                    "name": "title",
+                    "value": "{{4.title}}"
+                  },
+                  {
+                    "name": "isDirectEmployer",
+                    "value": "{{4.isDirectEmployer}}"
+                  },
+                  {
+                    "name": "outsideIr35",
+                    "value": "{{4.outsideIr35}}"
+                  },
+                  {
+                    "name": "salaryMin",
+                    "value": "{{4.salaryMin}}"
+                  },
+                  {
+                    "name": "salaryMax",
+                    "value": "{{4.salaryMax}}"
+                  },
+                  {
+                    "name": "jobUrl",
+                    "value": "{{4.jobUrl}}"
+                  },
+                  {
+                    "name": "agentSummary",
+                    "value": "{{4.agentSummary}}"
+                  }
+                ],
+                "scope": "roundtrip"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": -150,
+                  "name": "Normalize UK Hiring Lead"
+                },
+                "restore": {
+                  "expect": {
+                    "scope": {
+                      "label": "One cycle"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 6,
+              "module": "http:ActionSendData",
+              "version": 3,
+              "parameters": {
+                "handleErrors": true,
+                "useNewZLibDeCompress": true
+              },
+              "mapper": {
+                "url": "https://api.apify.com/v2/acts/ttyan0111~seek-au-nz-jobs-hiring-signals/run-sync-get-dataset-items",
+                "serializeUrl": false,
+                "method": "post",
+                "headers": [
+                  {
+                    "name": "Authorization",
+                    "value": "Bearer {{1.apifyToken}}"
+                  },
+                  {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "qs": [],
+                "bodyType": "raw",
+                "parseResponse": true,
+                "contentType": "application/json",
+                "data": "{\n  \"keywords\": \"{{1.auKeywords}}\",\n  \"location\": \"{{1.auLocation}}\",\n  \"country\": \"AU\",\n  \"directEmployerOnly\": true,\n  \"includeCompanyDetails\": true,\n  \"maxJobs\": {{1.maxJobs}}\n}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 600,
+                  "y": 150,
+                  "name": "Run Seek AU/NZ GraphQL Hiring Spy"
+                },
+                "restore": {
+                  "expect": {
+                    "method": {
+                      "mode": "chose",
+                      "label": "POST"
+                    },
+                    "bodyType": {
+                      "mode": "chose",
+                      "label": "Raw"
+                    },
+                    "contentType": {
+                      "mode": "chose",
+                      "label": "JSON (application/json)"
+                    },
+                    "headers": {
+                      "mode": "chose"
+                    },
+                    "qs": {
+                      "mode": "chose"
+                    }
+                  }
+                },
+                "parameters": [
+                  {
+                    "name": "handleErrors",
+                    "type": "boolean",
+                    "label": "Evaluate all states as errors (except for 2xx and 3xx)",
+                    "required": true
+                  },
+                  {
+                    "name": "useNewZLibDeCompress",
+                    "type": "boolean",
+                    "label": "Use new ZLib deCompress",
+                    "required": true
+                  }
+                ]
+              }
+            },
+            {
+              "id": 7,
+              "module": "builtin:BasicFeeder",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "array": "{{6.data}}"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 900,
+                  "y": 150,
+                  "name": "Iterate Seek AU Direct Jobs"
+                },
+                "restore": {
+                  "expect": {
+                    "array": {
+                      "mode": "edit"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 8,
+              "module": "util:SetVariables",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "variables": [
+                  {
+                    "name": "market",
+                    "value": "AU (Seek)"
+                  },
+                  {
+                    "name": "employerName",
+                    "value": "{{7.companyName}}"
+                  },
+                  {
+                    "name": "title",
+                    "value": "{{7.title}}"
+                  },
+                  {
+                    "name": "companyIndustry",
+                    "value": "{{7.companyIndustry}}"
+                  },
+                  {
+                    "name": "companySize",
+                    "value": "{{7.companySize}}"
+                  },
+                  {
+                    "name": "companyWebsite",
+                    "value": "{{7.companyWebsite}}"
+                  },
+                  {
+                    "name": "jobUrl",
+                    "value": "{{7.jobUrl}}"
+                  },
+                  {
+                    "name": "agentSummary",
+                    "value": "{{7.agentSummary}}"
+                  }
+                ],
+                "scope": "roundtrip"
+              },
+              "metadata": {
+                "designer": {
+                  "x": 1200,
+                  "y": 150,
+                  "name": "Normalize AU Hiring Lead"
+                },
+                "restore": {
+                  "expect": {
+                    "scope": {
+                      "label": "One cycle"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "us1.make.com"
+  }
+}

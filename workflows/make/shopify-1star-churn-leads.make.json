@@ -1,0 +1,283 @@
+{
+  "name": "Shopify App Store 1-Star Churn & Dev Email Leads",
+  "flow": [
+    {
+      "id": 1,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "variables": [
+          {
+            "name": "apifyToken",
+            "value": "YOUR_APIFY_API_TOKEN"
+          },
+          {
+            "name": "query1",
+            "value": "klaviyo-email-marketing"
+          },
+          {
+            "name": "query2",
+            "value": "upsell"
+          },
+          {
+            "name": "maxAppsPerQuery",
+            "value": "5"
+          },
+          {
+            "name": "maxReviewsPerApp",
+            "value": "20"
+          },
+          {
+            "name": "storefrontHub",
+            "value": "https://truonggiang0111.github.io/mcp/b2b-leads-datasets-and-custom-scrapers/"
+          }
+        ],
+        "scope": "roundtrip"
+      },
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "name": "Config & Apify Token ($5/mo Free)"
+        },
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {
+        "handleErrors": true,
+        "useNewZLibDeCompress": true
+      },
+      "mapper": {
+        "url": "https://api.apify.com/v2/acts/ttyan0111~shopify-app-store-churn-spy/run-sync-get-dataset-items",
+        "serializeUrl": false,
+        "method": "post",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{1.apifyToken}}"
+          },
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "contentType": "application/json",
+        "data": "{\n  \"queries\": [\"{{1.query1}}\", \"{{1.query2}}\"],\n  \"maxAppsPerQuery\": {{1.maxAppsPerQuery}},\n  \"includeReviews\": true,\n  \"starRatings\": [\"1\", \"2\"],\n  \"sortBy\": \"newest\",\n  \"maxReviewsPerApp\": {{1.maxReviewsPerApp}},\n  \"onlyWithDeveloperEmail\": false\n}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Run Shopify App Store Churn Spy"
+        },
+        "restore": {
+          "expect": {
+            "method": {
+              "mode": "chose",
+              "label": "POST"
+            },
+            "bodyType": {
+              "mode": "chose",
+              "label": "Raw"
+            },
+            "contentType": {
+              "mode": "chose",
+              "label": "JSON (application/json)"
+            },
+            "headers": {
+              "mode": "chose"
+            },
+            "qs": {
+              "mode": "chose"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "handleErrors",
+            "type": "boolean",
+            "label": "Evaluate all states as errors (except for 2xx and 3xx)",
+            "required": true
+          },
+          {
+            "name": "useNewZLibDeCompress",
+            "type": "boolean",
+            "label": "Use new ZLib deCompress",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "module": "builtin:BasicFeeder",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "array": "{{2.data}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "name": "Iterate Shopify Churn Apps"
+        },
+        "restore": {
+          "expect": {
+            "array": {
+              "mode": "edit"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "util:SetVariables",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "variables": [
+          {
+            "name": "appName",
+            "value": "{{3.name}}"
+          },
+          {
+            "name": "handle",
+            "value": "{{3.handle}}"
+          },
+          {
+            "name": "rating",
+            "value": "{{3.rating}}"
+          },
+          {
+            "name": "developerName",
+            "value": "{{3.developerName}}"
+          },
+          {
+            "name": "developerEmail",
+            "value": "{{3.developerEmail}}"
+          },
+          {
+            "name": "developerWebsite",
+            "value": "{{3.developerWebsite}}"
+          },
+          {
+            "name": "mentionedDomains",
+            "value": "{{join(3.mentionedDomains; \", \")}}"
+          },
+          {
+            "name": "painSignalSummary",
+            "value": "{{3.painSignalSummary}}"
+          },
+          {
+            "name": "appUrl",
+            "value": "{{3.appUrl}}"
+          },
+          {
+            "name": "agentSummary",
+            "value": "{{3.agentSummary}}"
+          }
+        ],
+        "scope": "roundtrip"
+      },
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0,
+          "name": "Project Churn & Dev Email Leads"
+        },
+        "restore": {
+          "expect": {
+            "scope": {
+              "label": "One cycle"
+            }
+          }
+        }
+      },
+      "filter": {
+        "name": "Has Reviews or Dev Email",
+        "conditions": [
+          [
+            {
+              "a": "{{3.reviewsCount}}",
+              "o": "number:greater",
+              "b": "0"
+            }
+          ],
+          [
+            {
+              "a": "{{3.developerEmail}}",
+              "o": "exist"
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "module": "util:TextAggregator",
+      "version": 1,
+      "parameters": {
+        "rowSeparator": "other",
+        "otherRowSeparator": "\n---\n",
+        "feeder": 3
+      },
+      "mapper": {
+        "value": "{{4.appName}} ({{4.rating}}*) | Dev: {{4.developerName}} <{{4.developerEmail}}> | Merchants: {{4.mentionedDomains}} | {{4.agentSummary}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0,
+          "name": "Aggregate Shopify Churn Digest"
+        },
+        "restore": {
+          "parameters": {
+            "rowSeparator": {
+              "label": "Other"
+            }
+          },
+          "extra": {
+            "feeder": {
+              "label": "Iterate Shopify Churn Apps"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "us1.make.com"
+  }
+}
