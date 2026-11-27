@@ -69,6 +69,20 @@ Import these JSON files directly into **n8n** and swap in your Apify token (`$5/
 
 ---
 
+## 3b. 15 Ready-to-Run Use-Case Tasks (Apify Store + AI `.md` Endpoints)
+
+Each task runs pre-configured B2B/RAG parameters on Apify Cloud and exposes a clean `.md` spec for AI agents:
+
+| Niche | Published Use-Case Landing Pages | AI Markdown |
+| :--- | :--- | :--- |
+| **Reed.co.uk (UK)** | [Find UK Direct-Employer Python Jobs Without Agencies](https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals/examples/uk-direct-employer-python-jobs) · [Outside IR35 Contracts](https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals/examples/outside-ir35-uk-contract-tech-jobs) · [Remote Direct Engineers](https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals/examples/uk-remote-software-engineer-hiring-leads) | [Python (.md)](https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals/examples/uk-direct-employer-python-jobs.md) |
+| **Seek (AU & NZ)** | [Sydney Direct Software Jobs](https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals/examples/sydney-direct-employer-software-jobs) · [Remote AU Company Signals](https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals/examples/australia-remote-tech-jobs-company-signals) · [New Zealand Direct Leads](https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals/examples/new-zealand-direct-employer-hiring-leads) | [Sydney (.md)](https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals/examples/sydney-direct-employer-software-jobs.md) |
+| **App Store + Play** | [1★–2★ Competitor Bug Complaints](https://apify.com/ttyan0111/app-store-play-reviews-spy/examples/competitor-app-1-star-bug-complaints) · [Billing Churn Audit](https://apify.com/ttyan0111/app-store-play-reviews-spy/examples/ios-android-billing-churn-review-audit) · [US & UK Benchmark](https://apify.com/ttyan0111/app-store-play-reviews-spy/examples/multi-country-mobile-app-sentiment-benchmark) | [Bug Spy (.md)](https://apify.com/ttyan0111/app-store-play-reviews-spy/examples/competitor-app-1-star-bug-complaints.md) |
+| **Google Ads Spy** | [Winning Google Ads (30+ Days)](https://apify.com/ttyan0111/google-ads-transparency-spy/examples/competitor-winning-google-ads-30-days) · [EU DSA Reach Audit](https://apify.com/ttyan0111/google-ads-transparency-spy/examples/eu-dsa-competitor-ad-reach-spend-audit) · [YouTube Video Ads](https://apify.com/ttyan0111/google-ads-transparency-spy/examples/youtube-video-ad-creatives-competitor-spy) | [Winning Ads (.md)](https://apify.com/ttyan0111/google-ads-transparency-spy/examples/competitor-winning-google-ads-30-days.md) |
+| **Google News RAG** | [Decode Google News RSS Links](https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/decode-google-news-rss-real-publisher-urls) · [AI Startup Funding RAG](https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/ai-startup-funding-news-full-text-rag) · [Layoffs & Launches PR](https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/competitor-pr-layoffs-launches-news-monitor) | [Real-URL (.md)](https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/decode-google-news-rss-real-publisher-urls.md) |
+
+---
+
 ## 4. Quick REST Example (Python & Node.js)
 
 ### Node.js (`fetch`) — Decode `news.google.com` Wrapper URLs to Real Articles
