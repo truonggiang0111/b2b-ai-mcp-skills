@@ -36,12 +36,18 @@ Production-tested **MCP endpoints**, **`15` portable `SKILL.md` playbooks**, **`
 
 ## Technical Guides & Open-Source Developer Tools
 
+- **Google Sheets Zero-Key Add-on & 15-Actor Sidebar (`v1.0.0`):** [`truonggiang0111/google-sheets-b2b-lead-scraper`](https://github.com/truonggiang0111/google-sheets-b2b-lead-scraper) — `=DECODE_GNEWS_URL()`, `=UK_GOV_TENDERS()`, `=CLINICAL_TRIALS_LEADS()` + Sidebar ([Setup Guide](https://truonggiang0111.github.io/mcp/google-sheets-apify-b2b-lead-automation/)).
 - **Native `n8n` Community Node & AI Agent Tool (`18` Ops, Zero Runtime Deps):** [`truonggiang0111/n8n-nodes-b2b-market-intel`](https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel) — `npm install github:truonggiang0111/n8n-nodes-b2b-market-intel` (`usableAsTool: true`, `3` zero-key ops + `15` Apify batch ops).
 - **Zero-Dep Node.js STDIO MCP Server (`v1.0.0`):** [`truonggiang0111/b2b-market-intel-mcp`](https://github.com/truonggiang0111/b2b-market-intel-mcp) — `npx -y github:truonggiang0111/b2b-market-intel-mcp` (`3` zero-key instant tools + `5` Apify batch tools).
 - **Zero-Dep Python 3.10+ SDK, CLI & Tool Schemas (`v1.0.0`):** [`truonggiang0111/b2b-market-intel-python`](https://github.com/truonggiang0111/b2b-market-intel-python) — `pip install git+https://github.com/truonggiang0111/b2b-market-intel-python` / `uvx` (`b2b-intel --self-test`, OpenAI/Anthropic/LangChain schemas + `ApifyB2BClient`).
 - **Standalone Zero-Dependency Node.js 18+ CLI & ESM Helper:** [`truonggiang0111/google-news-url-decoder` (`v1.0.0`)](https://github.com/truonggiang0111/google-news-url-decoder) — offline protobuf inspector + live `DotsSplashUi` `Fbv4je` single-URL decoder (`MIT`).
-- **Sanitised B2B Sample Datasets (`v1.0.0`, `6` CSV + `6` JSON):** [`truonggiang0111/b2b-sample-datasets-2026`](https://github.com/truonggiang0111/b2b-sample-datasets-2026) — `150` real zero-PII sample rows across 6 B2B verticals.
-- **Technical Guides (`7` Guides):**
+- **Sanitised B2B Sample Datasets (`v1.0.0`, `6` CSV + `6` JSON):** [`truonggiang0111/b2b-sample-datasets-2026`](https://github.com/truonggiang0111/b2b-sample-datasets-2026) — `150` real zero-PII sample rows across 6 B2B verticals ([Direct Order Hub & Bundles](https://truonggiang0111.github.io/mcp/b2b-leads-datasets-and-custom-scrapers/)).
+- **Technical Guides & Gallery (`12` Web Pages + `2` Dev.to):**
+  - [**Direct B2B Data Storefront (`$29` CSV Packs, `$199–$350` Custom Scrapers, Agensi Bundles)**](https://truonggiang0111.github.io/mcp/b2b-leads-datasets-and-custom-scrapers/)
+  - [**Interactive 1-Click `n8n` Workflow Gallery (`16` Workflows)**](https://truonggiang0111.github.io/mcp/n8n-b2b-lead-automation-workflows/) · [Dev.to Guide](https://dev.to/truonggiang0111/how-to-connect-n8n-ai-agents-to-b2b-lead-scrapers-via-mcp-zero-key-apis-16-free-workflows-145b)
+  - [Connecting n8n AI Agents to Streamable HTTP & STDIO MCP Servers (2026)](https://truonggiang0111.github.io/mcp/n8n-mcp-client-ai-agent-b2b-leads/)
+  - [Google Sheets Zero-Key Apps Script & Apify Lead Automation](https://truonggiang0111.github.io/mcp/google-sheets-apify-b2b-lead-automation/)
+  - [Mining 1-Star WooCommerce & Atlassian App Churn via Public REST APIs & n8n](https://truonggiang0111.github.io/mcp/wordpress-woocommerce-1-star-churn-leads/)
   - [Google News RSS CBMi Real-URL Decoding for AI RAG (2026)](https://truonggiang0111.github.io/mcp/google-news-rss-url-decoder/) · [Dev.to Breakdown](https://dev.to/truonggiang0111/why-google-news-rss-base64-decoding-broke-2024-2026-and-how-to-fix-it-for-ai-rag-mcp-26pi)
   - [Mining 1-Star & 2-Star App, Extension & SaaS Reviews for B2B Churn Leads](https://truonggiang0111.github.io/mcp/shopify-app-store-1-star-churn-teardown/)
   - [Filtering Out Recruitment Agency & Bootcamp Spam (~48% Noise) on Reed.co.uk & Seek.com.au](https://truonggiang0111.github.io/mcp/direct-employer-hiring-leads-uk-au/)
@@ -49,7 +55,7 @@ Production-tested **MCP endpoints**, **`15` portable `SKILL.md` playbooks**, **`
   - [ClinicalTrials.gov v2 Biotech Sponsor & PI Email Leads](https://truonggiang0111.github.io/mcp/clinicaltrials-gov-biotech-sponsor-leads/)
   - [VS Code Marketplace vs Open-VSX (Cursor/Windsurf) Metrics & Bug Churn](https://truonggiang0111.github.io/mcp/vscode-vs-openvsx-cursor-extension-metrics/)
   - [Substack Viral Notes Outlier Formula & Ghostwriter Swipe Prompts](https://truonggiang0111.github.io/mcp/substack-viral-notes-outlier-formula/)
-- **Developer Quickstart Gists:** [Google News CBMi RAG Quickstart](https://gist.github.com/truonggiang0111/19e0d938cdab54f3e616e486a764b842) · [1-Star Review Churn MCP + n8n](https://gist.github.com/truonggiang0111/29743bb101bc20a482d1009c8c24cbab) · [Python GNews + Tenders](https://gist.github.com/truonggiang0111/8f5a0a2ef71adae95735f1489908f868) · [Python ClinicalTrials Leads](https://gist.github.com/truonggiang0111/82546fcc4fa6d6222ca284326bb6f768)
+- **Developer Quickstart Gists (`7` Gists):** [Google News CBMi RAG](https://gist.github.com/truonggiang0111/19e0d938cdab54f3e616e486a764b842) · [1-Star Review Churn](https://gist.github.com/truonggiang0111/29743bb101bc20a482d1009c8c24cbab) · [Python GNews + Tenders](https://gist.github.com/truonggiang0111/8f5a0a2ef71adae95735f1489908f868) · [Python ClinicalTrials](https://gist.github.com/truonggiang0111/82546fcc4fa6d6222ca284326bb6f768) · [n8n Code Node](https://gist.github.com/truonggiang0111/5f5d680a7405ab72ecda0b888f693df5) · [n8n AI Agent MCP](https://gist.github.com/truonggiang0111/d4b30ef30d5a65d8a6aa980498d153f4) · [Google Sheets Apps Script](https://gist.github.com/truonggiang0111/e219e0531b5e28969da0a112f64cdb10)
 
 ---
 
