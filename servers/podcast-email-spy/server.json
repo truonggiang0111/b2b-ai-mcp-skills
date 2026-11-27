@@ -9,13 +9,15 @@
     {
       "src": "https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/icons/podcast-emails.png",
       "mimeType": "image/png",
-      "sizes": ["256x256"]
+      "sizes": [
+        "256x256"
+      ]
     }
   ],
   "repository": {
     "url": "https://github.com/truonggiang0111/b2b-ai-mcp-skills",
     "source": "github",
-    "subfolder": "staged-servers/podcast-email-spy"
+    "subfolder": "servers/podcast-email-spy"
   },
   "remotes": [
     {

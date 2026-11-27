@@ -1,6 +1,6 @@
 # b2b-ai-mcp-skills (`ttyan0111` / `truonggiang0111`)
 
-> Zero-proxy B2B Hiring Intelligence, Public Tenders, ClinicalTrials Biotech Leads, Competitor Ad Spend Spy, Multi-Store Review Churn Spy & Google News Real-URL RAG tools (`15` Agent Skills, `8` `n8n` Workflows, `50` AI `.md` Tasks, `12` Live Agensi Skills + Bundle).
+> Zero-proxy B2B Hiring Intelligence, Public Tenders, ClinicalTrials Biotech Leads, Competitor Ad Spend Spy, Multi-Store Review Churn Spy & Google News Real-URL RAG tools (`15` Agent Skills, `8` `n8n` Workflows, `100` AI `.md` Tasks, `12` Live Agensi Skills + Bundle).
 > Hosted serverless on Apify (`$5/month` free credit included) and distributed on Agensi.io (`https://mcp.agensi.io/mcp/auth`).
 > Full single-file spec: [llms-full.txt](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/llms-full.txt)
 
@@ -13,7 +13,7 @@
 
 ## Remote MCP Endpoints (All-in-One B2B Suite)
 
-- URL (`streamable-http`, Apify): `https://mcp.apify.com?actors=ttyan0111/reed-uk-jobs-hiring-signals,ttyan0111/seek-au-nz-jobs-hiring-signals,ttyan0111/app-store-play-reviews-spy,ttyan0111/google-ads-transparency-spy,ttyan0111/google-news-ai-article-extractor`
+- URL (`streamable-http`, Apify): `https://mcp.apify.com?actors=ttyan0111/reed-uk-jobs-hiring-signals,ttyan0111/seek-au-nz-jobs-hiring-signals,ttyan0111/app-store-play-reviews-spy,ttyan0111/google-ads-transparency-spy,ttyan0111/google-news-ai-article-extractor,ttyan0111/substack-newsletter-creator-leads,ttyan0111/chrome-web-store-extension-spy,ttyan0111/shopify-app-store-churn-spy,ttyan0111/podcast-host-email-sponsor-spy,ttyan0111/vscode-cursor-extension-spy`
 - Zero-Key Managed Marketplace (Agensi MCP `https://mcp.agensi.io/mcp/auth`): `https://www.agensi.io/creators/giang-tr-ng-tr-ng`
 - Official MCP Registry Namespaces (`io.github.truonggiang0111/*`):
   - `io.github.truonggiang0111/reed-uk-jobs-mcp`: Reed.co.uk UK jobs & Direct-Employer (`direct=True`) + Outside IR35 flags (`https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals`)
@@ -21,7 +21,12 @@
   - `io.github.truonggiang0111/app-reviews-bug-spy-mcp`: Unified iOS App Store + Google Play reviews with server-side star filter & pain-signal tags (`https://apify.com/ttyan0111/app-store-play-reviews-spy`)
   - `io.github.truonggiang0111/google-ads-transparency-mcp`: Google Ads Transparency Center creatives, active days & EU DSA reach stats (`https://apify.com/ttyan0111/google-ads-transparency-spy`)
   - `io.github.truonggiang0111/google-news-real-url-mcp`: Decode opaque `news.google.com/rss` links into real destination publisher URLs (`url` + `urlDecoded`) + clean LLM/RAG full article text (`https://apify.com/ttyan0111/google-news-ai-article-extractor`)
-  - `io.github.truonggiang0111/b2b-market-intel-mcp`: Multi-tool B2B Market Intel suite combining all 5 live endpoints above
+  - `io.github.truonggiang0111/substack-creator-leads-mcp`: Substack Newsletter & Creator Email Leads (`https://apify.com/ttyan0111/substack-newsletter-creator-leads`, `servers/substack-leads/server.json`)
+  - `io.github.truonggiang0111/chrome-web-store-spy-mcp`: Chrome Web Store Extensions, Dev Emails & Reviews Spy (`https://apify.com/ttyan0111/chrome-web-store-extension-spy`, `servers/chrome-store-spy/server.json`)
+  - `io.github.truonggiang0111/shopify-app-store-churn-mcp`: Shopify App Store 1-Star Churn & Dev Emails Spy (`https://apify.com/ttyan0111/shopify-app-store-churn-spy`, `servers/shopify-app-spy/server.json`)
+  - `io.github.truonggiang0111/podcast-host-email-mcp`: Apple Podcasts Host Emails & Sponsor Leads (`https://apify.com/ttyan0111/podcast-host-email-sponsor-spy`, `servers/podcast-email-spy/server.json`)
+  - `io.github.truonggiang0111/vscode-cursor-extension-mcp`: VS Code & Open-VSX (Cursor/Windsurf) Extension Spy (`https://apify.com/ttyan0111/vscode-cursor-extension-spy`, `servers/vscode-extension-spy/server.json`)
+  - `io.github.truonggiang0111/b2b-market-intel-mcp`: Multi-tool B2B Market Intel suite combining all 10 live endpoints above
 
 ## Agensi.io Live Skills & Bundle (`12` Live Skills + `1` Bundle — `HTTP 200`)
 
@@ -71,7 +76,7 @@
 - [workflows/n8n/weekly-podcast-guest-sponsor-outreach.n8n.json](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/workflows/n8n/weekly-podcast-guest-sponsor-outreach.n8n.json)
 - [workflows/n8n/weekly-vscode-chrome-extension-bugs.n8n.json](https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/workflows/n8n/weekly-vscode-chrome-extension-bugs.n8n.json)
 
-## `50` Ready-to-Run Published Use-Case Tasks (Web + `.md`)
+## `100` Ready-to-Run Published Use-Case Tasks (Web + `.md`)
 
 - https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals/examples/uk-direct-employer-python-jobs (.md)
 - https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals/examples/outside-ir35-uk-contract-tech-jobs (.md)
@@ -123,4 +128,54 @@
 - https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/b2b-saas-series-a-series-b-funding-trigger-news (.md)
 - https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/ecommerce-supply-chain-tariff-news-monitor (.md)
 - https://apify.com/ttyan0111/google-news-ai-article-extractor/examples/multilingual-europe-apac-google-news-decoder (.md)
+- https://apify.com/ttyan0111/substack-newsletter-creator-leads/examples/ai-engineering-paid-substack-creator-emails (.md)
+- https://apify.com/ttyan0111/substack-newsletter-creator-leads/examples/b2b-saas-founder-newsletter-sponsorship-leads (.md)
+- https://apify.com/ttyan0111/substack-newsletter-creator-leads/examples/fintech-venture-capital-paid-newsletter-leads (.md)
+- https://apify.com/ttyan0111/substack-newsletter-creator-leads/examples/finance-investing-substack-creator-contact-list (.md)
+- https://apify.com/ttyan0111/substack-newsletter-creator-leads/examples/marketing-growth-creator-newsletter-outreach (.md)
+- https://apify.com/ttyan0111/substack-newsletter-creator-leads/examples/cybersecurity-cloud-engineering-substack-leads (.md)
+- https://apify.com/ttyan0111/substack-newsletter-creator-leads/examples/crypto-web3-research-substack-newsletter-emails (.md)
+- https://apify.com/ttyan0111/substack-newsletter-creator-leads/examples/ecommerce-dtc-brand-operator-substack-leads (.md)
+- https://apify.com/ttyan0111/substack-newsletter-creator-leads/examples/biotech-healthtech-substack-newsletter-research (.md)
+- https://apify.com/ttyan0111/substack-newsletter-creator-leads/examples/top-tech-substack-publication-posts-engagement-audit (.md)
+- https://apify.com/ttyan0111/chrome-web-store-extension-spy/examples/ai-writing-chrome-extension-dev-emails-reviews (.md)
+- https://apify.com/ttyan0111/chrome-web-store-extension-spy/examples/shopify-ecommerce-chrome-extension-b2b-leads (.md)
+- https://apify.com/ttyan0111/chrome-web-store-extension-spy/examples/seo-marketing-chrome-extension-developer-spy (.md)
+- https://apify.com/ttyan0111/chrome-web-store-extension-spy/examples/linkedin-b2b-sales-chrome-extension-churn-spy (.md)
+- https://apify.com/ttyan0111/chrome-web-store-extension-spy/examples/notion-productivity-chrome-extension-bug-audit (.md)
+- https://apify.com/ttyan0111/chrome-web-store-extension-spy/examples/developer-tools-devtools-chrome-extension-leads (.md)
+- https://apify.com/ttyan0111/chrome-web-store-extension-spy/examples/youtube-video-creator-chrome-extension-spy (.md)
+- https://apify.com/ttyan0111/chrome-web-store-extension-spy/examples/adblock-privacy-vpn-chrome-extension-reviews (.md)
+- https://apify.com/ttyan0111/chrome-web-store-extension-spy/examples/recruiting-ats-hr-chrome-extension-dev-leads (.md)
+- https://apify.com/ttyan0111/chrome-web-store-extension-spy/examples/chrome-extension-direct-id-reviews-pain-monitor (.md)
+- https://apify.com/ttyan0111/shopify-app-store-churn-spy/examples/shopify-upsell-cross-sell-1-star-churn-leads (.md)
+- https://apify.com/ttyan0111/shopify-app-store-churn-spy/examples/shopify-email-marketing-klaviyo-churn-review-spy (.md)
+- https://apify.com/ttyan0111/shopify-app-store-churn-spy/examples/shopify-loyalty-rewards-app-merchant-churn-spy (.md)
+- https://apify.com/ttyan0111/shopify-app-store-churn-spy/examples/shopify-subscription-recurring-billing-churn-spy (.md)
+- https://apify.com/ttyan0111/shopify-app-store-churn-spy/examples/shopify-product-reviews-ugc-app-1-star-bugs (.md)
+- https://apify.com/ttyan0111/shopify-app-store-churn-spy/examples/shopify-bundles-volume-discount-app-churn-spy (.md)
+- https://apify.com/ttyan0111/shopify-app-store-churn-spy/examples/shopify-shipping-fulfillment-returns-app-churn (.md)
+- https://apify.com/ttyan0111/shopify-app-store-churn-spy/examples/shopify-page-builder-cro-app-performance-bugs (.md)
+- https://apify.com/ttyan0111/shopify-app-store-churn-spy/examples/shopify-seo-schema-speed-app-developer-leads (.md)
+- https://apify.com/ttyan0111/shopify-app-store-churn-spy/examples/shopify-helpdesk-live-chat-ai-support-churn-spy (.md)
+- https://apify.com/ttyan0111/podcast-host-email-sponsor-spy/examples/b2b-saas-podcast-host-direct-email-leads (.md)
+- https://apify.com/ttyan0111/podcast-host-email-sponsor-spy/examples/ai-startup-engineering-podcast-host-emails (.md)
+- https://apify.com/ttyan0111/podcast-host-email-sponsor-spy/examples/fintech-crypto-podcast-sponsor-email-finder (.md)
+- https://apify.com/ttyan0111/podcast-host-email-sponsor-spy/examples/ecommerce-dtc-shopify-podcast-guest-booking-leads (.md)
+- https://apify.com/ttyan0111/podcast-host-email-sponsor-spy/examples/cybersecurity-cloud-devops-podcast-host-emails (.md)
+- https://apify.com/ttyan0111/podcast-host-email-sponsor-spy/examples/uk-london-business-finance-podcast-host-leads (.md)
+- https://apify.com/ttyan0111/podcast-host-email-sponsor-spy/examples/australia-startup-investing-podcast-host-emails (.md)
+- https://apify.com/ttyan0111/podcast-host-email-sponsor-spy/examples/health-wellness-longevity-podcast-sponsor-spy (.md)
+- https://apify.com/ttyan0111/podcast-host-email-sponsor-spy/examples/real-estate-investing-podcast-host-email-leads (.md)
+- https://apify.com/ttyan0111/podcast-host-email-sponsor-spy/examples/canada-marketing-agency-podcast-sponsor-finder (.md)
+- https://apify.com/ttyan0111/vscode-cursor-extension-spy/examples/mcp-ai-coding-vscode-cursor-extension-installs (.md)
+- https://apify.com/ttyan0111/vscode-cursor-extension-spy/examples/ai-copilot-cursor-autocomplete-1-star-bug-spy (.md)
+- https://apify.com/ttyan0111/vscode-cursor-extension-spy/examples/trending-weekly-vscode-open-vsx-devtools-radar (.md)
+- https://apify.com/ttyan0111/vscode-cursor-extension-spy/examples/python-jupyter-data-science-vscode-bug-audit (.md)
+- https://apify.com/ttyan0111/vscode-cursor-extension-spy/examples/typescript-react-frontend-vscode-extension-spy (.md)
+- https://apify.com/ttyan0111/vscode-cursor-extension-spy/examples/docker-kubernetes-devops-vscode-extension-bugs (.md)
+- https://apify.com/ttyan0111/vscode-cursor-extension-spy/examples/git-pull-request-review-vscode-extension-spy (.md)
+- https://apify.com/ttyan0111/vscode-cursor-extension-spy/examples/sql-database-postgres-vscode-extension-leads (.md)
+- https://apify.com/ttyan0111/vscode-cursor-extension-spy/examples/rest-api-graphql-testing-vscode-extension-spy (.md)
+- https://apify.com/ttyan0111/vscode-cursor-extension-spy/examples/continue-claude-code-direct-id-extension-audit (.md)
 - Web Hub: https://truonggiang0111.github.io/mcp/ · https://truonggiang0111.github.io/llms.txt · https://truonggiang0111.github.io/llms-full.txt
