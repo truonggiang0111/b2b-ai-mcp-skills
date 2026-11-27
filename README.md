@@ -1,6 +1,7 @@
 # B2B Market Intel MCP Servers, Agent Skills (`SKILL.md`) & `n8n` Workflows
 
 [![MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.truonggiang0111-10b981?style=flat-square)](https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.truonggiang0111)
+[![B2B Market Intel Suite MCP connector](https://glama.ai/mcp/connectors/io.github.truonggiang0111/b2b-market-intel-mcp/badges/score.svg)](https://glama.ai/mcp/connectors/io.github.truonggiang0111/b2b-market-intel-mcp)
 [![Apify Profile](https://img.shields.io/badge/Apify%20Store-ttyan0111-2563eb?style=flat-square)](https://apify.com/ttyan0111)
 [![Agent Skills](https://img.shields.io/badge/skills.sh-Compatible-6366f1?style=flat-square)](#-install-portable-agent-skills-claude-code--cursor--codex)
 
