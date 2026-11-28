@@ -7,9 +7,10 @@
 [![Agent Skills](https://img.shields.io/badge/skills.sh-15%20Skills-6366f1?style=flat-square)](#-2-install-portable-agent-skills-claude-code--cursor--codex)
 [![n8n Workflows](https://img.shields.io/badge/n8n-16%20Workflows%20%2B%20Node-ea4b71?style=flat-square)](#-3-16-ready-to-import-n8n-workflows--native-community-node)
 [![Make.com Blueprints](https://img.shields.io/badge/Make.com-8%20Blueprints-6d00cc?style=flat-square)](#-3a-8-ready-to-import-makecom-blueprints-workflowsmake)
+[![Python AI Agents](https://img.shields.io/badge/Python%20Agents-OpenAI%20%7C%20Claude%20%7C%20LangChain%20%7C%20CrewAI-3776ab?style=flat-square)](./examples/python-agents/README.md)
 [![llms.txt](https://img.shields.io/badge/AI%20Index-llms--full.txt-059669?style=flat-square)](./llms-full.txt)
 
-Production-tested **MCP endpoints**, **`15` portable `SKILL.md` playbooks**, **`16` `n8n` JSON templates**, **`8` Make.com `.make.json` blueprints** ([interactive gallery](https://truonggiang0111.github.io/mcp/make-com-apify-b2b-lead-blueprints/)), **[`n8n-nodes-b2b-market-intel`](https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel)** (`usableAsTool: true`, `18` ops), **[`b2b-market-intel-python`](https://github.com/truonggiang0111/b2b-market-intel-python)** zero-dep Python SDK, **[`b2b-market-intel-mcp`](https://github.com/truonggiang0111/b2b-market-intel-mcp)** STDIO CLI, and **`100` AI `.md` use-case blueprints** for AI Agents, B2B growth teams, recruiters, and RAG developers. Powered by lightweight zero-proxy cloud endpoints on Apify (**new Apify accounts receive `$5/month` in free usage — try all tools at `$0` out-of-pocket**).
+Production-tested **MCP endpoints**, **`15` portable `SKILL.md` playbooks**, **`16` `n8n` JSON templates**, **`8` Make.com `.make.json` blueprints** ([interactive gallery](https://truonggiang0111.github.io/mcp/make-com-apify-b2b-lead-blueprints/)), **`4` runnable Python AI agent examples** ([`examples/python-agents/`](./examples/python-agents/README.md) · [Interactive Python Cookbook](https://truonggiang0111.github.io/mcp/python-crewai-langchain-b2b-leads/)), **[`n8n-nodes-b2b-market-intel`](https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel)** (`usableAsTool: true`, `18` ops), **[`b2b-market-intel-python`](https://github.com/truonggiang0111/b2b-market-intel-python)** zero-dep Python SDK, **[`b2b-market-intel-mcp`](https://github.com/truonggiang0111/b2b-market-intel-mcp)** STDIO CLI, and **`100` AI `.md` use-case blueprints** for AI Agents, B2B growth teams, recruiters, and RAG developers. Powered by lightweight zero-proxy cloud endpoints on Apify (**new Apify accounts receive `$5/month` in free usage — try all tools at `$0` out-of-pocket**).
 
 ---
 
@@ -41,9 +42,11 @@ Production-tested **MCP endpoints**, **`15` portable `SKILL.md` playbooks**, **`
 - **Native `n8n` Community Node & AI Agent Tool (`18` Ops, Zero Runtime Deps):** [`truonggiang0111/n8n-nodes-b2b-market-intel`](https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel) — `npm install github:truonggiang0111/n8n-nodes-b2b-market-intel` (`usableAsTool: true`, `3` zero-key ops + `15` Apify batch ops).
 - **Zero-Dep Node.js STDIO MCP Server (`v1.0.0`):** [`truonggiang0111/b2b-market-intel-mcp`](https://github.com/truonggiang0111/b2b-market-intel-mcp) — `npx -y github:truonggiang0111/b2b-market-intel-mcp` (`3` zero-key instant tools + `5` Apify batch tools).
 - **Zero-Dep Python 3.10+ SDK, CLI & Tool Schemas (`v1.0.0`):** [`truonggiang0111/b2b-market-intel-python`](https://github.com/truonggiang0111/b2b-market-intel-python) — `pip install git+https://github.com/truonggiang0111/b2b-market-intel-python` / `uvx` (`b2b-intel --self-test`, OpenAI/Anthropic/LangChain schemas + `ApifyB2BClient`).
+- **Python AI Agents Cookbook (`examples/python-agents/`):** [`examples/python-agents/README.md`](./examples/python-agents/README.md) — `4` runnable Python 3.10+ integrations for **OpenAI Tool-Calling**, **Anthropic Claude MCP**, **LangChain Tool**, and **CrewAI Agent** ([Interactive Switcher Guide](https://truonggiang0111.github.io/mcp/python-crewai-langchain-b2b-leads/)).
 - **Standalone Zero-Dependency Node.js 18+ CLI & ESM Helper:** [`truonggiang0111/google-news-url-decoder` (`v1.0.0`)](https://github.com/truonggiang0111/google-news-url-decoder) — offline protobuf inspector + live `DotsSplashUi` `Fbv4je` single-URL decoder (`MIT`).
 - **Sanitised B2B Sample Datasets (`v1.0.0`, `6` CSV + `6` JSON):** [`truonggiang0111/b2b-sample-datasets-2026`](https://github.com/truonggiang0111/b2b-sample-datasets-2026) — `150` real zero-PII sample rows across 6 B2B verticals ([Direct Order Hub & Bundles](https://truonggiang0111.github.io/mcp/b2b-leads-datasets-and-custom-scrapers/)).
-- **Technical Guides & Gallery (`13` Web Pages + `2` Dev.to):**
+- **Technical Guides & Gallery (`14` Web Pages + `2` Dev.to):**
+  - [**Python, CrewAI, LangChain, OpenAI & Claude B2B Leads Cookbook (`4` Live Scripts)**](https://truonggiang0111.github.io/mcp/python-crewai-langchain-b2b-leads/) · [`examples/python-agents/`](./examples/python-agents/README.md)
   - [**Direct B2B Data Storefront (`$29` CSV Packs, `$199–$350` Custom Scrapers, Agensi Bundles)**](https://truonggiang0111.github.io/mcp/b2b-leads-datasets-and-custom-scrapers/)
   - [**Interactive Make.com B2B Lead & Zero-Key Blueprints (`8` `.make.json` Scenarios)**](https://truonggiang0111.github.io/mcp/make-com-apify-b2b-lead-blueprints/) · [`workflows/make/`](./workflows/make/README.md)
   - [**Interactive 1-Click `n8n` Workflow Gallery (`16` Workflows)**](https://truonggiang0111.github.io/mcp/n8n-b2b-lead-automation-workflows/) · [Dev.to Guide](https://dev.to/truonggiang0111/how-to-connect-n8n-ai-agents-to-b2b-lead-scrapers-via-mcp-zero-key-apis-16-free-workflows-145b)
@@ -235,6 +238,14 @@ resp = requests.post(
 for job in resp.json():
     print(job["agentSummary"], "->", job["jobUrl"])
 ```
+
+### Python AI Agents Cookbook (`examples/python-agents/` — OpenAI, Claude MCP, LangChain, CrewAI)
+
+- [`examples/python-agents/google_news_rag_agent.py`](./examples/python-agents/google_news_rag_agent.py) — **OpenAI Tool-Calling** (`decode_google_news_url` zero-key `Fbv4je` + `CBMi` protobuf decoder + Apify batch RAG).
+- [`examples/python-agents/clinical_trials_biotech_agent.py`](./examples/python-agents/clinical_trials_biotech_agent.py) — **Anthropic Claude MCP** (`clinicaltrials.gov/api/v2/studies` zero-key + remote `mcp.apify.com` / local `npx` STDIO MCP).
+- [`examples/python-agents/uk_tenders_procurement_agent.py`](./examples/python-agents/uk_tenders_procurement_agent.py) — **LangChain Tool** (UK Contracts Finder REST v2 / OCDS zero-key `.gov.uk` buyer emails + `StructuredTool`).
+- [`examples/python-agents/shopify_competitor_churn_agent.py`](./examples/python-agents/shopify_competitor_churn_agent.py) — **CrewAI Agent** (Shopify `1★–2★` churn spy + WordPress.org Plugins 1.2 zero-key probe).
+- Interactive code switcher & quickstart: [Python AI Agents B2B Leads Guide](https://truonggiang0111.github.io/mcp/python-crewai-langchain-b2b-leads/) · [3 Free Agensi Skills (`agensi.io/r/GIANGTRNGTRNG`)](https://www.agensi.io/r/GIANGTRNGTRNG) · [`$29` Direct CSV Storefront](https://truonggiang0111.github.io/mcp/b2b-leads-datasets-and-custom-scrapers/)
 
 ---
 
