@@ -2,6 +2,8 @@
 
 [![MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.truonggiang0111-10b981?style=flat-square)](https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.truonggiang0111)
 [![B2B Market Intel Suite MCP connector](https://glama.ai/mcp/connectors/io.github.truonggiang0111/b2b-market-intel-mcp/badges/score.svg)](https://glama.ai/mcp/connectors/io.github.truonggiang0111/b2b-market-intel-mcp)
+[![HOL Guard](https://img.shields.io/endpoint?url=https%3A%2F%2Fhol.org%2Fapi%2Fregistry%2Fbadges%2Fplugin%3Fslug%3Dtruonggiang0111%252Fb2b-market-intel-mcp%26metric%3Drelease)](https://hol.org/guard/plugins/truonggiang0111%2Fb2b-market-intel-mcp)
+[![HOL Plugin Scanner](https://github.com/truonggiang0111/b2b-market-intel-mcp/actions/workflows/hol-plugin-scanner.yml/badge.svg)](https://hol.org/guard/plugins/truonggiang0111%2Fb2b-market-intel-mcp)
 [![Apify Profile](https://img.shields.io/badge/Apify%20Store-ttyan0111-2563eb?style=flat-square)](https://apify.com/ttyan0111)
 [![Agensi.io Storefront](https://img.shields.io/badge/Agensi.io-16%20Live%20Skills%20%2B%203%20Bundles-0f172a?style=flat-square)](https://www.agensi.io/r/GIANGTRNGTRNG?to=/creators/giang-tr-ng-tr-ng&utm_source=github_readme)
 [![Agent Skills](https://img.shields.io/badge/skills.sh-15%20Skills-6366f1?style=flat-square)](#-2-install-portable-agent-skills-claude-code--cursor--codex)
@@ -11,6 +13,15 @@
 [![llms.txt](https://img.shields.io/badge/AI%20Index-llms--full.txt-059669?style=flat-square)](./llms-full.txt)
 
 Production-tested **MCP endpoints**, **`15` portable `SKILL.md` playbooks**, **`16` `n8n` JSON templates**, **`8` Make.com `.make.json` blueprints** ([interactive gallery](https://truonggiang0111.github.io/mcp/make-com-apify-b2b-lead-blueprints/)), **`4` runnable Python AI agent examples** ([`examples/python-agents/`](./examples/python-agents/README.md) · [Interactive Python Cookbook](https://truonggiang0111.github.io/mcp/python-crewai-langchain-b2b-leads/)), **[`n8n-nodes-b2b-market-intel`](https://github.com/truonggiang0111/n8n-nodes-b2b-market-intel)** (`usableAsTool: true`, `18` ops), **[`b2b-market-intel-python`](https://github.com/truonggiang0111/b2b-market-intel-python)** zero-dep Python SDK, **[`b2b-market-intel-mcp`](https://github.com/truonggiang0111/b2b-market-intel-mcp)** STDIO CLI, and **`100` AI `.md` use-case blueprints** for AI Agents, B2B growth teams, recruiters, and RAG developers. Powered by lightweight zero-proxy cloud endpoints on Apify (**new Apify accounts receive `$5/month` in free usage — try all tools at `$0` out-of-pocket**).
+
+---
+
+## Independent Registry & Security Verification
+
+- **Official MCP Registry ([`registry.modelcontextprotocol.io`](https://registry.modelcontextprotocol.io)):** **`11` published servers / `12` active entries** under the verified `io.github.truonggiang0111/*` namespace ([live v0.1 API index](https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.truonggiang0111)).
+- **Hashgraph Online HOL Guard ([`truonggiang0111/b2b-market-intel-mcp`](https://hol.org/guard/plugins/truonggiang0111%2Fb2b-market-intel-mcp)):** **Owner Verified**, Security Score **`100/100 (A - Excellent)`** (`0` findings on `v1.1.0` across Security `16/16`, Operational Security `20/20`, Best Practices `6/6`, Code Quality `10/10`), live HOL Guard badge active.
+- **Glama.ai ([`glama.ai/mcp/servers?query=truonggiang0111`](https://glama.ai/mcp/servers?query=truonggiang0111)):** **`6` remote Streamable HTTP connectors** ([`b2b-market-intel-mcp` connector](https://glama.ai/mcp/connectors/io.github.truonggiang0111/b2b-market-intel-mcp)) + containerized **`Dockerfile` STDIO server** ([`truonggiang0111/b2b-market-intel-mcp`](https://glama.ai/mcp/servers/truonggiang0111/b2b-market-intel-mcp)).
+- **MCPTry:** **`11` live health-checked Official Registry listings**, including [`b2b-market-intel-mcp`](https://mcptry.com/servers/io.github.truonggiang0111/b2b-market-intel-mcp) and [`app-reviews-bug-spy-mcp`](https://mcptry.com/servers/io.github.truonggiang0111/app-reviews-bug-spy-mcp).
 
 ---
 
