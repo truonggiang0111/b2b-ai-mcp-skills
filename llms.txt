@@ -31,9 +31,9 @@
 
 ## Remote MCP Endpoints (All-in-One B2B Suite)
 
-- URL (`streamable-http`, Apify): `https://mcp.apify.com?actors=ttyan0111/reed-uk-jobs-hiring-signals,ttyan0111/seek-au-nz-jobs-hiring-signals,ttyan0111/app-store-play-reviews-spy,ttyan0111/google-ads-transparency-spy,ttyan0111/google-news-ai-article-extractor,ttyan0111/substack-newsletter-creator-leads,ttyan0111/chrome-web-store-extension-spy,ttyan0111/shopify-app-store-churn-spy,ttyan0111/podcast-host-email-sponsor-spy,ttyan0111/vscode-cursor-extension-spy`
+- URL (`streamable-http`, Apify): `https://mcp.apify.com?actors=ttyan0111/reed-uk-jobs-hiring-signals,ttyan0111/seek-au-nz-jobs-hiring-signals,ttyan0111/app-store-play-reviews-spy,ttyan0111/google-ads-transparency-spy,ttyan0111/google-news-ai-article-extractor,ttyan0111/substack-newsletter-creator-leads,ttyan0111/chrome-web-store-extension-spy,ttyan0111/shopify-app-store-churn-spy,ttyan0111/podcast-host-email-sponsor-spy,ttyan0111/vscode-cursor-extension-spy,ttyan0111/substack-viral-notes-outlier-spy,ttyan0111/uk-gov-tenders-buyer-leads,ttyan0111/atlassian-marketplace-b2b-spy,ttyan0111/clinical-trials-biotech-leads,ttyan0111/wordpress-plugin-churn-spy`
 - Zero-Key Managed Marketplace (Agensi MCP `https://mcp.agensi.io/mcp/auth`): `https://www.agensi.io/creators/giang-tr-ng-tr-ng`
-- Official MCP Registry Namespaces (`io.github.truonggiang0111/*` — `11` Servers / `12` Active Versions):
+- Official MCP Registry Namespaces (`io.github.truonggiang0111/*` — `16` Servers / `18` Active Versions):
   - `io.github.truonggiang0111/reed-uk-jobs-mcp`: Reed.co.uk UK jobs & Direct-Employer (`direct=True`) + Outside IR35 flags (`https://apify.com/ttyan0111/reed-uk-jobs-hiring-signals`)
   - `io.github.truonggiang0111/seek-au-nz-jobs-mcp`: Seek Australia (`seek.com.au`) & New Zealand (`seek.co.nz`) GraphQL jobs + company signals without HTML 403 blocks (`https://apify.com/ttyan0111/seek-au-nz-jobs-hiring-signals`)
   - `io.github.truonggiang0111/app-reviews-bug-spy-mcp`: Unified iOS App Store + Google Play reviews with server-side star filter & pain-signal tags (`https://apify.com/ttyan0111/app-store-play-reviews-spy`)
@@ -44,13 +44,18 @@
   - `io.github.truonggiang0111/shopify-app-store-churn-mcp`: Shopify App Store 1-Star Churn & Dev Emails Spy (`https://apify.com/ttyan0111/shopify-app-store-churn-spy`, `servers/shopify-app-spy/server.json`)
   - `io.github.truonggiang0111/podcast-host-email-mcp`: Apple Podcasts Host Emails & Sponsor Leads (`https://apify.com/ttyan0111/podcast-host-email-sponsor-spy`, `servers/podcast-email-spy/server.json`)
   - `io.github.truonggiang0111/vscode-cursor-extension-mcp`: VS Code & Open-VSX (Cursor/Windsurf) Extension Spy (`https://apify.com/ttyan0111/vscode-cursor-extension-spy`, `servers/vscode-extension-spy/server.json`)
-  - `io.github.truonggiang0111/b2b-market-intel-mcp`: Multi-tool B2B Market Intel suite combining all 10 live endpoints above (`v1.1.0`)
+  - `io.github.truonggiang0111/substack-viral-notes-mcp`: Substack viral Notes ranked by outlier multiplier, hook patterns, peak UTC hours & swipe prompts (`https://apify.com/ttyan0111/substack-viral-notes-outlier-spy`, `servers/substack-notes-spy/server.json`)
+  - `io.github.truonggiang0111/uk-gov-tenders-buyer-leads-mcp`: UK Contracts Finder OCDS open tenders, contract awards, GBP values & direct .gov.uk/NHS buyer emails (`https://apify.com/ttyan0111/uk-gov-tenders-buyer-leads`, `servers/uk-gov-tenders-buyer-leads/server.json`)
+  - `io.github.truonggiang0111/atlassian-marketplace-b2b-spy-mcp`: Jira & Confluence app installs, active users, Cloud Fortified tiers, vendor emails & 1-2 star churn reviews (`https://apify.com/ttyan0111/atlassian-marketplace-b2b-spy`, `servers/atlassian-marketplace-b2b-spy/server.json`)
+  - `io.github.truonggiang0111/clinical-trials-biotech-leads-mcp`: Recruiting Biotech & Pharma Phase 1-3 trials with corporate sponsor emails & clinical site PIs (`https://apify.com/ttyan0111/clinical-trials-biotech-leads`, `servers/clinical-trials-biotech-leads/server.json`)
+  - `io.github.truonggiang0111/wordpress-plugin-churn-spy-mcp`: WordPress.org & WooCommerce active installs, vendor emails, 1-2 star churn reviews & unresolved tickets (`https://apify.com/ttyan0111/wordpress-plugin-churn-spy`, `servers/wordpress-plugin-churn-spy/server.json`)
+  - `io.github.truonggiang0111/b2b-market-intel-mcp`: Multi-tool B2B Market Intel suite combining all 15 live endpoints above (`v1.2.0`)
 
 ## Independent Registry & Security Verification
 
-- **Official MCP Registry (`https://registry.modelcontextprotocol.io`):** `11` published servers / `12` active entries under `io.github.truonggiang0111/*` (`https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.truonggiang0111`)
+- **Official MCP Registry (`https://registry.modelcontextprotocol.io`):** `16` published servers / `18` active entries under `io.github.truonggiang0111/*` (`https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.truonggiang0111`)
 - **Hashgraph Online HOL Guard (`https://hol.org/guard/plugins/truonggiang0111%2Fb2b-market-intel-mcp`):** Owner Verified, Security Score `100/100 A - Excellent` (`0` findings on `v1.1.0`; live HOL Guard badge `https://img.shields.io/endpoint?url=https%3A%2F%2Fhol.org%2Fapi%2Fregistry%2Fbadges%2Fplugin%3Fslug%3Dtruonggiang0111%252Fb2b-market-intel-mcp%26metric%3Drelease`)
-- **Glama.ai (`https://glama.ai/mcp/servers?query=truonggiang0111`):** `6` remote Streamable HTTP connectors (`https://glama.ai/mcp/connectors/io.github.truonggiang0111/b2b-market-intel-mcp`) + containerized `Dockerfile` STDIO server (`https://glama.ai/mcp/servers/truonggiang0111/b2b-market-intel-mcp`)
+- **Glama.ai (`https://glama.ai/mcp/servers?query=truonggiang0111`):** `11` remote Streamable HTTP connectors (`https://glama.ai/mcp/connectors/io.github.truonggiang0111/b2b-market-intel-mcp`) + containerized `Dockerfile` STDIO server (`https://glama.ai/mcp/servers/truonggiang0111/b2b-market-intel-mcp`)
 - **MCPTry (`11` live health-checked Official Registry listings):** `https://mcptry.com/servers/io.github.truonggiang0111/b2b-market-intel-mcp` · `https://mcptry.com/servers/io.github.truonggiang0111/app-reviews-bug-spy-mcp`
 
 ## Agensi.io Live Skills & Bundles (`16` Live Skills + `3` Bundles — `HTTP 200`)

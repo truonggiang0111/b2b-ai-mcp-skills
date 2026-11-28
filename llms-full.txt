@@ -5,8 +5,8 @@
 
 ## Quick Invocation Summary
 
-1. **Streamable-HTTP Remote MCP (All 10 Live Tools):**
-   `https://mcp.apify.com?actors=ttyan0111/reed-uk-jobs-hiring-signals,ttyan0111/seek-au-nz-jobs-hiring-signals,ttyan0111/app-store-play-reviews-spy,ttyan0111/google-ads-transparency-spy,ttyan0111/google-news-ai-article-extractor,ttyan0111/substack-newsletter-creator-leads,ttyan0111/chrome-web-store-extension-spy,ttyan0111/shopify-app-store-churn-spy,ttyan0111/podcast-host-email-sponsor-spy,ttyan0111/vscode-cursor-extension-spy`
+1. **Streamable-HTTP Remote MCP (All 15 Live Tools):**
+   `https://mcp.apify.com?actors=ttyan0111/reed-uk-jobs-hiring-signals,ttyan0111/seek-au-nz-jobs-hiring-signals,ttyan0111/app-store-play-reviews-spy,ttyan0111/google-ads-transparency-spy,ttyan0111/google-news-ai-article-extractor,ttyan0111/substack-newsletter-creator-leads,ttyan0111/chrome-web-store-extension-spy,ttyan0111/shopify-app-store-churn-spy,ttyan0111/podcast-host-email-sponsor-spy,ttyan0111/vscode-cursor-extension-spy,ttyan0111/substack-viral-notes-outlier-spy,ttyan0111/uk-gov-tenders-buyer-leads,ttyan0111/atlassian-marketplace-b2b-spy,ttyan0111/clinical-trials-biotech-leads,ttyan0111/wordpress-plugin-churn-spy`
 2. **CLI Skill Install (`skills.sh` — `15` Portable Skills):**
    `npx skills add truonggiang0111/b2b-ai-mcp-skills`
 3. **Standalone Open-Source SDKs, `n8n` Node, `Make.com` Blueprints, CLIs & Sample Datasets:**
@@ -55,9 +55,9 @@
 
 ## Independent Registry & Security Verification
 
-- **Official MCP Registry (`https://registry.modelcontextprotocol.io`):** `11` published servers / `12` active entries under verified `io.github.truonggiang0111/*` namespace (`https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.truonggiang0111`).
+- **Official MCP Registry (`https://registry.modelcontextprotocol.io`):** `16` published servers / `18` active entries under verified `io.github.truonggiang0111/*` namespace (`https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.truonggiang0111`).
 - **Hashgraph Online HOL Guard (`https://hol.org/guard/plugins/truonggiang0111%2Fb2b-market-intel-mcp`):** Owner Verified, Security Score `100/100 A - Excellent` (`0` findings on `truonggiang0111/b2b-market-intel-mcp` `v1.1.0`; live HOL Guard badge `https://img.shields.io/endpoint?url=https%3A%2F%2Fhol.org%2Fapi%2Fregistry%2Fbadges%2Fplugin%3Fslug%3Dtruonggiang0111%252Fb2b-market-intel-mcp%26metric%3Drelease`).
-- **Glama.ai (`https://glama.ai/mcp/servers?query=truonggiang0111`):** `6` remote Streamable HTTP connectors (`https://glama.ai/mcp/connectors/io.github.truonggiang0111/b2b-market-intel-mcp`) + containerized `Dockerfile` STDIO server (`https://glama.ai/mcp/servers/truonggiang0111/b2b-market-intel-mcp`).
+- **Glama.ai (`https://glama.ai/mcp/servers?query=truonggiang0111`):** `11` remote Streamable HTTP connectors (`https://glama.ai/mcp/connectors/io.github.truonggiang0111/b2b-market-intel-mcp`) + containerized `Dockerfile` STDIO server (`https://glama.ai/mcp/servers/truonggiang0111/b2b-market-intel-mcp`).
 - **MCPTry (`11` live health-checked Official Registry listings):** `https://mcptry.com/servers/io.github.truonggiang0111/b2b-market-intel-mcp` · `https://mcptry.com/servers/io.github.truonggiang0111/app-reviews-bug-spy-mcp`.
 
 ---
@@ -433,13 +433,156 @@
 
 ---
 
-## `5` Staged Cloud Extensions (Rolling Out Across Daily Apify Store Slots)
-- `ttyan0111/substack-viral-notes-outlier-spy` (`M94EJel0a0kLProDy`) — Substack viral Notes ranked by weighted Viral Score (`Likes + 3×Replies + 5×Restacks`), `>= 2.0x` outlier detection, peak UTC windows & Ghostwriter swipe prompts (`io.github.truonggiang0111/substack-viral-notes-mcp`)
-- `ttyan0111/uk-gov-tenders-buyer-leads` (`DzbTiN1nN4Ab1Yhki`) — UK Contracts Finder OCDS open tenders, contract awards, GBP values, CPV codes & direct `.gov.uk`/NHS/council buyer emails (`io.github.truonggiang0111/uk-gov-tenders-buyer-leads-mcp`)
-- `ttyan0111/atlassian-marketplace-b2b-spy` (`okE229LJXfmguNyI4`) — Jira & Confluence Marketplace app installs, active users, Cloud Fortified tiers, pricing, vendor emails & 1–2★ enterprise churn reviews (`io.github.truonggiang0111/atlassian-marketplace-b2b-spy-mcp`)
-- `ttyan0111/clinical-trials-biotech-leads` (`eFcbJHonnspdvgqIy`) — ClinicalTrials.gov v2 recruiting Industry Biotech/Pharma Phase 1–3 trials with corporate sponsor emails & deduplicated clinical site PIs (`io.github.truonggiang0111/clinical-trials-biotech-leads-mcp`)
-- `ttyan0111/wordpress-plugin-churn-spy` (`gpcdQYoORhHYCPREc`) — WordPress.org & WooCommerce active installs, domain-verified vendor emails, 1–2★ RSS churn reviews & live unresolved support tickets (`io.github.truonggiang0111/wordpress-plugin-churn-spy-mcp`)
+## Tool 11: Substack Viral Notes Outlier & Hook Spy
+- **Actor ID / Slug:** `M94EJel0a0kLProDy` (`ttyan0111/substack-viral-notes-outlier-spy`)
+- **Official MCP Registry:** `io.github.truonggiang0111/substack-viral-notes-mcp` (`servers/substack-notes-spy/server.json`)
+- **Glama Connector:** `https://glama.ai/mcp/connectors/io.github.truonggiang0111/substack-viral-notes-mcp`
+- **Direct MCP URL:** `https://mcp.apify.com?actors=ttyan0111/substack-viral-notes-outlier-spy`
+- **Sync REST URL:** `POST https://api.apify.com/v2/acts/ttyan0111~substack-viral-notes-outlier-spy/run-sync-get-dataset-items`
+- **Proxy Required:** None (`$0` proxy cost, 256 MB RAM)
+- **Pricing (Pay-per-Event):** `$0.005` start + `$1.50/1k` notes + `$0.003`/creator insights
+- **Sample Input JSON:**
+  ```json
+  {
+    "queries": [
+      "gurwinder",
+      "dan"
+    ],
+    "maxNotesPerCreator": 25,
+    "maxCreatorsPerKeyword": 3,
+    "onlyOutliers": false,
+    "minOutlierMultiplier": 1,
+    "sortBy": "viralScore"
+  }
+  ```
+- **Recommended Output Projection:** `handle,authorName,subscriberCount,hook,viralScore,outlierMultiplier,isOutlier,likes,comments,restacks,wordCount,lengthBucket,hasImage,publishedAt,noteUrl,agentSummary`
+- **KV Store Summary Key:** RUN_SUMMARY (`totalNotesExported, creatorsAnalyzed, outlierCount, insights, overallInsights, topHooks, ghostwriterSwipePrompt`)
 
+---
+
+## Tool 12: UK Gov Tenders & Direct Buyer Emails
+- **Actor ID / Slug:** `DzbTiN1nN4Ab1Yhki` (`ttyan0111/uk-gov-tenders-buyer-leads`)
+- **Official MCP Registry:** `io.github.truonggiang0111/uk-gov-tenders-buyer-leads-mcp` (`servers/uk-gov-tenders-buyer-leads/server.json`)
+- **Glama Connector:** `https://glama.ai/mcp/connectors/io.github.truonggiang0111/uk-gov-tenders-buyer-leads-mcp`
+- **Direct MCP URL:** `https://mcp.apify.com?actors=ttyan0111/uk-gov-tenders-buyer-leads`
+- **Sync REST URL:** `POST https://api.apify.com/v2/acts/ttyan0111~uk-gov-tenders-buyer-leads/run-sync-get-dataset-items`
+- **Proxy Required:** None (`$0` proxy cost, 256 MB RAM)
+- **Pricing (Pay-per-Event):** `$0.008` start + `$2.00/1k` tenders + `$2.50/1k` direct buyer emails
+- **Sample Input JSON:**
+  ```json
+  {
+    "keywords": [
+      "software",
+      "cloud"
+    ],
+    "stages": [
+      "tender",
+      "award"
+    ],
+    "minValueGBP": 0,
+    "onlyWithEmail": false,
+    "maxItems": 20
+  }
+  ```
+- **Recommended Output Projection:** `title,stage,buyerName,contactName,contactEmail,contactTelephone,valueGBP,minValueGBP,deadlineDate,region,postalCode,cpvCode,suitableForSME,awardedSuppliersText,noticeUrl,agentSummary`
+- **KV Store Summary Key:** RUN_SUMMARY (`totalScraped, emailsFoundCount, publicSectorEmailsCount, smeSuitableCount, directBuyerEmails, totalValueGBP, byStage, topTenders`)
+
+---
+
+## Tool 13: Atlassian Marketplace App & Churn Spy
+- **Actor ID / Slug:** `okE229LJXfmguNyI4` (`ttyan0111/atlassian-marketplace-b2b-spy`)
+- **Official MCP Registry:** `io.github.truonggiang0111/atlassian-marketplace-b2b-spy-mcp` (`servers/atlassian-marketplace-b2b-spy/server.json`)
+- **Glama Connector:** `https://glama.ai/mcp/connectors/io.github.truonggiang0111/atlassian-marketplace-b2b-spy-mcp`
+- **Direct MCP URL:** `https://mcp.apify.com?actors=ttyan0111/atlassian-marketplace-b2b-spy`
+- **Sync REST URL:** `POST https://api.apify.com/v2/acts/ttyan0111~atlassian-marketplace-b2b-spy/run-sync-get-dataset-items`
+- **Proxy Required:** None (`$0` proxy cost, 256 MB RAM)
+- **Pricing (Pay-per-Event):** `$0.006` start + `$2.00/1k` apps + `$1.20/1k` churn reviews
+- **Sample Input JSON:**
+  ```json
+  {
+    "queries": [
+      "time tracking",
+      "workflow automation"
+    ],
+    "application": "all",
+    "hosting": "cloud",
+    "maxAppsPerQuery": 5,
+    "includeChurnReviews": true,
+    "maxReviewsPerApp": 15
+  }
+  ```
+- **Recommended Output Projection:** `name,addonKey,vendorName,vendorEmail,vendorDomain,vendorSupportUrl,totalInstalls,totalUsers,averageStars,reviewCount,cloudFortified,partnerTier,startingPriceUsd,churnReviewsCount,topPainCategories,marketplaceUrl,agentSummary`
+- **KV Store Summary Key:** RUN_SUMMARY (`totalApps, totalChurnReviews, vendorEmailsFound, vendorDomainsFound, cloudFortifiedCount, topPainCategories, painCategoryCounts, highInstallVulnerableApps`)
+
+---
+
+## Tool 14: ClinicalTrials.gov Biotech & PI Leads
+- **Actor ID / Slug:** `eFcbJHonnspdvgqIy` (`ttyan0111/clinical-trials-biotech-leads`)
+- **Official MCP Registry:** `io.github.truonggiang0111/clinical-trials-biotech-leads-mcp` (`servers/clinical-trials-biotech-leads/server.json`)
+- **Glama Connector:** `https://glama.ai/mcp/connectors/io.github.truonggiang0111/clinical-trials-biotech-leads-mcp`
+- **Direct MCP URL:** `https://mcp.apify.com?actors=ttyan0111/clinical-trials-biotech-leads`
+- **Sync REST URL:** `POST https://api.apify.com/v2/acts/ttyan0111~clinical-trials-biotech-leads/run-sync-get-dataset-items`
+- **Proxy Required:** None (`$0` proxy cost, 256 MB RAM)
+- **Pricing (Pay-per-Event):** `$0.006` start + `$2.50/1k` trials + `$1.50/1k` site contacts
+- **Sample Input JSON:**
+  ```json
+  {
+    "queries": [
+      "oncology",
+      "immunotherapy"
+    ],
+    "location": "United States",
+    "statuses": [
+      "RECRUITING",
+      "NOT_YET_RECRUITING"
+    ],
+    "sponsorClass": "INDUSTRY",
+    "phases": [
+      "PHASE1",
+      "PHASE2",
+      "PHASE3"
+    ],
+    "onlyWithEmail": true,
+    "includeSiteContacts": true,
+    "maxSiteContactsPerTrial": 10,
+    "maxTrials": 20
+  }
+  ```
+- **Recommended Output Projection:** `nctId,briefTitle,leadSponsorName,leadSponsorClass,phasesText,overallStatus,enrollmentCount,primaryEmail,primaryContactName,primaryPhone,corporateSponsorDomain,leadPiSummary,siteContactsCount,totalLocationsCount,studyUrl,agentSummary`
+- **KV Store Summary Key:** RUN_SUMMARY (`totalTrialsScraped, trialsWithCentralEmailCount, totalUniqueEmailsFound, totalSiteContactsEnriched, corporateSponsorEmails, sitePiEmails, byPhase, topBiotechLeads`)
+
+---
+
+## Tool 15: WordPress & WooCommerce Plugin Churn Spy
+- **Actor ID / Slug:** `gpcdQYoORhHYCPREc` (`ttyan0111/wordpress-plugin-churn-spy`)
+- **Official MCP Registry:** `io.github.truonggiang0111/wordpress-plugin-churn-spy-mcp` (`servers/wordpress-plugin-churn-spy/server.json`)
+- **Glama Connector:** `https://glama.ai/mcp/connectors/io.github.truonggiang0111/wordpress-plugin-churn-spy-mcp`
+- **Direct MCP URL:** `https://mcp.apify.com?actors=ttyan0111/wordpress-plugin-churn-spy`
+- **Sync REST URL:** `POST https://api.apify.com/v2/acts/ttyan0111~wordpress-plugin-churn-spy/run-sync-get-dataset-items`
+- **Proxy Required:** None (`$0` proxy cost, 256 MB RAM)
+- **Pricing (Pay-per-Event):** `$0.006` start + `$2.00/1k` plugins + `$1.20/1k` churn/ticket signals
+- **Sample Input JSON:**
+  ```json
+  {
+    "queries": [
+      "woocommerce stripe",
+      "checkout upsell"
+    ],
+    "maxPluginsPerQuery": 5,
+    "minActiveInstalls": 500,
+    "includeChurnReviews": true,
+    "maxReviewsPerPlugin": 15,
+    "includeUnresolvedSupport": true,
+    "enrichAuthorContacts": true
+  }
+  ```
+- **Recommended Output Projection:** `name,slug,authorName,vendorEmail,vendorDomain,activeInstalls,averageStars,oneStarCount,unresolvedSupportThreads,churnReviewsCount,unresolvedTicketsCount,topPainCategories,version,testedUpToWp,pluginUrl,agentSummary`
+- **KV Store Summary Key:** RUN_SUMMARY (`totalPlugins, totalChurnReviews, totalUnresolvedTickets, totalSignalsAnalyzed, vendorEmailsFound, topPainCategories, painCategoryCounts, highInstallVulnerablePlugins`)
+
+---
+
+## All `15/15` Cloud Actors Live (`0` Staged Remaining)
+- All 15 B2B Market Intel Actors are `isPublic: true` on `https://apify.com/ttyan0111` with `16` server manifests active under `servers/*/server.json` (`100/100` Apify public tasks live).
 ---
 
 ## `n8n` Community Node (`n8n-nodes-b2b-market-intel`) & `16` Ready-to-Import Workflows

@@ -9,13 +9,15 @@
     {
       "src": "https://raw.githubusercontent.com/truonggiang0111/b2b-ai-mcp-skills/main/icons/clinical-trials-biotech-leads.png",
       "mimeType": "image/png",
-      "sizes": ["256x256"]
+      "sizes": [
+        "256x256"
+      ]
     }
   ],
   "repository": {
     "url": "https://github.com/truonggiang0111/b2b-ai-mcp-skills",
     "source": "github",
-    "subfolder": "staged-servers/clinical-trials-biotech-leads"
+    "subfolder": "servers/clinical-trials-biotech-leads"
   },
   "remotes": [
     {
